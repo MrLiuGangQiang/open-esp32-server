@@ -24,16 +24,14 @@ concurrency:
   group: acr-server-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  ACR_REGISTRY: registry.cn-hangzhou.aliyuncs.com
-  ACR_IMAGE: liugangqiang/open-esp32-server
-
 jobs:
   prepare:
     name: Resolve version
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      registry: ${{ steps.version.outputs.registry }}
+      image: ${{ steps.version.outputs.image }}
     steps:
       - name: Resolve release version
         id: version
@@ -44,14 +42,18 @@ jobs:
           else
             VERSION="$(date +%Y%m%d%H%M)-${GITHUB_SHA:0:7}"
           fi
-          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "version=${VERSION}"
+            echo "registry=registry.cn-hangzhou.aliyuncs.com"
+            echo "image=liugangqiang/open-esp32-server"
+          } >> "${GITHUB_OUTPUT}"
 
   build-base:
     name: Build server base image
     runs-on: ubuntu-latest
     needs: prepare
     outputs:
-      base_ref: ${{ env.ACR_REGISTRY }}/${{ env.ACR_IMAGE }}:base-${{ needs.prepare.outputs.version }}
+      base_ref: ${{ steps.base.outputs.ref }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -62,7 +64,7 @@ jobs:
       - name: Login to Alibaba Cloud ACR
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.ACR_REGISTRY }}
+          registry: ${{ needs.prepare.outputs.registry }}
           username: ${{ secrets.ACR_USERNAME || vars.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD || vars.ACR_PASSWORD }}
 
@@ -74,10 +76,17 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ${{ env.ACR_REGISTRY }}/${{ env.ACR_IMAGE }}:base-${{ needs.prepare.outputs.version }}
-            ${{ env.ACR_REGISTRY }}/${{ env.ACR_IMAGE }}:base-latest
+            ${{ needs.prepare.outputs.registry }}/${{ needs.prepare.outputs.image }}:base-${{ needs.prepare.outputs.version }}
+            ${{ needs.prepare.outputs.registry }}/${{ needs.prepare.outputs.image }}:base-latest
           cache-from: type=gha,scope=server-base
           cache-to: type=gha,scope=server-base,mode=max
+
+      - name: Record base image reference
+        id: base
+        shell: bash
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: echo "ref=${{ needs.prepare.outputs.registry }}/${{ needs.prepare.outputs.image }}:base-${VERSION}" >> "${GITHUB_OUTPUT}"
 
   build-app:
     name: Build and push application image
@@ -93,7 +102,7 @@ jobs:
       - name: Login to Alibaba Cloud ACR
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.ACR_REGISTRY }}
+          registry: ${{ needs.prepare.outputs.registry }}
           username: ${{ secrets.ACR_USERNAME || vars.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD || vars.ACR_PASSWORD }}
 
@@ -101,7 +110,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.ACR_REGISTRY }}/${{ env.ACR_IMAGE }}
+          images: ${{ needs.prepare.outputs.registry }}/${{ needs.prepare.outputs.image }}
           tags: |
             type=raw,value=${{ needs.prepare.outputs.version }}
             type=raw,value=latest,enable=${{ github.ref_type == 'branch' }}
@@ -115,7 +124,7 @@ jobs:
           push: true
           provenance: false
           build-args: |
-            BASE_IMAGE=${{ env.ACR_REGISTRY }}/${{ env.ACR_IMAGE }}:base-${{ needs.prepare.outputs.version }}
+            BASE_IMAGE=${{ needs.build-base.outputs.base_ref }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=server-app
