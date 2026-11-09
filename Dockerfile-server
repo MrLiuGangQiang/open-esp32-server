@@ -1,5 +1,7 @@
 # 生产镜像，仅包含应用代码
-FROM ghcr.io/xinnan-tech/xiaozhi-esp32-server:server-base
+# 基础镜像可通过 --build-arg BASE_IMAGE=<镜像> 覆盖（CI 中使用自建 ACR 基础镜像）
+ARG BASE_IMAGE=ghcr.io/xinnan-tech/xiaozhi-esp32-server:server-base
+FROM ${BASE_IMAGE}
 
 COPY main/xiaozhi-server .
 
