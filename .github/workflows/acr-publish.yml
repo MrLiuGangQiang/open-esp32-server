@@ -13,8 +13,8 @@ on:
       - "Dockerfile-server"
       - "Dockerfile-server-base"
       - ".github/workflows/acr-publish.yml"
-  tags:
-    - "v*"
+    tags:
+      - "v*"
   workflow_dispatch:
 
 permissions:
