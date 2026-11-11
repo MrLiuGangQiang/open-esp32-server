@@ -69,6 +69,19 @@ class ConfigServiceImplTest {
         assertEquals(List.of("first", "second"), features.get("labels"));
     }
 
+    @Test
+    void blankAssistantNameFallsBackToXiaofanBrand() {
+        ConfigServiceImpl service = newService(mock(SysParamsService.class), mock(RedisUtils.class));
+        Map<String, Object> result = new HashMap<>();
+
+        ReflectionTestUtils.invokeMethod(service, "buildModuleConfig",
+                null, "\u4f60\u597d\uff0c{{assistant_name}}", null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null,
+                result, true);
+
+        assertEquals("\u4f60\u597d\uff0c\u5c0f\u51e1", result.get("prompt"));
+    }
+
     private static SysParamsDTO parameter(String code, String value, String type) {
         SysParamsDTO parameter = new SysParamsDTO();
         parameter.setParamCode(code);

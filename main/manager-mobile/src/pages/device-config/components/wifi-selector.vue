@@ -71,7 +71,7 @@ async function checkESP32Connection() {
 // 扫描WiFi网络
 async function scanWifi() {
   if (!isConnectedToESP32.value) {
-    toast.error(t('deviceConfig.connectXiaozhiHotspot'))
+    toast.error(t('deviceConfig.connectXiaofanHotspot'))
     return
   }
 
@@ -135,7 +135,7 @@ async function showNetworkSelector() {
   await checkESP32Connection()
 
   if (!isConnectedToESP32.value) {
-    toast.error(t('deviceConfig.connectXiaozhiHotspot'))
+    toast.error(t('deviceConfig.connectXiaofanHotspot'))
     return
   }
 
@@ -220,12 +220,12 @@ onMounted(() => {
 
 <template>
   <view class="wifi-selector">
-    <!-- Xiaozhi连接状态 -->
+    <!-- Xiaofan连接状态 -->
     <view v-if="props.autoConnect" class="connection-status">
       <view v-if="!isConnectedToESP32" class="status-warning">
         <view class="status-content">
           <text class="warning-text">
-            {{ t('deviceConfig.connectXiaozhiHotspot') }} (xiaozhi-XXXXXX)
+            {{ t('deviceConfig.connectXiaofanHotspot') }} (xiaozhi-XXXXXX)
           </text>
           <wd-button
             size="small"
@@ -240,7 +240,7 @@ onMounted(() => {
       <view v-else class="status-success">
         <view class="status-content">
           <text class="success-text">
-            {{ t('deviceConfig.connectedXiaozhiHotspot') }}
+            {{ t('deviceConfig.connectedXiaofanHotspot') }}
           </text>
           <wd-button
             size="small"

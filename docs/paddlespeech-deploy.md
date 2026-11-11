@@ -69,7 +69,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8092 (Press CTRL+C to quit)
 ```
 
-## 三、配置小智服务
+## 三、配置小凡服务
 ### 1. 无需修改代码（provider 已内置于 main/xiaozhi-server/core/providers/tts/paddle_speech.py）
 
 ### 2.新建 `main/xiaozhi-server/data/.config.yaml`
@@ -80,7 +80,7 @@ INFO:     Uvicorn running on http://0.0.0.0:8092 (Press CTRL+C to quit)
 mkdir -p main/xiaozhi-server/data
 ```
 
-这个文件是必需的，少了它小智服务起不来，会直接报错退出。
+这个文件是必需的，少了它小凡服务起不来，会直接报错退出。
 
 使用单模块部署
 ```yaml
@@ -100,7 +100,7 @@ TTS:
 
 ### 3.启动xiaozhi服务
 
-小智服务用**另一个** Python 环境，不要用前面给 PaddleSpeech 建的 `paddle_env` —— 那个环境里装的是 PaddleSpeech 自己那套依赖，版本由它决定，跟本项目锁定的版本不一定一致（`paddlespeech` 对 numpy 没写版本上限，装进去的 numpy 未必是本项目要的那个）。本项目推荐的 Python 版本和依赖版本写在 `main/xiaozhi-server/requirements.txt` 里（文件开头写着推荐 python3.10，另外锁了 torch 2.2.2、numpy 1.26.4）。
+小凡服务用**另一个** Python 环境，不要用前面给 PaddleSpeech 建的 `paddle_env` —— 那个环境里装的是 PaddleSpeech 自己那套依赖，版本由它决定，跟本项目锁定的版本不一定一致（`paddlespeech` 对 numpy 没写版本上限，装进去的 numpy 未必是本项目要的那个）。本项目推荐的 Python 版本和依赖版本写在 `main/xiaozhi-server/requirements.txt` 里（文件开头写着推荐 python3.10，另外锁了 torch 2.2.2、numpy 1.26.4）。
 
 先建环境、装依赖（在仓库根目录执行）：
 ```bash

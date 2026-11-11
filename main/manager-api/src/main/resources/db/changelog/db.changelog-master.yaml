@@ -17,3 +17,12 @@ databaseChangeLog:
             path: ../postgresql/02_data.sql
             relativeToChangelogFile: true
             splitStatements: false
+  - changeSet:
+      id: postgresql-rebrand-xiaofan
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611111111.sql
+            relativeToChangelogFile: true
+            splitStatements: false

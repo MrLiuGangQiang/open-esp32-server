@@ -150,7 +150,7 @@ export default {
       confirmLoading: false,
       form: {
         id: null,
-        agentCode: "小智",
+        agentCode: "小凡",
         agentName: "",
         systemPrompt: "",
         sort: 0,
@@ -231,7 +231,7 @@ export default {
       this.dialogTitle = this.$t("templateQuickConfig.addTemplate");
       this.form = {
         id: null,
-        agentCode: "小智",
+        agentCode: "小凡",
         agentName: this.$t("templateQuickConfig.newTemplate"),
         systemPrompt: "",
         sort: 1,
@@ -250,7 +250,7 @@ export default {
           const template = res.data.data;
           this.form = {
             id: template.id,
-            agentCode: template.agentCode || "小智",
+            agentCode: template.agentCode || "小凡",
             agentName: template.agentName || "",
             systemPrompt: template.systemPrompt || "",
             sort: template.sort || 0,

@@ -9,7 +9,7 @@ import plugins_func.functions.hass_state  # noqa: F401  注册 hass_state 模块
 from plugins_func.functions.hass_init import append_devices_to_prompt
 
 HEADER = "\n下面是我家智能设备列表（位置，设备名，entity_id），可以通过homeassistant控制\n"
-BASE_PROMPT = "你是小智。"
+BASE_PROMPT = "你是小凡。"
 
 
 class FakeDialogue:

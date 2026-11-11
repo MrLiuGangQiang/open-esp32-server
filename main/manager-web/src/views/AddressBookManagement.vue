@@ -588,22 +588,22 @@ export default {
     getDeviceAvatar(deviceId) {
       // 根据 deviceId 计算 MD5，选择对应的头像
       const avatars = [
-        require('@/assets/device-avatars/xiaozhi-logo1.png'),
-        require('@/assets/device-avatars/xiaozhi-logo2.png'),
-        require('@/assets/device-avatars/xiaozhi-logo3.png'),
-        require('@/assets/device-avatars/xiaozhi-logo4.png'),
-        require('@/assets/device-avatars/xiaozhi-logo5.png'),
-        require('@/assets/device-avatars/xiaozhi-logo6.png'),
-        require('@/assets/device-avatars/xiaozhi-logo7.png'),
-        require('@/assets/device-avatars/xiaozhi-logo8.png'),
-        require('@/assets/device-avatars/xiaozhi-logo9.png'),
-        require('@/assets/device-avatars/xiaozhi-logo10.png'),
-        require('@/assets/device-avatars/xiaozhi-logo11.png'),
-        require('@/assets/device-avatars/xiaozhi-logo12.png'),
-        require('@/assets/device-avatars/xiaozhi-logo13.png'),
-        require('@/assets/device-avatars/xiaozhi-logo14.png'),
-        require('@/assets/device-avatars/xiaozhi-logo15.png'),
-        require('@/assets/device-avatars/xiaozhi-logo16.png')
+        require('@/assets/device-avatars/xiaofan-avatar1.png'),
+        require('@/assets/device-avatars/xiaofan-avatar2.png'),
+        require('@/assets/device-avatars/xiaofan-avatar3.png'),
+        require('@/assets/device-avatars/xiaofan-avatar4.png'),
+        require('@/assets/device-avatars/xiaofan-avatar5.png'),
+        require('@/assets/device-avatars/xiaofan-avatar6.png'),
+        require('@/assets/device-avatars/xiaofan-avatar7.png'),
+        require('@/assets/device-avatars/xiaofan-avatar8.png'),
+        require('@/assets/device-avatars/xiaofan-avatar9.png'),
+        require('@/assets/device-avatars/xiaofan-avatar10.png'),
+        require('@/assets/device-avatars/xiaofan-avatar11.png'),
+        require('@/assets/device-avatars/xiaofan-avatar12.png'),
+        require('@/assets/device-avatars/xiaofan-avatar13.png'),
+        require('@/assets/device-avatars/xiaofan-avatar14.png'),
+        require('@/assets/device-avatars/xiaofan-avatar15.png'),
+        require('@/assets/device-avatars/xiaofan-avatar16.png')
       ];
       // 简单的哈希算法，根据 deviceId 分配头像
       let hash = 0;

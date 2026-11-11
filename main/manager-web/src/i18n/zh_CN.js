@@ -298,7 +298,7 @@ export default {
 
   // 注册页面相关
   'register.title': '创建账号',
-  'register.welcome': '欢迎使用小智AI',
+  'register.welcome': '欢迎使用小凡AI',
   'register.usernamePlaceholder': '请输入用户名',
   'register.mobilePlaceholder': '请输入手机号码',
   'register.captchaPlaceholder': '请输入验证码',
@@ -584,7 +584,7 @@ export default {
   'button.close': '关闭',
 
   // 系统信息
-  'system.name': '小智服务',
+  'system.name': '小凡服务',
 
   // 声纹相关
   'voiceprint.management': '声纹管理',
@@ -723,7 +723,7 @@ export default {
 
   // 首页文本
   'home.addAgent': '添加智能体',
-  'home.greeting': '你好小智',
+  'home.greeting': '你好小凡',
   'home.wish': '让我们度过美好的一天！',
   'home.languageModel': '语言模型',
   'home.voiceModel': '音色模型',
@@ -796,7 +796,7 @@ export default {
   'paramManagement.deleteFailed': '删除失败，请重试',
   'paramManagement.operationCancelled': '已取消删除操作',
   'paramManagement.operationClosed': '操作已关闭',
-  'paramManagement.updateSuccess': '修改成功，部分配置需重启xiaozhi-server模块才生效',
+  'paramManagement.updateSuccess': '修改成功，部分配置需重启xiaofan-server模块才生效',
   'paramManagement.addSuccess': '新增成功',
   'paramManagement.updateFailed': '更新失败',
   'paramManagement.addFailed': '新增失败',
@@ -1008,7 +1008,7 @@ export default {
   // 表单字段 Tooltip 提示说明
   'roleConfig.tooltip.agentName': '设置智能体的名称，用于标识和识别您的AI助手',
   'roleConfig.tooltip.roleTemplate': '从预设的角色模板中选择，快速配置智能体的基础设定',
-  'roleConfig.tooltip.contextProvider': '在小智被唤醒时，获取外部系统的数据，并将其动态注入到大模型的系统提示词中',
+  'roleConfig.tooltip.contextProvider': '在小凡被唤醒时，获取外部系统的数据，并将其动态注入到大模型的系统提示词中',
   'roleConfig.tooltip.roleIntroduction': '定义AI助手的角色定位、人格特征、行为规范和专业知识背景',
   'roleConfig.tooltip.memoryHis': '总结聊天记录内容',
   'roleConfig.tooltip.languageCode': '设置语言代码，如zh-CN、en-US等，用于特定功能识别',
@@ -1097,7 +1097,7 @@ export default {
   'modelConfig.enableSuccess': '启用成功',
   'modelConfig.disableSuccess': '禁用成功',
   'modelConfig.operationFailed': '操作失败',
-  'modelConfig.setDefaultSuccess': '设置默认模型成功，请及时手动重启xiaozhi-server模块',
+  'modelConfig.setDefaultSuccess': '设置默认模型成功，请及时手动重启xiaofan-server模块',
   'modelConfig.itemsPerPage': '{items}条/页',
   'modelConfig.firstPage': '首页',
   'modelConfig.prevPage': '上一页',

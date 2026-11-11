@@ -1,11 +1,11 @@
 [![Banners](../images/banner1.png)](https://github.com/xinnan-tech/xiaozhi-esp32-server)
 
-<h1 align="center">Servicio backend Xiaozhi xiaozhi-esp32-server</h1>
+<h1 align="center">Servicio backend Xiaofan xiaofan-server</h1>
 
 <p align="center">
 Este proyecto desarrolla sistemas de hardware y software para terminales inteligentes a partir de la teoría y la tecnología de la inteligencia simbiótica humano-máquina<br/>y ofrece el servicio backend del proyecto de hardware inteligente de código abierto
 <a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32</a><br/>
-Implementado en Python, Java y Vue según el <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">protocolo de comunicación Xiaozhi</a><br/>
+Implementado en Python, Java y Vue según el <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">protocolo de comunicación Xiaofan</a><br/>
 Compatible con el protocolo MQTT+UDP, el protocolo WebSocket, puntos de acceso MCP, reconocimiento de huella de voz y bases de conocimiento
 </p>
 
@@ -67,7 +67,7 @@ Este proyecto debe usarse junto con hardware ESP32. Si ya ha comprado hardware r
     <td>
       <a href="https://www.bilibili.com/video/BV1WEcxzFEAT" target="_blank">
         <picture>
-          <img alt="Humano digital Xiaozhi con activación por voz" src="../images/demo8.png" /></picture>
+          <img alt="Humano digital Xiaofan con activación por voz" src="../images/demo8.png" /></picture>
       </a>
     </td>
     <td>
@@ -203,7 +203,7 @@ Dirección de la interfaz WebSocket: wss://2662r3426b.vicp.fun/xiaozhi/v1/
 | Intent (reconocimiento de intención) | function_call (llamada a funciones) | function_call (llamada a funciones) |
 | Memory (memoria) | mem_local_short (memoria local a corto plazo) | mem_local_short (memoria local a corto plazo) |
 
-Si le importa el tiempo que tarda cada componente, consulte el [informe de rendimiento de los componentes de Xiaozhi](https://github.com/xinnan-tech/xiaozhi-performance-research) y pruebe en su propio entorno con el método que describe el informe.
+Si le importa el tiempo que tarda cada componente, consulte el [informe de rendimiento de los componentes de Xiaofan](https://github.com/xinnan-tech/xiaozhi-performance-research) y pruebe en su propio entorno con el método que describe el informe.
 
 #### 🔧 Herramientas de prueba
 Este proyecto incluye las siguientes herramientas para comprobar el sistema y elegir un modelo adecuado:
@@ -245,7 +245,7 @@ Si desarrolla software, aquí tiene una [carta abierta a quienes desarrollan](..
 ---
 
 ## Ecosistema del producto 👬
-Xiaozhi es un ecosistema. Al usar este producto, también puede ver otros [proyectos destacados](https://github.com/78/xiaozhi-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) de este ecosistema
+Xiaofan es un ecosistema. Al usar este producto, también puede ver otros [proyectos destacados](https://github.com/78/xiaozhi-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) de este ecosistema
 
 ---
 
@@ -346,7 +346,7 @@ El reconocimiento de huella de voz requiere desplegar por separado el servicio [
 | Logo | Proyecto o empresa | Descripción |
 |:---:|:---:|:---|
 | <img src="../images/logo_bailing.png" width="160"> | [Robot de diálogo por voz Bailing (百聆语音对话机器人)](https://github.com/wwbin2017/bailing) | Este proyecto parte del [robot de diálogo por voz Bailing](https://github.com/wwbin2017/bailing) y se construye sobre esa base |
-| <img src="../images/logo_tenclass.png" width="160"> | [Tenclass (十方融海)](https://www.tenclass.com/) | Gracias a [Tenclass](https://www.tenclass.com/) por definir el protocolo de comunicación estándar del ecosistema Xiaozhi, las soluciones de compatibilidad con varios dispositivos y los ejemplos prácticos de alta concurrencia, y por el apoyo de documentación técnica de todo el recorrido de este proyecto |
+| <img src="../images/logo_tenclass.png" width="160"> | [Tenclass (十方融海)](https://www.tenclass.com/) | Gracias a [Tenclass](https://www.tenclass.com/) por definir el protocolo de comunicación estándar del ecosistema Xiaofan, las soluciones de compatibilidad con varios dispositivos y los ejemplos prácticos de alta concurrencia, y por el apoyo de documentación técnica de todo el recorrido de este proyecto |
 | <img src="../images/logo_xuanfeng.png" width="160"> | [Xuanfeng Technology (玄凤科技)](https://github.com/Eric0308) | Gracias a [Xuanfeng Technology](https://github.com/Eric0308) por el código del marco de llamada a funciones, del protocolo de comunicación MCP y del mecanismo de llamadas basado en plugins. Con un sistema estandarizado de despacho de instrucciones y capacidad de ampliación dinámica, mejora de forma clara la eficiencia de interacción y la extensibilidad de los dispositivos de frontend (IoT) |
 | <img src="../images/logo_junsen.png" width="160"> | [huangjunsen](https://github.com/huangjunsen0406) | Gracias a [huangjunsen](https://github.com/huangjunsen0406) por el módulo `consola inteligente móvil`, que permite controlar con eficacia dispositivos móviles de varias plataformas e interactuar en tiempo real, y mejora mucho la comodidad de uso y la eficiencia de gestión en escenarios móviles |
 | <img src="../images/logo_huiyuan.png" width="160"> | [Huiyuan Design (汇远设计)](http://ui.kwd988.net/) | Gracias a [Huiyuan Design](http://ui.kwd988.net/) por la solución visual de este proyecto, y por poner al servicio de la experiencia de uso la práctica de diseño acumulada con más de mil empresas |

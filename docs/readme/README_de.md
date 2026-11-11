@@ -1,11 +1,11 @@
 [![Banners](../images/banner1.png)](https://github.com/xinnan-tech/xiaozhi-esp32-server)
 
-<h1 align="center">Xiaozhi Backend-Service xiaozhi-esp32-server</h1>
+<h1 align="center">Xiaofan Backend-Service xiaozhi-esp32-server</h1>
 
 <p align="center">
 Dieses Projekt basiert auf der Theorie und Technologie der Mensch-Maschine-symbiotischen Intelligenz zur Entwicklung intelligenter Terminal-Hardware- und Software-Systeme<br/>und bietet Backend-Dienste für das Open-Source-Hardware-Projekt
 <a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32</a><br/>
-Implementiert mit Python, Java und Vue gemäß dem <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">Xiaozhi-Kommunikationsprotokoll</a><br/>
+Implementiert mit Python, Java und Vue gemäß dem <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">Xiaofan-Kommunikationsprotokoll</a><br/>
 Unterstützt MQTT+UDP-Protokoll, Websocket-Protokoll, MCP-Zugriffspunkte, Stimmabdruckerkennung und Wissensdatenbank
 </p>
 
@@ -67,7 +67,7 @@ Möchten Sie die Nutzungseffekte sehen? Klicken Sie auf die Videos unten 🎥
     <td>
       <a href="https://www.bilibili.com/video/BV1WEcxzFEAT" target="_blank">
         <picture>
-          <img alt="Xiaozhi-Digitalmensch mit Sprachaktivierung" src="../images/demo8.png" /></picture>
+          <img alt="Xiaofan-Digitalmensch mit Sprachaktivierung" src="../images/demo8.png" /></picture>
       </a>
     </td>
     <td>
@@ -203,7 +203,7 @@ Websocket-Schnittstellenadresse: wss://2662r3426b.vicp.fun/xiaozhi/v1/
 | Intent (Absichtserkennung) | function_call (Funktionsaufruf) | function_call (Funktionsaufruf) |
 | Memory (Gedächtnisfunktion) | mem_local_short (Lokales Kurzzeitgedächtnis) | mem_local_short (Lokales Kurzzeitgedächtnis) |
 
-Wenn Sie sich um die Latenz jeder Komponente kümmern, lesen Sie bitte den [Xiaozhi-Komponenten-Leistungstestbericht](https://github.com/xinnan-tech/xiaozhi-performance-research). Sie können gemäß den Testmethoden im Bericht in Ihrer Umgebung tatsächlich testen.
+Wenn Sie sich um die Latenz jeder Komponente kümmern, lesen Sie bitte den [Xiaofan-Komponenten-Leistungstestbericht](https://github.com/xinnan-tech/xiaozhi-performance-research). Sie können gemäß den Testmethoden im Bericht in Ihrer Umgebung tatsächlich testen.
 
 #### 🔧 Testwerkzeuge
 Dieses Projekt bietet die folgenden Testwerkzeuge, um Ihnen bei der Überprüfung des Systems und der Auswahl geeigneter Modelle zu helfen:
@@ -245,7 +245,7 @@ Wenn Sie ein Softwareentwickler sind, finden Sie hier einen [Offenen Brief an En
 ---
 
 ## Produktökosystem 👬
-Xiaozhi ist ein Ökosystem. Wenn Sie dieses Produkt verwenden, können Sie sich auch andere [hervorragende Projekte](https://github.com/78/xiaozhi-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) in diesem Ökosystem ansehen
+Xiaofan ist ein Ökosystem. Wenn Sie dieses Produkt verwenden, können Sie sich auch andere [hervorragende Projekte](https://github.com/78/xiaozhi-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) in diesem Ökosystem ansehen
 
 ---
 
@@ -346,7 +346,7 @@ Die Stimmabdruckerkennung erfordert einen separat bereitgestellten [voiceprint-a
 | Logo | Projekt/Unternehmen | Beschreibung |
 |:---:|:---:|:---|
 | <img src="../images/logo_bailing.png" width="160"> | [Bailing Voice Dialogue Robot](https://github.com/wwbin2017/bailing) | Dieses Projekt wurde von [Bailing Voice Dialogue Robot](https://github.com/wwbin2017/bailing) inspiriert und auf dessen Basis implementiert |
-| <img src="../images/logo_tenclass.png" width="160"> | [Tenclass](https://www.tenclass.com/) | Dank an [Tenclass](https://www.tenclass.com/) für die Formulierung von Standardkommunikationsprotokollen, Multi-Geräte-Kompatibilitätslösungen und High-Concurrency-Szenario-Praxisdemonstrationen für das Xiaozhi-Ökosystem; für die Bereitstellung vollständiger technischer Dokumentationsunterstützung für dieses Projekt |
+| <img src="../images/logo_tenclass.png" width="160"> | [Tenclass](https://www.tenclass.com/) | Dank an [Tenclass](https://www.tenclass.com/) für die Formulierung von Standardkommunikationsprotokollen, Multi-Geräte-Kompatibilitätslösungen und High-Concurrency-Szenario-Praxisdemonstrationen für das Xiaofan-Ökosystem; für die Bereitstellung vollständiger technischer Dokumentationsunterstützung für dieses Projekt |
 | <img src="../images/logo_xuanfeng.png" width="160"> | [Xuanfeng Technology](https://github.com/Eric0308) | Dank an [Xuanfeng Technology](https://github.com/Eric0308) für den Beitrag des Funktionsaufruf-Frameworks, des MCP-Kommunikationsprotokolls und der plugin-basierten Aufrufmechanismus-Implementierungscode. Durch standardisiertes Befehlsplanungssystem und dynamische Erweiterungsfähigkeiten wird die Interaktionseffizienz und funktionale Erweiterbarkeit von Frontend-Geräten (IoT) erheblich verbessert |
 | <img src="../images/logo_junsen.png" width="160"> | [huangjunsen](https://github.com/huangjunsen0406) | Dank an [huangjunsen](https://github.com/huangjunsen0406) für den Beitrag des `Smart Control Console Mobile`-Moduls, das eine effiziente Steuerung und Echtzeit-Interaktion über mobile Geräte ermöglicht und die Betriebsbequemlichkeit und Verwaltungseffizienz des Systems in mobilen Szenarien erheblich verbessert |
 | <img src="../images/logo_huiyuan.png" width="160"> | [Huiyuan Design](http://ui.kwd988.net/) | Dank an [Huiyuan Design](http://ui.kwd988.net/) für die Bereitstellung professioneller visueller Lösungen für dieses Projekt, unter Verwendung ihrer Design-Praxiserfahrung im Dienst von über tausend Unternehmen, um die Produktbenutzererfahrung dieses Projekts zu stärken |
