@@ -229,18 +229,19 @@ ws://你宿主机的ip:8000/xiaozhi/v1/
 
 # 方式二：本地源码运行全模块
 
-## 1.安装MySQL数据库
+## 1.安装PostgreSQL数据库
 
-如果本机已经安装了MySQL，可以直接在数据库中创建名为`xiaozhi_esp32_server`的数据库。
+如果本机已经安装PostgreSQL，可以直接创建名为`xiaozhi_esp32_server`的数据库。
 
 ```sql
-CREATE DATABASE xiaozhi_esp32_server CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER xiaozhi WITH PASSWORD 'xiaozhi';
+CREATE DATABASE xiaozhi_esp32_server OWNER xiaozhi;
 ```
 
-如果还没有MySQL，你可以通过docker安装mysql
+如果还没有PostgreSQL，你可以通过docker安装PostgreSQL：
 
-```
-docker run --name xiaozhi-esp32-server-db -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -e MYSQL_DATABASE=xiaozhi_esp32_server -e MYSQL_INITDB_ARGS="--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci" -e TZ=Asia/Shanghai -d mysql:latest
+```bash
+docker run --name xiaozhi-esp32-server-db   -e POSTGRES_USER=xiaozhi -e POSTGRES_PASSWORD=xiaozhi   -e POSTGRES_DB=xiaozhi_esp32_server -p 5432:5432   -e TZ=Asia/Shanghai -d postgres:17
 ```
 
 ## 2.安装redis
@@ -266,8 +267,8 @@ docker run --name xiaozhi-esp32-server-redis -d -p 6379:6379 redis
 ```
 spring:
   datasource:
-    username: root
-    password: 123456
+    username: xiaozhi
+    password: xiaozhi
 ```
 在`src/main/resources/application-dev.yml`中配置Redis连接信息
 ```

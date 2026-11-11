@@ -1,6 +1,8 @@
 package xiaozhi.modules.sys;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -11,9 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.Collection;
+import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
 import xiaozhi.common.exception.ErrorCode;
 import xiaozhi.common.exception.RenException;
+import xiaozhi.common.utils.Result;
 import xiaozhi.modules.security.controller.LoginController;
 import xiaozhi.modules.security.dto.LoginDTO;
 import xiaozhi.modules.security.dto.SmsVerificationDTO;
@@ -76,4 +82,13 @@ class loginControllerTest {
 
     }
 
+    @Test
+    public void pubConfigLoadsDictionaryFromPostgreSQL() {
+        Result<Map<String, Object>> result = loginController.pubConfig();
+
+        assertNotNull(result);
+        Object mobileAreas = result.getData().get("mobileAreaList");
+        assertNotNull(mobileAreas);
+        assertFalse(((Collection<?>) mobileAreas).isEmpty());
+    }
 }

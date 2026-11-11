@@ -20,7 +20,7 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 几个 @SpringBootTest 要真连 MySQL 和 Redis。本地没起这两个依赖时，
+ * 几个 @SpringBootTest 要真连 PostgreSQL 和 Redis。本地没起这两个依赖时，
  * 整类测试跳过，别让 Spring 上下文起不来变成一堆看不懂的报错；
  * CI 里依赖必须真的在，探不通就直接让构建红。
  */
@@ -49,7 +49,7 @@ public final class IntegrationTestEnvironment {
             throw new IllegalStateException(
                     "CI 环境里" + issue + "，这几个集成测试必须真的跑起来，不能跳过");
         }
-        log.warn("跳过依赖 MySQL 和 Redis 的集成测试：{}", issue);
+        log.warn("跳过依赖 PostgreSQL 和 Redis 的集成测试：{}", issue);
         Assumptions.assumeTrue(false, issue);
     }
 
@@ -86,7 +86,7 @@ public final class IntegrationTestEnvironment {
                     connection.isValid(3);
                 }
             } catch (Exception e) {
-                issues.append("连不上 MySQL（").append(e.getMessage()).append("）；");
+                issues.append("连不上 PostgreSQL（").append(e.getMessage()).append("）；");
             }
         }
 

@@ -99,7 +99,9 @@
                redaction_version AS redactionVersion
         FROM ai_agent_snapshot
         WHERE redaction_version &lt; #{targetRedactionVersion}
-          AND (#{afterId} IS NULL OR id &gt; #{afterId})
+        <if test="afterId != null">
+          AND id &gt; #{afterId}
+        </if>
         ORDER BY id ASC
         LIMIT #{limit}
     </select>

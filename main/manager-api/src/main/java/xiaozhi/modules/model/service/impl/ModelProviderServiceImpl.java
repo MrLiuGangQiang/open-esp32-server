@@ -94,7 +94,7 @@ public class ModelProviderServiceImpl extends BaseServiceImpl<ModelProviderDao, 
     public List<ModelProviderDTO> getListByModelType(String modelType) {
 
         QueryWrapper<ModelProviderEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("model_type", StringUtils.isBlank(modelType) ? "" : modelType);
+        queryWrapper.apply("lower(model_type) = lower({0})", StringUtils.isBlank(modelType) ? "" : modelType);
         queryWrapper.orderByAsc("sort");
         List<ModelProviderEntity> providerEntities = modelProviderDao.selectList(queryWrapper);
         return ConvertUtils.sourceToTarget(providerEntities, ModelProviderDTO.class);
@@ -172,7 +172,7 @@ public class ModelProviderServiceImpl extends BaseServiceImpl<ModelProviderDao, 
     @Override
     public List<ModelProviderDTO> getList(String modelType, String providerCode) {
         QueryWrapper<ModelProviderEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("model_type", StringUtils.isBlank(modelType) ? "" : modelType);
+        queryWrapper.apply("lower(model_type) = lower({0})", StringUtils.isBlank(modelType) ? "" : modelType);
         queryWrapper.eq("provider_code", StringUtils.isBlank(providerCode) ? "" : providerCode);
         List<ModelProviderEntity> providerEntities = modelProviderDao.selectList(queryWrapper);
         return ConvertUtils.sourceToTarget(providerEntities, ModelProviderDTO.class);

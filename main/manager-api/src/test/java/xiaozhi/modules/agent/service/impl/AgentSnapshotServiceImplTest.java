@@ -1631,10 +1631,12 @@ class AgentSnapshotServiceImplTest {
         assertTrue(sql.contains("restore_from_snapshot_id"));
         assertTrue(sql.contains("restore_from_version_no"));
         assertTrue(sql.contains("idx_snapshot_user_created_at"));
-        assertTrue(sql.contains("DEFAULT (JSON_OBJECT())"));
-        assertTrue(master.contains("202607071530.sql"));
-        assertFalse(master.contains("202607081150.sql"));
-        assertFalse(master.contains("202607081230.sql"));
+        String baseline = Files.readString(Path.of("src/main/resources/db/postgresql/01_schema.sql"));
+
+        assertTrue(baseline.contains("snapshot_data text"));
+        assertTrue(baseline.contains("restore_from_snapshot_id"));
+        assertTrue(baseline.contains("restore_from_version_no"));
+        assertTrue(master.contains("postgresql-baseline-schema"));
     }
 
     @Test
@@ -1646,7 +1648,11 @@ class AgentSnapshotServiceImplTest {
         assertTrue(sql.contains("redaction_version"));
         assertTrue(sql.contains("idx_snapshot_redaction_version_id"));
         assertTrue(sql.contains("-- rollback"));
-        assertTrue(master.contains("202607101200.sql"));
+        String baseline = Files.readString(Path.of("src/main/resources/db/postgresql/01_schema.sql"));
+
+        assertTrue(baseline.contains("redaction_version"));
+        assertTrue(baseline.contains("idx_snapshot_redaction_version_id"));
+        assertTrue(master.contains("postgresql-baseline-schema"));
         assertTrue(mapper.contains("selectLegacyRedactionBatch"));
         assertTrue(mapper.contains("redaction_version &lt; #{targetRedactionVersion}"));
         assertTrue(mapper.contains("<update id=\"updateRedactedSnapshots\">"));

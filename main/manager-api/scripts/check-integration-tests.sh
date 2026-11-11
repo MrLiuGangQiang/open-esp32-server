@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 检查那几个要连 MySQL 和 Redis 的集成测试是不是真的跑了。
+# 检查那几个要连 PostgreSQL 和 Redis 的集成测试是不是真的跑了。
 # 守卫要是哪天手滑把它们全跳过了，CI 必须红，不能安安静静少跑一半门禁。
 set -uo pipefail
 

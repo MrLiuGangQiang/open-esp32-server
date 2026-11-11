@@ -47,7 +47,7 @@
     这是一个基于Java Spring Boot框架构建的应用程序，它为整个系统的管理和配置提供了一套安全的RESTful API。它不仅是 `manager-web` 控制台的后端支撑，也是 `xiaozhi-server` 的配置数据来源。其核心功能包括：
     *   为Web控制台提供用户认证（登录、权限验证）和用户账户管理功能。
     *   ESP32设备的注册、信息管理以及设备特定配置的维护。
-    *   在**MySQL数据库**中持久化存储系统配置，例如用户选择的AI服务提供商、API密钥、设备参数、插件设置等。
+    *   在**PostgreSQL数据库**中持久化存储系统配置，例如用户选择的AI服务提供商、API密钥、设备参数、插件设置等。
     *   提供特定的API端点，供 `xiaozhi-server` 拉取其所需的最新配置。
     *   管理TTS音色选项、处理OTA（Over-The-Air）固件更新流程及相关元数据。
     *   利用 **Redis** 作为高速缓存，存储热点数据（如会话信息、频繁访问的配置），以提升API响应速度和系统整体性能。
@@ -184,7 +184,7 @@ xiaozhi-esp32-server
     *   **Spring Boot 3:** 作为核心开发框架，极大地简化了独立、生产级别的Spring应用的创建和部署。它提供了自动配置、内嵌Web服务器（默认为Tomcat）、依赖管理等关键功能。
     *   **Spring MVC:** Spring框架中用于构建Web应用和RESTful API的模块。
     *   **MyBatis-Plus:** 一个对MyBatis进行功能增强的ORM（对象关系映射）框架。它简化了数据库操作，提供了强大的CRUD（增删改查）功能、条件构造器、代码生成器等，并能很好地与Spring Boot集成。
-    *   **MySQL:** 作为主要的后端关系型数据库，用于存储所有需要持久化的管理数据和配置信息。
+    *   **PostgreSQL:** 作为主要的后端关系型数据库，用于存储所有需要持久化的管理数据和配置信息。
     *   **Druid (Alibaba Druid):** 一个功能强大的JDBC连接池实现，提供了丰富的监控功能和优秀的性能，用于高效管理数据库连接。
     *   **Redis (通过 Spring Data Redis):** 一个高性能的内存数据结构存储，常用于实现数据缓存（例如缓存热点配置数据、用户会话信息），以显著提升API的响应速度。
     *   **Apache Shiro:** 一个成熟且易用的Java安全框架，负责处理应用的认证（用户身份验证）和授权（API访问权限控制）需求。
@@ -472,7 +472,7 @@ xiaozhi-esp32-server
         *   Vue.js前端应用 (`manager-web`) 会通过其API封装模块（位于`src/apis/module/`）向`manager-api`的对应REST API端点发起异步HTTP请求（通常是GET, POST, PUT, DELETE）。
         *   请求体和响应体通常使用JSON格式。
         *   `manager-api`中的`@RestController`类接收这些请求。**Apache Shiro**框架会首先对请求进行认证和授权检查。
-        *   通过验证后，Controller将请求分发给相应的Service层处理业务逻辑。Service层可能会与MySQL数据库（通过MyBatis-Plus）交互，并可能利用Redis进行数据缓存。
+        *   通过验证后，Controller将请求分发给相应的Service层处理业务逻辑。Service层可能会与PostgreSQL数据库（通过MyBatis-Plus）交互，并可能利用Redis进行数据缓存。
         *   处理完成后，`manager-api`向`manager-web`返回一个JSON格式的HTTP响应。
         *   `manager-web`根据响应结果更新其Vuex状态存储和用户界面显示。
 
@@ -554,12 +554,12 @@ xiaozhi-esp32-server
 
 1.  **基于Docker的部署:**
     *   **简化安装 (仅`xiaozhi-server`):** 此选项仅部署核心的基于Python的`xiaozhi-server`。它适用于主要需要语音AI处理能力和IoT控制，而不需要完整Web管理界面和数据库支持功能（如OTA）的用户。在此模式下，配置通常通过本地文件（`config.yaml`）管理，但如果需要，仍可将其指向一个已存在的`manager-api`实例。
-    *   **全模块安装 (所有组件):** 此方案部署所有核心组件：`xiaozhi-server`、基于Java的`manager-api`、以及基于Vue.js的`manager-web`，同时还包括所需的数据库服务（MySQL和Redis）。这提供了完整的系统体验，包括用于全面配置和管理的Web控制面板。
+    *   **全模块安装 (所有组件):** 此方案部署所有核心组件：`xiaozhi-server`、基于Java的`manager-api`、以及基于Vue.js的`manager-web`，同时还包括所需的数据库服务（PostgreSQL和Redis）。这提供了完整的系统体验，包括用于全面配置和管理的Web控制面板。
     *   项目为每个服务提供了`Dockerfile`定义，并使用`docker-compose.yml`文件（例如`docker-compose.yml`用于基础版，`docker-compose_all.yml`用于全功能版）来编排和管理多容器的部署。此外，还可能提供一个`docker-setup.sh`脚本来辅助自动化部分Docker环境的搭建工作。
 
 2.  **源代码部署:**
     *   这种方法需要为每个组件手动设置相应的开发环境：Python环境用于`xiaozhi-server`，Java/Maven环境用于`manager-api`，Node.js/Vue CLI环境用于`manager-web`。
-    *   对于全模块安装，还需要手动安装和配置MySQL及Redis数据库服务。
+    *   对于全模块安装，还需要手动安装和配置PostgreSQL及Redis数据库服务。
     *   这种方式通常用于项目开发、深度定制、调试，或者在对环境有特殊要求的生产场景中。
 
 **配置管理:**
@@ -575,7 +575,7 @@ xiaozhi-esp32-server
 
 2.  **`manager-api` 配置:**
     *   作为一个Spring Boot应用，其配置主要通过位于`src/main/resources`目录下的`application.properties`或`application.yml`文件进行管理。
-    *   关键配置项包括：数据库连接信息（MySQL的URL、用户名、密码）、Redis服务器地址和端口、应用服务端口（默认为8002）、Apache Shiro安全相关的设置，以及任何集成的第三方服务（如阿里云短信）的配置参数。
+    *   关键配置项包括：数据库连接信息（PostgreSQL的URL、用户名、密码）、Redis服务器地址和端口、应用服务端口（默认为8002）、Apache Shiro安全相关的设置，以及任何集成的第三方服务（如阿里云短信）的配置参数。
 
 3.  **`manager-web` 配置:**
     *   Vue.js前端应用的环境特定设置通过项目根目录下的`.env`系列文件（例如`.env`, `.env.development`, `.env.production`）进行管理。

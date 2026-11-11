@@ -1,80 +1,73 @@
-# Docker安装全模块
-
-version: '3'
 services:
-  # Server模块
   xiaozhi-esp32-server:
-    image: ghcr.nju.edu.cn/xinnan-tech/xiaozhi-esp32-server:server_latest
+    build:
+      context: ../..
+      dockerfile: Dockerfile-server
+    image: xiaozhi-esp32-server:postgres
     container_name: xiaozhi-esp32-server
-    depends_on:
-      - xiaozhi-esp32-server-db
-      - xiaozhi-esp32-server-redis
     restart: always
-    networks:
-      - default
+    networks: [default]
+    depends_on:
+      xiaozhi-esp32-server-web:
+        condition: service_started
     ports:
-      # ws服务端
-      - "8000:8000"
-      # http服务的端口，用于视觉分析接口
-      - "8003:8003"
+      - '8000:8000'
+      - '8003:8003'
     security_opt:
       - seccomp:unconfined
     environment:
-      - TZ=Asia/Shanghai
+      TZ: Asia/Shanghai
     volumes:
-      # 配置文件目录
       - ./data:/opt/xiaozhi-esp32-server/data
-      # 模型文件挂接，很重要
-      - ./models/SenseVoiceSmall/model.pt:/opt/xiaozhi-esp32-server/models/SenseVoiceSmall/model.pt
+      - ./models/SenseVoiceSmall:/opt/xiaozhi-esp32-server/models/SenseVoiceSmall
+      - ./models/snakers4_silero-vad:/opt/xiaozhi-esp32-server/models/snakers4_silero-vad
 
-  # manager-api和manager-web模块
   xiaozhi-esp32-server-web:
-    image: ghcr.nju.edu.cn/xinnan-tech/xiaozhi-esp32-server:web_latest
+    build:
+      context: ../..
+      dockerfile: Dockerfile-web
+    image: xiaozhi-esp32-manager-web:postgres
     container_name: xiaozhi-esp32-server-web
     restart: always
-    networks:
-      - default
+    networks: [default]
     depends_on:
       xiaozhi-esp32-server-db:
         condition: service_healthy
       xiaozhi-esp32-server-redis:
         condition: service_healthy
     ports:
-      # 智控台
-      - "8002:8002"
+      - '8002:8002'
     environment:
-      - TZ=Asia/Shanghai
-      - SPRING_DATASOURCE_DRUID_URL=jdbc:mysql://xiaozhi-esp32-server-db:3306/xiaozhi_esp32_server?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true&connectTimeout=30000&socketTimeout=30000&autoReconnect=true&failOverReadOnly=false&maxReconnects=10
-      - SPRING_DATASOURCE_DRUID_USERNAME=root
-      - SPRING_DATASOURCE_DRUID_PASSWORD=123456
-      - SPRING_DATA_REDIS_HOST=xiaozhi-esp32-server-redis
-      - SPRING_DATA_REDIS_PASSWORD=
-      - SPRING_DATA_REDIS_PORT=6379
+      TZ: Asia/Shanghai
+      SPRING_DATASOURCE_DRUID_URL: jdbc:postgresql://xiaozhi-esp32-server-db:5432/xiaozhi_esp32_server?currentSchema=public
+      SPRING_DATASOURCE_DRUID_USERNAME: xiaozhi
+      SPRING_DATASOURCE_DRUID_PASSWORD: xiaozhi_esp32_password
+      SPRING_DATA_REDIS_HOST: xiaozhi-esp32-server-redis
+      SPRING_DATA_REDIS_PASSWORD: ''
+      SPRING_DATA_REDIS_PORT: '6379'
     volumes:
-      # 配置文件目录
       - ./uploadfile:/uploadfile
-  # 数据库模块
+
   xiaozhi-esp32-server-db:
-    image: mysql:latest
+    image: postgres:17
     container_name: xiaozhi-esp32-server-db
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      test: ['CMD-SHELL', 'pg_isready -U xiaozhi -d xiaozhi_esp32_server']
       timeout: 45s
       interval: 10s
       retries: 10
     restart: always
-    networks:
-      - default
+    networks: [default]
     expose:
-      - 3306
+      - 5432
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - ./postgres/data:/var/lib/postgresql/data
     environment:
-      - TZ=Asia/Shanghai
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=xiaozhi_esp32_server
-      - MYSQL_INITDB_ARGS="--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
-  # redis模块
+      TZ: Asia/Shanghai
+      POSTGRES_USER: xiaozhi
+      POSTGRES_PASSWORD: xiaozhi_esp32_password
+      POSTGRES_DB: xiaozhi_esp32_server
+
   xiaozhi-esp32-server-redis:
     image: redis:8.0
     expose:
@@ -82,11 +75,11 @@ services:
     container_name: xiaozhi-esp32-server-redis
     restart: always
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 10s
       timeout: 5s
       retries: 3
-    networks:
-      - default
+    networks: [default]
+
 networks:
   default:
