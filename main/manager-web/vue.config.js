@@ -6,8 +6,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin')
 // BundleAnalyzerPlugin 用于分析打包后的文件
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-// WorkboxPlugin 用于生成Service Worker
-const { InjectManifest } = require('workbox-webpack-plugin');
 // 引入 path 模块
 
 const path = require('path')
@@ -43,7 +41,7 @@ module.exports = defineConfig({
   devServer: {
     port: 8001, // 指定端口为 8001
     proxy: {
-      '/xiaozhi': {
+      '/xiaofan': {
         target: 'http://127.0.0.1:8002',
         changeOrigin: true
       }
@@ -119,22 +117,6 @@ module.exports = defineConfig({
         })
       );
 
-      // 根据是否使用CDN来决定是否添加Service Worker
-      config.plugins.push(
-        new InjectManifest({
-          swSrc: path.resolve(__dirname, 'src/service-worker.js'),
-          swDest: 'service-worker.js',
-          exclude: [/\.map$/, /asset-manifest\.json$/],
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
-          // 自定义Service Worker注入点
-          injectionPoint: 'self.__WB_MANIFEST',
-          // 添加额外信息传递给Service Worker
-          additionalManifestEntries: useCDN ?
-            [{ url: 'cdn-mode', revision: 'enabled' }] :
-            [{ url: 'cdn-mode', revision: 'disabled' }]
-        })
-      );
-
       // 如果使用CDN，则配置externals排除依赖包
       if (useCDN) {
         config.externals = {
@@ -171,11 +153,4 @@ module.exports = defineConfig({
       };
     }
   },
-  // 将CDN资源信息暴露给service-worker.js
-  pwa: {
-    workboxOptions: {
-      skipWaiting: true,
-      clientsClaim: true
-    }
-  }
 });

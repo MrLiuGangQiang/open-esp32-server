@@ -21,7 +21,7 @@
     <div class="device-name">
       {{ $t('home.voiceModel') }}：{{ device.ttsModelName }} ({{ device.ttsVoiceName }})
     </div>
-    <div style="display: flex;gap: 10px;align-items: center;">
+    <div class="device-actions">
       <div class="settings-btn" @click="handleConfigure">
         {{ $t('home.configureRole') }}
       </div>

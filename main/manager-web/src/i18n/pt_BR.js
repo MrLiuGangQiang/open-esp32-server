@@ -1,4 +1,14 @@
 export default {
+  'capability.standardTokenAuth': "标准 Token",
+  'capability.mcpAccessToken': "Token",
+  'capability.mcpAccessTokenPlaceholder': "粘贴 Bearer Token 或完整 Authorization 头",
+  'capability.mcpAccessTokenHint': "标准 MCP 认证方式。可只填 Token，也可填完整 Authorization: Bearer xxx；保存后按 Authorization: Bearer xxx 发送。",
+  'capability.agentAuthSearch': "Pesquisar serviços MCP",
+  'capability.selectedItems': '{selected}/{total} selecionados',
+  'capability.selectedCount': "{selected}/{total} autorizados",
+  'capability.noSearchResults': "Nenhum serviço MCP correspondente",
+  'capability.authorizeService': "Autorizar este serviço",
+  'capability.noDeviceCredentialsRequired': "Este serviço usa autenticação no servidor; nenhuma credencial de dispositivo é necessária.",
   // Texto da página de login
   'login.requiredUsername': 'O nome de usuário não pode estar vazio',
   'login.requiredPassword': 'A senha não pode estar vazia',
@@ -204,7 +214,7 @@ export default {
   'firmwareDialog.firmwareFile': 'Arquivo de Firmware',
   'firmwareDialog.clickUpload': 'Clique para Enviar',
   'firmwareDialog.uploadTip': 'Apenas arquivos de firmware (.bin/.apk) são suportados, e o tamanho não deve exceder 100MB',
-  'firmwareDialog.uploadHint': 'Lembrete: Por favor, envie o arquivo xiaozhi.bin pré-mesclado, não o arquivo merged-binary.bin mesclado',
+  'firmwareDialog.uploadHint': 'Lembrete: Por favor, envie o arquivo xiaofan.bin pré-mesclado, não o arquivo merged-binary.bin mesclado',
   'firmwareDialog.remark': 'Observação',
   'firmwareDialog.remarkPlaceholder': 'Por favor, insira informações de observação',
   'firmwareDialog.requiredFirmwareName': 'Por favor, insira o nome do firmware (placa + versão)',
@@ -402,6 +412,10 @@ export default {
 
   // Página de login
   'login.title': 'Entrar',
+  'login.heroEyebrow': 'CLOUD DE DISPOSITIVOS IA',
+  'login.heroTitle': 'Um cérebro de IA para cada dispositivo inteligente.',
+  'login.heroDescription': 'Conecte dispositivos, agentes e ferramentas em um plano de controle confiável para IA no mundo real.',
+  'login.signInSubtitle': 'Entre no seu espaço de trabalho Xiaofan AI',
   'login.welcome': 'BEM-VINDO AO LOGIN',
   'login.username': 'Nome de Usuário',
   'login.usernamePlaceholder': 'Por favor, insira o nome de usuário',

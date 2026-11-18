@@ -51,7 +51,7 @@
 - 填入搜索源（`metaso`、`tavily`、`serply`或`outcrawl`），并将对应的`API Key`填入配置项
 - 保存配置，再保存智能体配置
 
-### 方式2. 单模块xiaozhi-server部署
+### 方式2. 单模块xiaofan-server部署
 
 在 `data/.config.yaml` 中配置：
 

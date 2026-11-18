@@ -1,4 +1,14 @@
 export default {
+  'capability.standardTokenAuth': "标准 Token",
+  'capability.mcpAccessToken': "Token",
+  'capability.mcpAccessTokenPlaceholder': "粘贴 Bearer Token 或完整 Authorization 头",
+  'capability.mcpAccessTokenHint': "标准 MCP 认证方式。可只填 Token，也可填完整 Authorization: Bearer xxx；保存后按 Authorization: Bearer xxx 发送。",
+  'capability.agentAuthSearch': "MCP-Dienste durchsuchen",
+  'capability.selectedItems': '{selected}/{total} ausgewählt',
+  'capability.selectedCount': "{selected}/{total} autorisiert",
+  'capability.noSearchResults': "Keine passenden MCP-Dienste",
+  'capability.authorizeService': "Diesen Dienst autorisieren",
+  'capability.noDeviceCredentialsRequired': "Dieser Dienst verwendet serverseitige Authentifizierung; keine Gerätezugangsdaten erforderlich.",
   // Login page related prompt text
   'login.requiredUsername': 'Benutzername darf nicht leer sein',
   'login.requiredPassword': 'Passwort darf nicht leer sein',
@@ -204,7 +214,7 @@ export default {
   'firmwareDialog.firmwareFile': 'Firmware-Datei',
   'firmwareDialog.clickUpload': 'Zum Hochladen klicken',
   'firmwareDialog.uploadTip': 'Nur Firmware-Dateien (.bin/.apk) werden unterstützt, Größe sollte 100MB nicht überschreiten',
-  'firmwareDialog.uploadHint': 'Hinweis: Bitte die vorab zusammengeführte xiaozhi.bin-Datei hochladen, nicht die zusammengeführte merged-binary.bin-Datei',
+  'firmwareDialog.uploadHint': 'Hinweis: Bitte die vorab zusammengeführte xiaofan.bin-Datei hochladen, nicht die zusammengeführte merged-binary.bin-Datei',
   'firmwareDialog.remark': 'Bemerkung',
   'firmwareDialog.remarkPlaceholder': 'Bitte Bemerkungsinformationen eingeben',
   'firmwareDialog.requiredFirmwareName': 'Bitte Firmware-Namen eingeben (Board + Version)',
@@ -402,6 +412,10 @@ export default {
 
   // Login page text
   'login.title': 'Anmelden',
+  'login.heroEyebrow': 'KI-GERÄTECLOUD',
+  'login.heroTitle': 'Ein KI-Gehirn für jedes intelligente Gerät.',
+  'login.heroDescription': 'Verbinden Sie Geräte, Agenten und Tools in einer zuverlässigen Control Plane für reale KI-Szenarien.',
+  'login.signInSubtitle': 'Bei Ihrem Xiaofan AI Workspace anmelden',
   'login.welcome': 'WILLKOMMEN ZUR ANMELDUNG',
   'login.username': 'Benutzername',
   'login.usernamePlaceholder': 'Bitte Benutzernamen eingeben',

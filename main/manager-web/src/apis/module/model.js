@@ -22,6 +22,62 @@ function retryCallbackRequest(retry, retryCount, onTerminalFailure, error, retry
 }
 
 export default {
+    testMcpServer(data, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/servers/test`).method('POST').data(data).success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).fail((err) => {
+            RequestService.clearRequestTime();
+            callback({ data: { code: -1, data: { connected: false, message: err?.data?.msg || `HTTP ${err?.status || 'error'}` } } });
+        }).networkFail(() => RequestService.reAjaxFun(() => this.testMcpServer(data, callback))).send();
+    },
+    describeMcpServer(data, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/servers/describe`).method('POST').data(data).success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).fail((err) => {
+            RequestService.clearRequestTime();
+            callback({ data: { code: -1, msg: err?.data?.msg || `HTTP ${err?.status || 'error'}` } });
+        }).networkFail(() => RequestService.reAjaxFun(() => this.describeMcpServer(data, callback))).send();
+    },
+    getMcpServers(params, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/servers/all`).method('GET').success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.getMcpServers(params, callback))).send();
+    },
+    createMcpServer(data, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/servers`).method('POST').data(data).success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.createMcpServer(data, callback))).send();
+    },
+    updateMcpServer(id, data, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/servers/${id}`).method('PUT').data(data).success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.updateMcpServer(id, data, callback))).send();
+    },
+    deleteMcpServer(id, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/servers/${id}`).method('DELETE').success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.deleteMcpServer(id, callback))).send();
+    },
+    getDeviceMcpAccounts(macAddress, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/device/${macAddress}/accounts`).method('GET').success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.getDeviceMcpAccounts(macAddress, callback))).send();
+    },
+    saveDeviceMcpAccounts(data, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/device/${encodeURIComponent(data.macAddress)}/accounts`).method('PUT').data(data).success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.saveDeviceMcpAccounts(data, callback))).send();
+    },
+    getAgentMcpAuthorization(agentId, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/agent/${agentId}`).method('GET').success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.getAgentMcpAuthorization(agentId, callback))).send();
+    },
+    saveAgentMcpAuthorization(agentId, serverIds, callback) {
+        RequestService.sendRequest().url(`${getServiceUrl()}/mcp/agent/${agentId}`).method('PUT').data({ serverIds }).success((res) => {
+            RequestService.clearRequestTime(); callback(res);
+        }).networkFail(() => RequestService.reAjaxFun(() => this.saveAgentMcpAuthorization(agentId, serverIds, callback))).send();
+    },
   // 获取模型配置列表
   getModelList(params, callback) {
     const queryParams = new URLSearchParams({

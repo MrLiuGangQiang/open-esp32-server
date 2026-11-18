@@ -1,19 +1,19 @@
-[![Banners](../images/banner1.png)](https://github.com/xinnan-tech/xiaozhi-esp32-server)
+[![Banners](../images/banner1.png)](https://github.com/xinnan-tech/xiaofan-esp32-server)
 
-<h1 align="center">Xiaofan Backend Service xiaozhi-esp32-server</h1>
+<h1 align="center">Xiaofan Backend Service xiaofan-esp32-server</h1>
 
 <p align="center">
 This project is based on human-machine symbiotic intelligence theory and technology to develop intelligent terminal hardware and software systems<br/>providing backend services for the open-source intelligent hardware project
-<a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32</a><br/>
+<a href="https://github.com/78/xiaofan-esp32">xiaofan-esp32</a><br/>
 Implemented using Python, Java, and Vue according to the <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">Xiaofan Communication Protocol</a><br/>
 Support for MQTT+UDP protocol, Websocket protocol, MCP access point, voiceprint recognition, and knowledge base
 </p>
 
 <p align="center">
 <a href="../FAQ.md">FAQ</a>
-· <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/issues">Report Issues</a>
+· <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/issues">Report Issues</a>
 · <a href="../../README.md#%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3">Deployment Docs</a>
-· <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/releases">Release Notes</a>
+· <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/releases">Release Notes</a>
 </p>
 
 <p align="center">
@@ -23,14 +23,14 @@ Support for MQTT+UDP protocol, Websocket protocol, MCP access point, voiceprint 
   <a href="./README_de.md"><img alt="Deutsch" src="https://img.shields.io/badge/Deutsch-DFE0E5"></a>
   <a href="./README_pt_BR.md"><img alt="Português (Brasil)" src="https://img.shields.io/badge/Português (Brasil)-DFE0E5"></a>
   <a href="./README_es.md"><img alt="Español" src="https://img.shields.io/badge/Español-DFE0E5"></a>
-  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/releases">
-    <img alt="GitHub Contributors" src="https://img.shields.io/github/v/release/xinnan-tech/xiaozhi-esp32-server?logo=docker" />
+  <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/releases">
+    <img alt="GitHub Contributors" src="https://img.shields.io/github/v/release/xinnan-tech/xiaofan-esp32-server?logo=docker" />
   </a>
-  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/LICENSE">
+  <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/LICENSE">
     <img alt="GitHub pull requests" src="https://img.shields.io/badge/license-MIT-white?labelColor=black" />
   </a>
-  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server">
-    <img alt="stars" src="https://img.shields.io/github/stars/xinnan-tech/xiaozhi-esp32-server?color=ffcb47&labelColor=black" />
+  <a href="https://github.com/xinnan-tech/xiaofan-esp32-server">
+    <img alt="stars" src="https://img.shields.io/github/stars/xinnan-tech/xiaofan-esp32-server?color=ffcb47&labelColor=black" />
   </a>
 </p>
 
@@ -46,7 +46,7 @@ Spearheaded by Professor Siyuan Liu's Team (South China University of Technology
 
 ## Target Users 👥
 
-This project requires ESP32 hardware devices to work. If you have purchased ESP32-related hardware, successfully connected to Brother Xia's deployed backend service, and want to build your own `xiaozhi-esp32` backend service independently, then this project is perfect for you.
+This project requires ESP32 hardware devices to work. If you have purchased ESP32-related hardware, successfully connected to Brother Xia's deployed backend service, and want to build your own `xiaofan-esp32` backend service independently, then this project is perfect for you.
 
 Want to see the usage effects? Click the videos below 🎥
 
@@ -180,8 +180,8 @@ Intelligent Control Console Address: https://2662r3426b.vicp.fun
 Intelligent Control Console Address (H5): https://2662r3426b.vicp.fun/h5/index.html
 
 Service Test Tool: https://2662r3426b.vicp.fun/test/
-OTA Interface Address: https://2662r3426b.vicp.fun/xiaozhi/ota/
-Websocket Interface Address: wss://2662r3426b.vicp.fun/xiaozhi/v1/
+OTA Interface Address: https://2662r3426b.vicp.fun/xiaofan/ota/
+Websocket Interface Address: wss://2662r3426b.vicp.fun/xiaofan/v1/
 ```
 
 #### 🚩 Configuration Description and Recommendations
@@ -203,7 +203,7 @@ Websocket Interface Address: wss://2662r3426b.vicp.fun/xiaozhi/v1/
 | Intent(Intent Recognition) | function_call(Function calling) | function_call(Function calling) |
 | Memory(Memory function) | mem_local_short(Local short-term memory) | mem_local_short(Local short-term memory) |
 
-If you are concerned about the latency of each component, please refer to the [Xiaofan Component Performance Test Report](https://github.com/xinnan-tech/xiaozhi-performance-research), and test in your own environment following the test methods in the report.
+If you are concerned about the latency of each component, please refer to the [Xiaofan Component Performance Test Report](https://github.com/xinnan-tech/xiaofan-performance-research), and test in your own environment following the test methods in the report.
 
 #### 🔧 Testing Tools
 This project provides the following testing tools to help you verify the system and choose suitable models:
@@ -211,7 +211,7 @@ This project provides the following testing tools to help you verify the system 
 | Tool Name | Location | Usage Method | Function Description |
 |:---:|:---|:---:|:---:|
 | Audio Interaction Test Tool | main》digital-human》index.html | In `main/digital-human`, install dependencies as its README says, then run `python start.py` and open `http://127.0.0.1:8006/index.html` | Tests audio playback and reception functions, verifies if Python-side audio processing is normal |
-| Model Response Test Tool | main》xiaozhi-server》performance_tester.py | Execute `python performance_tester.py` | Tests response speed of core modules such as ASR(speech recognition), LLM(large model), VLLM(vision model), TTS(speech synthesis) |
+| Model Response Test Tool | main》xiaofan-server》performance_tester.py | Execute `python performance_tester.py` | Tests response speed of core modules such as ASR(speech recognition), LLM(large model), VLLM(vision model), TTS(speech synthesis) |
 
 > 💡 Note: When testing model speed, only models with configured keys will be tested.
 
@@ -221,7 +221,7 @@ This project provides the following testing tools to help you verify the system 
 ![Full-module installation architecture diagram](../images/deploy2.png)
 | Feature Module | Description |
 |:---:|:---|
-| Core Architecture | Based on [MQTT+UDP gateway](https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/mqtt-gateway-integration.md), WebSocket and HTTP servers, provides complete console management and authentication system |
+| Core Architecture | Based on [MQTT+UDP gateway](https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/mqtt-gateway-integration.md), WebSocket and HTTP servers, provides complete console management and authentication system |
 | Voice Interaction | Supports streaming ASR(speech recognition), streaming TTS(speech synthesis), VAD(voice activity detection), supports multi-language recognition and voice processing |
 | Voiceprint Recognition | Supports multi-user voiceprint registration, management, and recognition, processes in parallel with ASR, real-time speaker identity recognition and passes to LLM for personalized responses |
 | Intelligent Dialogue | Supports multiple LLM(large language models), implements intelligent dialogue |
@@ -245,7 +245,7 @@ If you are a software developer, here is an [Open Letter to Developers](../contr
 ---
 
 ## Product Ecosystem 👬
-Xiaofan is an ecosystem. When using this product, you can also check out other [excellent projects](https://github.com/78/xiaozhi-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) in this ecosystem
+Xiaofan is an ecosystem. When using this product, you can also check out other [excellent projects](https://github.com/78/xiaofan-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) in this ecosystem
 
 ---
 
@@ -351,13 +351,13 @@ Voiceprint recognition requires a separately deployed [voiceprint-api](https://g
 | <img src="../images/logo_junsen.png" width="160"> | [huangjunsen](https://github.com/huangjunsen0406) | Thanks to [huangjunsen](https://github.com/huangjunsen0406) for contributing the `Smart Control Console Mobile` module, which enables efficient control and real-time interaction across mobile devices, significantly enhancing the system's operational convenience and management efficiency in mobile scenarios. |
 | <img src="../images/logo_huiyuan.png" width="160"> | [Huiyuan Design](http://ui.kwd988.net/) | Thanks to [Huiyuan Design](http://ui.kwd988.net/) for providing professional visual solutions for this project, using their design practical experience serving over a thousand enterprises to empower this project's product user experience |
 | <img src="../images/logo_qinren.png" width="160"> | [Xi'an Qinren Information Technology](https://www.029app.com/) | Thanks to [Xi'an Qinren Information Technology](https://www.029app.com/) for deepening this project's visual system, ensuring consistency and extensibility of overall design style in multi-scenario applications |
-| <img src="../images/logo_contributors.png" width="160"> | [Code Contributors](https://github.com/xinnan-tech/xiaozhi-esp32-server/graphs/contributors) | Thanks to [all code contributors](https://github.com/xinnan-tech/xiaozhi-esp32-server/graphs/contributors), your efforts have made the project more robust and powerful. |
+| <img src="../images/logo_contributors.png" width="160"> | [Code Contributors](https://github.com/xinnan-tech/xiaofan-esp32-server/graphs/contributors) | Thanks to [all code contributors](https://github.com/xinnan-tech/xiaofan-esp32-server/graphs/contributors), your efforts have made the project more robust and powerful. |
 
 
-<a href="https://www.star-history.com/?repos=xinnan-tech%2Fxiaozhi-esp32-server&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=xinnan-tech%2Fxiaofan-esp32-server&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaozhi-esp32-server&type=date&theme=dark&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaozhi-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=xinnan-tech/xiaozhi-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaofan-esp32-server&type=date&theme=dark&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaofan-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=xinnan-tech/xiaofan-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
  </picture>
 </a>

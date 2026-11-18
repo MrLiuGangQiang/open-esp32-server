@@ -14,7 +14,7 @@ Redis 5.0+
 Vue 3.x
 
 # 接口文档
-启动后打开：http://localhost:8002/xiaozhi/doc.html
+启动后打开：http://localhost:8002/xiaofan/doc.html
 
 # 跑测试
 测试分两种：纯单元测试，和要真连 PostgreSQL、Redis 的集成测试（`DeviceTest`、`loginControllerTest`、`ModelConfigPersistenceTest`）。
@@ -24,10 +24,10 @@ Vue 3.x
 本地用 Docker 起这两个依赖：
 
 ```bash
-docker run -d --name xiaozhi-postgres -p 5432:5432 \
-  -e POSTGRES_USER=xiaozhi -e POSTGRES_PASSWORD=xiaozhi \
-  -e POSTGRES_DB=xiaozhi_esp32_server postgres:17
-docker run -d --name xiaozhi-redis -p 6379:6379 redis:8.0
+docker run -d --name xiaofan-postgres -p 5432:5432 \
+  -e POSTGRES_USER=xiaofan -e POSTGRES_PASSWORD=xiaofan \
+  -e POSTGRES_DB=xiaofan_esp32_server postgres:17
+docker run -d --name xiaofan-redis -p 6379:6379 redis:8.0
 ```
 
 跑全部测试：

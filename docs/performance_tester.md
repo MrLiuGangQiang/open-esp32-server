@@ -2,12 +2,12 @@
 
 0.先装依赖（在仓库根目录执行）
 ```
-cd main/xiaozhi-server
+cd main/xiaofan-server
 pip install -r requirements.txt
 ```
 测试脚本要 import `yaml`、`aiohttp`、`tabulate`，少一个都起不来。`tabulate` 不在 requirements.txt 里，是 `edge-tts` 间接带进来的。
 
-1.在main/xiaozhi-server目录下创建data目录
+1.在main/xiaofan-server目录下创建data目录
 2.在data目录下创建.config.yaml文件
 3.在data/.config.yaml中，写入你的语音识别、流式语音识别、大语言模型、非流式语音合成、流式语音合成、视觉模型的参数
 例如：
@@ -43,14 +43,14 @@ ASR:
     model_dir: models/SenseVoiceSmall
     language: auto
 ```
-4.在main/xiaozhi-server目录下运行performance_tester.py: 
+4.在main/xiaofan-server目录下运行performance_tester.py: 
 ```
 python performance_tester.py
 ```
 
 ## 几点说明
 
-- 脚本第一行提示的 `docs/performance_tester.md` 就是本文档，它在仓库根目录的 `docs/` 下；脚本本身在 `main/xiaozhi-server/` 目录里跑，两处不是一个目录。
+- 脚本第一行提示的 `docs/performance_tester.md` 就是本文档，它在仓库根目录的 `docs/` 下；脚本本身在 `main/xiaofan-server/` 目录里跑，两处不是一个目录。
 - LLM、VLLM、非流式语音合成这三项会把 `config.yaml` 和 `data/.config.yaml` 两份配置合并起来再遍历，所以实际会测**所有配好 api_key 的供应器**，不只是你在 `.config.yaml` 里写的那一个；api_key 还是占位符的会被跳过。
 - 非流式的语音识别这一项读配置的方式和别的不一样：它自己扫 `data/` 目录下的 `*.config.yaml`，只取其中的 `ASR` 段，**不会**用 `config.yaml` 里的默认值。想测语音识别，就得把供应器写进 `data/.config.yaml`。
 - 流式语音识别读的是合并后的配置，固定测 `DoubaoStreamASR`、`Qwen3ASRFlash`、`XunfeiStreamASR` 这三家。`config.yaml` 里这三项带的 key 是占位符，要在 `data/.config.yaml` 的 `ASR` 段里填上自己的 key 才会测出延迟。

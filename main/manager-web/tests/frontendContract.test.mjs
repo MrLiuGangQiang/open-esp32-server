@@ -14,8 +14,16 @@ const functionDialogSource = await readFile(
   new URL('../src/components/FunctionDialog.vue', import.meta.url),
   'utf8',
 );
+const modelApiSource = await readFile(
+  new URL('../src/apis/module/model.js', import.meta.url),
+  'utf8',
+);
 const modelConfigSource = await readFile(
   new URL('../src/views/ModelConfig.vue', import.meta.url),
+  'utf8',
+);
+const agentMcpDialogSource = await readFile(
+  new URL('../src/components/AgentMcpDialog.vue', import.meta.url),
   'utf8',
 );
 
@@ -60,6 +68,14 @@ test('address-book permission state consistently uses the target device MAC', ()
     addressBookSource,
     /handleSavePermissions\(\) \{\s*if \(this\.permissionsLoading\) return;/,
   );
+});
+
+test('device MCP account updates address the device-specific endpoint', () => {
+  assert.match(
+    modelApiSource,
+    /saveDeviceMcpAccounts\(data, callback\) \{\s*RequestService\.sendRequest\(\)\.url\(`\$\{getServiceUrl\(\)\}\/mcp\/device\/\$\{encodeURIComponent\(data\.macAddress\)\}\/accounts`\)/,
+  );
+  assert.doesNotMatch(modelApiSource, /\/mcp\/device\/accounts/);
 });
 
 test('correct-word pagination maps the UI page size to the backend limit query', () => {
@@ -149,4 +165,32 @@ test('function dialog footer stays above the expanding MCP tools section', () =>
   assert.ok(mcpLayer, 'MCP section should define its stacking layer');
   assert.ok(footerLayer, 'drawer footer should define its stacking layer');
   assert.ok(Number(footerLayer[1]) > Number(mcpLayer[1]));
+});
+
+test('MCP configuration preserves server and client auth boundaries', () => {
+  assert.match(modelConfigSource, /capability\.authBoundary/);
+  assert.match(modelConfigSource, /label="server"/);
+  assert.match(modelConfigSource, /label="client"/);
+  assert.match(modelConfigSource, /capability\.clientAuthHint/);
+
+  const buildPayload = modelConfigSource.match(
+    /buildMcpPayload\(\) \{([\s\S]*?)\n    \},/,
+  )?.[1];
+  assert.ok(buildPayload, 'MCP configuration should build an explicit payload');
+  assert.match(buildPayload, /authMode = this\.mcpForm\.authMode/);
+  assert.match(buildPayload, /authMode === 'server' && token/);
+  assert.match(buildPayload, /headers: extraHeaders/);
+  assert.match(modelConfigSource, /capability\.testToken/);
+  assert.match(modelConfigSource, /capability\.testTokenHint/);
+  assert.match(modelConfigSource, /requireMcpTestAuth\(rawPayload\)/);
+});
+test('client-auth MCP authorization binds a Token per bound device', () => {
+  assert.match(agentMcpDialogSource, /getAgentBindDevices/);
+  assert.match(agentMcpDialogSource, /getDeviceMcpAccounts/);
+  assert.match(agentMcpDialogSource, /saveDeviceMcpAccounts/);
+  assert.match(agentMcpDialogSource, /v-for="device in devices"/);
+  assert.match(agentMcpDialogSource, /accountFor\(device\.macAddress, activeServer\.id\)/);
+  assert.match(agentMcpDialogSource, /validateClientCredentials\(\)/);
+  assert.match(agentMcpDialogSource, /capability\.deviceToken/);
+  assert.match(agentMcpDialogSource, /account\.token/);
 });

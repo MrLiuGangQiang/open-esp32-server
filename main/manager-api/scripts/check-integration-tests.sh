@@ -6,9 +6,9 @@ set -uo pipefail
 REPORT_DIR="${1:-target/surefire-reports}"
 
 WATCHED=(
-  "xiaozhi.modules.device.DeviceTest"
-  "xiaozhi.modules.model.service.impl.ModelConfigPersistenceTest"
-  "xiaozhi.modules.sys.loginControllerTest"
+  "xiaofan.modules.device.DeviceTest"
+  "xiaofan.modules.model.service.impl.ModelConfigPersistenceTest"
+  "xiaofan.modules.sys.loginControllerTest"
 )
 
 if [ ! -d "$REPORT_DIR" ]; then

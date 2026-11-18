@@ -1,5 +1,5 @@
 {
-  "name": "xiaozhi-mobile-admin",
+  "name": "xiaofan-mobile-admin",
   "type": "commonjs",
   "version": "3.4.0",
   "unibest-version": "3.4.0",
@@ -9,15 +9,15 @@
   "author": {
     "name": "huangjunsen",
     "zhName": "黄俊森",
-    "email": "huangjunsen@xiaozhi.com",
+    "email": "huangjunsen@xiaofan.com",
     "github": "https://github.com/huangjunsen0406",
     "gitee": "https://gitee.com/huang-jun-sen"
   },
   "license": "MIT",
-  "homepage": "https://github.com/xinnan-tech/xiaozhi-esp32-server",
-  "repository": "https://github.com/xinnan-tech/xiaozhi-esp32-server",
+  "homepage": "https://github.com/xinnan-tech/xiaofan-esp32-server",
+  "repository": "https://github.com/xinnan-tech/xiaofan-esp32-server",
   "bugs": {
-    "url": "https://github.com/xinnan-tech/xiaozhi-esp32-server/issues"
+    "url": "https://github.com/xinnan-tech/xiaofan-esp32-server/issues"
   },
   "engines": {
     "node": ">=18",

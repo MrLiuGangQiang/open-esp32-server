@@ -49,7 +49,7 @@
 
 ### 第四步：固件端添加远程唤醒工具
 
-1. 在[xiaozhi-esp32](https://github.com/78/xiaozhi-esp32) 代码的基础上增加远程唤醒工具MCP，版本支持为2.1.0至2.2.6（2026年5月29日的版本）
+1. 在[xiaofan-esp32](https://github.com/78/xiaofan-esp32) 代码的基础上增加远程唤醒工具MCP，版本支持为2.1.0至2.2.6（2026年5月29日的版本）
 2. 在application.h文件中添加远程唤醒函数声明
     ```cpp
     void RemoteWakeup(const std::string& reason);

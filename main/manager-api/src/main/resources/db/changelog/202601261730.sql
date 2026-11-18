@@ -1,4 +1,4 @@
--- 更新小智参数中的默认采样率从 16000 改为 24000
+-- 更新小凡参数中的默认采样率从 16000 改为 24000
 UPDATE `sys_params`
 SET `param_value` = '{
   "type": "hello",
@@ -11,4 +11,4 @@ SET `param_value` = '{
     "frame_duration": 60
   }
 }'
-WHERE `id` = 309 AND `param_code` = 'xiaozhi';
+WHERE `id` = 309 AND `param_code` = 'xiaofan';

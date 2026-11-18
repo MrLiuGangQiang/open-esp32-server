@@ -1,19 +1,19 @@
-[![Banners](../images/banner1.png)](https://github.com/xinnan-tech/xiaozhi-esp32-server)
+[![Banners](../images/banner1.png)](https://github.com/xinnan-tech/xiaofan-esp32-server)
 
 <h1 align="center">Servicio backend Xiaofan xiaofan-server</h1>
 
 <p align="center">
 Este proyecto desarrolla sistemas de hardware y software para terminales inteligentes a partir de la teoría y la tecnología de la inteligencia simbiótica humano-máquina<br/>y ofrece el servicio backend del proyecto de hardware inteligente de código abierto
-<a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32</a><br/>
+<a href="https://github.com/78/xiaofan-esp32">xiaofan-esp32</a><br/>
 Implementado en Python, Java y Vue según el <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">protocolo de comunicación Xiaofan</a><br/>
 Compatible con el protocolo MQTT+UDP, el protocolo WebSocket, puntos de acceso MCP, reconocimiento de huella de voz y bases de conocimiento
 </p>
 
 <p align="center">
 <a href="../FAQ.md">Preguntas frecuentes</a>
-· <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/issues">Informar de problemas</a>
+· <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/issues">Informar de problemas</a>
 · <a href="../../README.md#%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3">Documentación de despliegue</a>
-· <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/releases">Notas de la versión</a>
+· <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/releases">Notas de la versión</a>
 </p>
 
 <p align="center">
@@ -23,14 +23,14 @@ Compatible con el protocolo MQTT+UDP, el protocolo WebSocket, puntos de acceso M
   <a href="./README_de.md"><img alt="Deutsch" src="https://img.shields.io/badge/Deutsch-DFE0E5"></a>
   <a href="./README_pt_BR.md"><img alt="Português (Brasil)" src="https://img.shields.io/badge/Português (Brasil)-DFE0E5"></a>
   <a href="./README_es.md"><img alt="Español" src="https://img.shields.io/badge/Español-DBEDFA"></a>
-  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/releases">
-    <img alt="GitHub Contributors" src="https://img.shields.io/github/v/release/xinnan-tech/xiaozhi-esp32-server?logo=docker" />
+  <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/releases">
+    <img alt="GitHub Contributors" src="https://img.shields.io/github/v/release/xinnan-tech/xiaofan-esp32-server?logo=docker" />
   </a>
-  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/LICENSE">
+  <a href="https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/LICENSE">
     <img alt="GitHub pull requests" src="https://img.shields.io/badge/license-MIT-white?labelColor=black" />
   </a>
-  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server">
-    <img alt="stars" src="https://img.shields.io/github/stars/xinnan-tech/xiaozhi-esp32-server?color=ffcb47&labelColor=black" />
+  <a href="https://github.com/xinnan-tech/xiaofan-esp32-server">
+    <img alt="stars" src="https://img.shields.io/github/stars/xinnan-tech/xiaofan-esp32-server?color=ffcb47&labelColor=black" />
   </a>
 </p>
 
@@ -46,7 +46,7 @@ Liderado por el equipo del profesor Siyuan Liu (Universidad Tecnológica del Sur
 
 ## A quién va dirigido 👥
 
-Este proyecto debe usarse junto con hardware ESP32. Si ya ha comprado hardware relacionado con ESP32, se ha conectado con éxito al servicio backend desplegado por Brother Xia (虾哥) y quiere montar por su cuenta su propio servicio backend `xiaozhi-esp32`, este proyecto encaja con lo que busca.
+Este proyecto debe usarse junto con hardware ESP32. Si ya ha comprado hardware relacionado con ESP32, se ha conectado con éxito al servicio backend desplegado por Brother Xia (虾哥) y quiere montar por su cuenta su propio servicio backend `xiaofan-esp32`, este proyecto encaja con lo que busca.
 
 ¿Quiere ver cómo se usa? Pulse los vídeos 🎥
 
@@ -180,8 +180,8 @@ Dirección de la consola inteligente: https://2662r3426b.vicp.fun
 Consola inteligente (versión H5): https://2662r3426b.vicp.fun/h5/index.html
 
 Herramienta de prueba del servicio: https://2662r3426b.vicp.fun/test/
-Dirección de la interfaz OTA: https://2662r3426b.vicp.fun/xiaozhi/ota/
-Dirección de la interfaz WebSocket: wss://2662r3426b.vicp.fun/xiaozhi/v1/
+Dirección de la interfaz OTA: https://2662r3426b.vicp.fun/xiaofan/ota/
+Dirección de la interfaz WebSocket: wss://2662r3426b.vicp.fun/xiaofan/v1/
 ```
 
 #### 🚩 Descripción y recomendaciones de configuración
@@ -203,7 +203,7 @@ Dirección de la interfaz WebSocket: wss://2662r3426b.vicp.fun/xiaozhi/v1/
 | Intent (reconocimiento de intención) | function_call (llamada a funciones) | function_call (llamada a funciones) |
 | Memory (memoria) | mem_local_short (memoria local a corto plazo) | mem_local_short (memoria local a corto plazo) |
 
-Si le importa el tiempo que tarda cada componente, consulte el [informe de rendimiento de los componentes de Xiaofan](https://github.com/xinnan-tech/xiaozhi-performance-research) y pruebe en su propio entorno con el método que describe el informe.
+Si le importa el tiempo que tarda cada componente, consulte el [informe de rendimiento de los componentes de Xiaofan](https://github.com/xinnan-tech/xiaofan-performance-research) y pruebe en su propio entorno con el método que describe el informe.
 
 #### 🔧 Herramientas de prueba
 Este proyecto incluye las siguientes herramientas para comprobar el sistema y elegir un modelo adecuado:
@@ -211,7 +211,7 @@ Este proyecto incluye las siguientes herramientas para comprobar el sistema y el
 | Herramienta | Ubicación | Uso | Qué hace |
 |:---:|:---|:---:|:---:|
 | Prueba de interacción de audio | main》digital-human》index.html | En `main/digital-human`, instale las dependencias como indica su README, después ejecute `python start.py` y abra `http://127.0.0.1:8006/index.html` | Prueba la reproducción y la recepción de audio, y comprueba que el procesamiento de audio en Python funciona |
-| Prueba de respuesta de los modelos | main》xiaozhi-server》performance_tester.py | Ejecute `python performance_tester.py` | Mide la velocidad de respuesta de los principales módulos: ASR (reconocimiento de voz), LLM (modelo de lenguaje), VLLM (modelo de visión) y TTS (síntesis de voz) |
+| Prueba de respuesta de los modelos | main》xiaofan-server》performance_tester.py | Ejecute `python performance_tester.py` | Mide la velocidad de respuesta de los principales módulos: ASR (reconocimiento de voz), LLM (modelo de lenguaje), VLLM (modelo de visión) y TTS (síntesis de voz) |
 
 > 💡 Nota: al medir la velocidad de los modelos, solo se prueban los modelos que tienen una clave configurada.
 
@@ -221,7 +221,7 @@ Este proyecto incluye las siguientes herramientas para comprobar el sistema y el
 ![Diagrama de arquitectura de la instalación de todos los módulos](../images/deploy2.png)
 | Módulo | Descripción |
 |:---:|:---|
-| Arquitectura principal | Basada en la [pasarela MQTT+UDP](https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/mqtt-gateway-integration.md) y en servidores WebSocket y HTTP; ofrece un sistema completo de gestión de consola y de autenticación |
+| Arquitectura principal | Basada en la [pasarela MQTT+UDP](https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/mqtt-gateway-integration.md) y en servidores WebSocket y HTTP; ofrece un sistema completo de gestión de consola y de autenticación |
 | Interacción por voz | Admite ASR en streaming (reconocimiento de voz), TTS en streaming (síntesis de voz) y VAD (detección de actividad de voz), además de reconocimiento multilingüe y procesamiento de voz |
 | Huella de voz | Admite el registro, la gestión y el reconocimiento de la huella de voz de varios usuarios; se procesa en paralelo con el ASR, identifica en tiempo real quién habla y se lo pasa al LLM para una respuesta personalizada |
 | Diálogo inteligente | Admite varios LLM (modelos de lenguaje) para mantener un diálogo inteligente |
@@ -245,7 +245,7 @@ Si desarrolla software, aquí tiene una [carta abierta a quienes desarrollan](..
 ---
 
 ## Ecosistema del producto 👬
-Xiaofan es un ecosistema. Al usar este producto, también puede ver otros [proyectos destacados](https://github.com/78/xiaozhi-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) de este ecosistema
+Xiaofan es un ecosistema. Al usar este producto, también puede ver otros [proyectos destacados](https://github.com/78/xiaofan-esp32/blob/main/README_zh.md#%E7%9B%B8%E5%85%B3%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE) de este ecosistema
 
 ---
 
@@ -351,13 +351,13 @@ El reconocimiento de huella de voz requiere desplegar por separado el servicio [
 | <img src="../images/logo_junsen.png" width="160"> | [huangjunsen](https://github.com/huangjunsen0406) | Gracias a [huangjunsen](https://github.com/huangjunsen0406) por el módulo `consola inteligente móvil`, que permite controlar con eficacia dispositivos móviles de varias plataformas e interactuar en tiempo real, y mejora mucho la comodidad de uso y la eficiencia de gestión en escenarios móviles |
 | <img src="../images/logo_huiyuan.png" width="160"> | [Huiyuan Design (汇远设计)](http://ui.kwd988.net/) | Gracias a [Huiyuan Design](http://ui.kwd988.net/) por la solución visual de este proyecto, y por poner al servicio de la experiencia de uso la práctica de diseño acumulada con más de mil empresas |
 | <img src="../images/logo_qinren.png" width="160"> | [Xi'an Qinren Information Technology (西安勤人信息科技)](https://www.029app.com/) | Gracias a [Xi'an Qinren Information Technology](https://www.029app.com/) por profundizar el sistema visual de este proyecto y mantener un estilo coherente y ampliable en distintos escenarios |
-| <img src="../images/logo_contributors.png" width="160"> | [Quienes contribuyen código](https://github.com/xinnan-tech/xiaozhi-esp32-server/graphs/contributors) | Gracias a [todas las personas que contribuyen código](https://github.com/xinnan-tech/xiaozhi-esp32-server/graphs/contributors). Su trabajo hace el proyecto más sólido y más capaz. |
+| <img src="../images/logo_contributors.png" width="160"> | [Quienes contribuyen código](https://github.com/xinnan-tech/xiaofan-esp32-server/graphs/contributors) | Gracias a [todas las personas que contribuyen código](https://github.com/xinnan-tech/xiaofan-esp32-server/graphs/contributors). Su trabajo hace el proyecto más sólido y más capaz. |
 
 
-<a href="https://www.star-history.com/?repos=xinnan-tech%2Fxiaozhi-esp32-server&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=xinnan-tech%2Fxiaofan-esp32-server&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaozhi-esp32-server&type=date&theme=dark&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaozhi-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=xinnan-tech/xiaozhi-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaofan-esp32-server&type=date&theme=dark&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=xinnan-tech/xiaofan-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=xinnan-tech/xiaofan-esp32-server&type=date&legend=top-left&sealed_token=cQovHKgZjqEnQ-svfYfN392irNvGuq-6pyv4cA8nd2jQEhQLz1ETV4YHTVk2UZyLMFbCQuZA7jduRh3YbeK5WPYaRLrfmIimGQa3lram652jJL9oQk-UuSZA5H6L4dPIhZc8KCc-Ur_UAUNbly7TePpnTR2otGknBLCOjOliD4fk1st6z7tPEDVjSRx5" />
  </picture>
 </a>

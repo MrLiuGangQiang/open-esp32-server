@@ -155,6 +155,21 @@ export default {
             }).send();
     },
     // 发送ws服务器动作指令
+    getMcpServers(params, callback) {
+        RequestService.sendRequest()
+            .url(`${getServiceUrl()}/admin/server/mcp-servers`)
+            .method('GET')
+            .success((res) => {
+                RequestService.clearRequestTime()
+                callback(res)
+            })
+            .networkFail((err) => {
+                console.error('Failed to load server MCP connections:', err)
+                RequestService.reAjaxFun(() => {
+                    this.getMcpServers(params, callback)
+                })
+            }).send();
+    },
     sendWsServerAction(data, callback) {
         RequestService.sendRequest()
             .url(`${getServiceUrl()}/admin/server/emit-action`)

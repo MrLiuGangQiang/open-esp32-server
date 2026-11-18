@@ -109,7 +109,7 @@
                       </template>
                       <div style="display: flex; align-items: center; justify-content: space-between;">
                         <span style="color: #606266; font-size: 13px;">
-                          {{ $t('roleConfig.contextProviderSuccess', { count: currentContextProviders.length }) }}<a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/context-provider-integration.md" target="_blank" class="doc-link">{{ $t('roleConfig.contextProviderDocLink') }}</a>
+                          {{ $t('roleConfig.contextProviderSuccess', { count: currentContextProviders.length }) }}<a href="https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/context-provider-integration.md" target="_blank" class="doc-link">{{ $t('roleConfig.contextProviderDocLink') }}</a>
                         </span>
                         <el-button
                           class="edit-function-btn"
@@ -338,6 +338,12 @@
                           >
                             {{ $t("roleConfig.editFunctions") }}
                           </el-button>
+                          <el-button
+                            class="edit-function-btn mcp-auth-btn"
+                            @click="showMcpDialog = true"
+                          >
+                            {{ $t('capability.agentAuth') }}
+                          </el-button>
                         </div>
                         <div
                           v-if="
@@ -453,6 +459,10 @@
         </div>
       </div>
     </div>
+    <agent-mcp-dialog
+      :visible.sync="showMcpDialog"
+      :agent-id="$route.query.agentId"
+    />
     <function-dialog
       v-model="showFunctionDialog"
       :functions="currentFunctions"
@@ -489,6 +499,7 @@
 import Api from "@/apis/api";
 import { getServiceUrl } from "@/apis/api";
 import RequestService from "@/apis/httpRequest";
+import AgentMcpDialog from "@/components/AgentMcpDialog.vue";
 import FunctionDialog from "@/components/FunctionDialog.vue";
 import ContextProviderDialog from "@/components/ContextProviderDialog.vue";
 import TtsAdvancedSettings from "@/components/TtsAdvancedSettings.vue";
@@ -500,7 +511,7 @@ import VersionFooter from "@/components/VersionFooter.vue";
 
 export default {
   name: "RoleConfigPage",
-  components: { HeaderBar, FunctionDialog, ContextProviderDialog, TtsAdvancedSettings, AgentSnapshotDialog, VersionFooter },
+  components: { HeaderBar, AgentMcpDialog, FunctionDialog, ContextProviderDialog, TtsAdvancedSettings, AgentSnapshotDialog, VersionFooter },
   data() {
     return {
       showContextProviderDialog: false,
@@ -553,6 +564,7 @@ export default {
       voiceOptions: [],
       voiceDetails: {}, // 保存完整的音色信息
       showFunctionDialog: false,
+      showMcpDialog: false,
       currentVersionNo: null,
       currentFunctions: [],
       currentContextProviders: [],
@@ -2253,6 +2265,10 @@ export default {
   border-radius: 18px;
   padding: 10px 20px;
   transition: all 0.3s;
+}
+
+.mcp-auth-btn {
+  margin-left: 8px;
 }
 
 .edit-function-btn.active-btn {

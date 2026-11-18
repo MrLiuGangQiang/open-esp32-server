@@ -1,4 +1,16 @@
 export default {
+  'capability.standardTokenAuth': "标准 Token",
+  'capability.mcpAccessToken': "Token",
+  'capability.mcpAccessTokenPlaceholder': "粘贴 Bearer Token 或完整 Authorization 头",
+  'capability.mcpAccessTokenHint': "标准 MCP 认证方式。可只填 Token，也可填完整 Authorization: Bearer xxx；保存后按 Authorization: Bearer xxx 发送。",
+  'capability.agentAuthSearch': "搜尋 MCP 服務",
+  'capability.selectedItems': '已選擇 {selected}/{total}',
+  'capability.selectedCount': "已授權 {selected}/{total}",
+  'capability.noSearchResults': "沒有符合的 MCP 服務",
+  'capability.authorizeService': "授權此服務",
+  'capability.noDeviceCredentialsRequired': "此服務使用服務端認證，無需填寫設備帳號密碼。",
+  'capability.serverAuthNoticeTitle': "服務端鑑權：此處不填寫設備帳號密碼",
+  'capability.serverAuthNoticeDescription': "所有裝置共用 MCP 配置中的服務端憑證。如需每台裝置獨立帳號密碼，請在能力配置 → MCP配置 → 修改 中將鑑權邊界改為客戶端鑑權。",
   // 登錄頁面相關提示文本
   'login.requiredUsername': '用戶名不能為空',
   'login.requiredPassword': '密碼不能為空',
@@ -204,7 +216,7 @@ export default {
   'firmwareDialog.firmwareFile': '固件文件',
   'firmwareDialog.clickUpload': '點擊上傳',
   'firmwareDialog.uploadTip': '只能上傳固件文件(.bin/.apk)，且不超過100MB',
-  'firmwareDialog.uploadHint': '溫馨提示：請上傳合併前的xiaozhi.bin文件，而不是合併後的merged-binary.bin文件',
+  'firmwareDialog.uploadHint': '溫馨提示：請上傳合併前的xiaofan.bin文件，而不是合併後的merged-binary.bin文件',
   'firmwareDialog.remark': '備註',
   'firmwareDialog.remarkPlaceholder': '請輸入備註信息',
   'firmwareDialog.requiredFirmwareName': '請輸入固件名稱(板子+版本號)',
@@ -402,6 +414,10 @@ export default {
 
   // 登录页面文本
   'login.title': '登錄',
+  'login.heroEyebrow': 'AI 裝置雲平台',
+  'login.heroTitle': '讓每一台裝置，擁有同一個 AI 大腦',
+  'login.heroDescription': '統一連接裝置、智慧代理與工具能力，讓 AI 在真實場景中穩定運行。',
+  'login.signInSubtitle': '登入以進入 Xiaofan AI 控制台',
   'login.welcome': 'WELCOME TO LOGIN',
   'login.username': '用戶名',
   'login.usernamePlaceholder': '請輸入用戶名',

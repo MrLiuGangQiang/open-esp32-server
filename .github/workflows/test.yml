@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   python:
-    name: Python (xiaozhi-server)
+    name: Python (xiaofan-server)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip'
-          cache-dependency-path: 'main/xiaozhi-server/requirements.txt'
+          cache-dependency-path: 'main/xiaofan-server/requirements.txt'
       - name: Install system dependencies
         run: |
           # opuslib_next 是 ctypes 绑定，pip 装上的是纯 Python 包，真正的编解码
@@ -28,19 +28,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libopus0
       - name: Install dependencies
-        working-directory: main/xiaozhi-server
+        working-directory: main/xiaofan-server
         run: |
           pip install -r requirements.txt
           pip install pytest pytest-asyncio freezegun
       - name: Prepare test config
-        working-directory: main/xiaozhi-server
+        working-directory: main/xiaofan-server
         run: |
           # config/settings.py 在 import 期就要这个文件，缺了整套用例连收集都过不去。
           # data/ 在 .gitignore 里，只能由这一步现造
           mkdir -p data
           printf '{}\n' > data/.config.yaml
       - name: Run tests
-        working-directory: main/xiaozhi-server
+        working-directory: main/xiaofan-server
         run: |
           # Edge TTS 那条要连微软公网，runner 的出口 IP 会被风控挡掉，先排除。
           # 根治办法是给它打 live 标记，让 mock 模式下自动不收（另开一条改）
@@ -54,13 +54,13 @@ jobs:
       postgres:
         image: postgres:17
         env:
-          POSTGRES_USER: xiaozhi
-          POSTGRES_PASSWORD: xiaozhi
-          POSTGRES_DB: xiaozhi_esp32_server
+          POSTGRES_USER: xiaofan
+          POSTGRES_PASSWORD: xiaofan
+          POSTGRES_DB: xiaofan_esp32_server
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U xiaozhi -d xiaozhi_esp32_server"
+          --health-cmd="pg_isready -U xiaofan -d xiaofan_esp32_server"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=20

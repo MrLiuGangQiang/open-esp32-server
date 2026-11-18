@@ -35,7 +35,8 @@ export class WebSocketHandler {
                 token: config.token,
                 features: {
                     mcp: true,
-                    emoji: config.emojiEnabled
+                    emoji: config.emojiEnabled,
+                    tool_status: true
                 }
             };
 
@@ -108,6 +109,11 @@ export class WebSocketHandler {
             this.handleTTSMessage(message);
         } else if (message.type === 'audio') {
             log(`收到音频控制消息: ${JSON.stringify(message)}`, 'info');
+        } else if (message.type === 'tool_status' || message.display_type === 'tool_status') {
+            log(`工具状态: ${message.text}`, 'info');
+            if (this.onChatMessage && message.text) {
+                this.onChatMessage(message.text, false);
+            }
         } else if (message.type === 'stt') {
             log(`识别结果: ${message.text}`, 'info');
             // 检查是否需要绑定设备
@@ -358,7 +364,7 @@ export class WebSocketHandler {
                             "tools": {}
                         },
                         "serverInfo": {
-                            "name": "xiaozhi-web-test",
+                            "name": "xiaofan-web-test",
                             "version": "2.1.0"
                         }
                     }

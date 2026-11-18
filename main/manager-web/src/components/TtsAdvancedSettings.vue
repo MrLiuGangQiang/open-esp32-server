@@ -5,6 +5,8 @@
     direction="rtl"
     size="400px"
     :modal="true"
+    :append-to-body="true"
+    :modal-append-to-body="true"
     :show-close="false"
     custom-class="tts-advanced-drawer"
   >

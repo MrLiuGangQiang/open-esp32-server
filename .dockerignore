@@ -5,4 +5,4 @@ __pycache__
 Dockerfile
 tmp/
 data/
-main/xiaozhi-server/models/SenseVoiceSmall/model.pt
+main/xiaofan-server/models/SenseVoiceSmall/model.pt

@@ -12,14 +12,14 @@ spring:
     druid:
       # PostgreSQL
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://127.0.0.1:5432/xiaozhi_esp32_server?currentSchema=public
-      username: xiaozhi
-      password: xiaozhi
+      url: jdbc:postgresql://127.0.0.1:5432/xiaofan_esp32_server?currentSchema=public
+      username: xiaofan
+      password: xiaofan
       initial-size: 10
       max-active: 100
       min-idle: 10
       max-wait: 6000
-      pool-prepared-statements: true
+      pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000

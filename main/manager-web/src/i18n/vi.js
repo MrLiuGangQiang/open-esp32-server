@@ -1,4 +1,14 @@
 export default {
+  'capability.standardTokenAuth': "标准 Token",
+  'capability.mcpAccessToken': "Token",
+  'capability.mcpAccessTokenPlaceholder': "粘贴 Bearer Token 或完整 Authorization 头",
+  'capability.mcpAccessTokenHint': "标准 MCP 认证方式。可只填 Token，也可填完整 Authorization: Bearer xxx；保存后按 Authorization: Bearer xxx 发送。",
+  'capability.agentAuthSearch': "Tìm dịch vụ MCP",
+  'capability.selectedItems': 'Đã chọn {selected}/{total}',
+  'capability.selectedCount': "Đã cấp quyền {selected}/{total}",
+  'capability.noSearchResults': "Không có dịch vụ MCP phù hợp",
+  'capability.authorizeService': "Cấp quyền dịch vụ này",
+  'capability.noDeviceCredentialsRequired': "Dịch vụ này dùng xác thực phía máy chủ, không cần tài khoản mật khẩu thiết bị.",
   // Login page related prompt text
   'login.requiredUsername': 'Tên đăng nhập không được để trống',
   'login.requiredPassword': 'Mật khẩu không được để trống',
@@ -204,7 +214,7 @@ export default {
   'firmwareDialog.firmwareFile': 'Tệp firmware',
   'firmwareDialog.clickUpload': 'Nhấp để tải lên',
   'firmwareDialog.uploadTip': 'Chỉ hỗ trợ tệp firmware (.bin/.apk), kích thước không vượt quá 100MB',
-  'firmwareDialog.uploadHint': 'Nhắc nhở: Vui lòng tải lên tệp xiaozhi.bin đã hợp nhất trước, không phải tệp merged-binary.bin đã hợp nhất',
+  'firmwareDialog.uploadHint': 'Nhắc nhở: Vui lòng tải lên tệp xiaofan.bin đã hợp nhất trước, không phải tệp merged-binary.bin đã hợp nhất',
   'firmwareDialog.remark': 'Ghi chú',
   'firmwareDialog.remarkPlaceholder': 'Vui lòng nhập thông tin ghi chú',
   'firmwareDialog.requiredFirmwareName': 'Vui lòng nhập tên firmware (board + phiên bản)',
@@ -402,6 +412,10 @@ export default {
 
   // Login page text
   'login.title': 'DN',
+  'login.heroEyebrow': 'ĐÁM MÂY THIẾT BỊ AI',
+  'login.heroTitle': 'Một bộ não AI cho mọi thiết bị thông minh.',
+  'login.heroDescription': 'Kết nối thiết bị, tác nhân và công cụ trong một bảng điều khiển ổn định cho AI thực tế.',
+  'login.signInSubtitle': 'Đăng nhập vào không gian làm việc Xiaofan AI',
   'login.welcome': 'CHÀO MỪNG ĐẾN VỚI ĐĂNG NHẬP',
   'login.username': 'Tên đăng nhập',
   'login.usernamePlaceholder': 'Vui lòng nhập tên đăng nhập',

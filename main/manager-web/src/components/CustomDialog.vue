@@ -7,6 +7,8 @@
     :close-on-press-escape="closeOnPressEscape"
     :show-close="showClose"
     :destroy-on-close="destroyOnClose"
+    :append-to-body="true"
+    :modal-append-to-body="true"
     :custom-class="dialogCustomClass"
     class="custom-dialog"
     @close="handleClose"
@@ -22,15 +24,17 @@
     </template>
     <slot></slot>
     <template slot="footer">
-      <div v-if="footer" class="dialog-footer">
-        <CustomButton @click="handleCancel">{{ cancelText }}</CustomButton>
-        <CustomButton :loading="confirmLoading" type="confirm" @click="handleConfirm">
-          <span class="confirm-inner">
-            <img src="@/assets/knowledge-base/star.png" class="confirm-icon" />
-            {{ confirmText }}
-          </span>
-        </CustomButton>
-      </div>
+      <slot name="footer">
+        <div v-if="footer" class="dialog-footer">
+          <CustomButton @click="handleCancel">{{ cancelText }}</CustomButton>
+          <CustomButton :loading="confirmLoading" type="confirm" @click="handleConfirm">
+            <span class="confirm-inner">
+              <img src="@/assets/knowledge-base/star.png" class="confirm-icon" />
+              {{ confirmText }}
+            </span>
+          </CustomButton>
+        </div>
+      </slot>
     </template>
   </el-dialog>
 </template>

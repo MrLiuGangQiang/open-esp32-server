@@ -26,3 +26,103 @@ databaseChangeLog:
             path: 202611111111.sql
             relativeToChangelogFile: true
             splitStatements: false
+  - changeSet:
+      id: postgresql-openai-thinking-field
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611131045.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+  - changeSet:
+      id: postgresql-configurable-emoji
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611151930.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+  - changeSet:
+      id: postgresql-capability-mcp-servers
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611160900.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+
+  - changeSet:
+      id: postgresql-public-endpoint-params
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611161000.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+
+
+  - changeSet:
+      id: postgresql-mcp-auth-mode
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611162000.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+
+  - changeSet:
+      id: postgresql-mcp-description-text
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611162100.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+  - changeSet:
+      id: postgresql-enterprise-assistant-template
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611162300.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: postgresql-mcp-test-credentials
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611170000.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: postgresql-mcp-token-credentials
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611170100.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: postgresql-mcp-token-only-device-accounts
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611170101.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: postgresql-mcp-token-only-legacy-columns
+      author: codex
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: 202611170102.sql
+            relativeToChangelogFile: true

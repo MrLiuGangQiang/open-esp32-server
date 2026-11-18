@@ -1,0 +1,102 @@
+services:
+  xiaofan-esp32-server:
+    build:
+      context: ../..
+      dockerfile: Dockerfile-server
+    image: xiaofan-esp32-server:postgres
+    container_name: xiaofan-esp32-server
+    command: ["python", "app.py"]
+    restart: always
+    networks: [default]
+    extra_hosts:
+      - "mcp-endpoint-host:host-gateway"
+    depends_on:
+      xiaofan-esp32-server-web:
+        condition: service_started
+    ports:
+      - '8000:8000'
+      - '8003:8003'
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data:/opt/xiaofan-esp32-server/data
+      - ../../main/xiaofan-server/core/websocket_server.py:/opt/xiaofan-esp32-server/core/websocket_server.py:ro
+      - ../../main/xiaofan-server/core/providers/tools/server_mcp/mcp_manager.py:/opt/xiaofan-esp32-server/core/providers/tools/server_mcp/mcp_manager.py:ro
+      - ../../main/xiaofan-server/core/providers/tools/server_mcp/mcp_executor.py:/opt/xiaofan-esp32-server/core/providers/tools/server_mcp/mcp_executor.py:ro
+      - ../../main/xiaofan-server/core/providers/tools/device_mcp/mcp_handler.py:/opt/xiaofan-esp32-server/core/providers/tools/device_mcp/mcp_handler.py:ro
+      - ../../main/xiaofan-server/core/providers/tools/unified_tool_handler.py:/opt/xiaofan-esp32-server/core/providers/tools/unified_tool_handler.py:ro
+      - ../../main/xiaofan-server/core/handle/reportHandle.py:/opt/xiaofan-esp32-server/core/handle/reportHandle.py:ro
+      - ../../main/xiaofan-server/core/connection.py:/opt/xiaofan-esp32-server/core/connection.py:ro
+      - ./models/SenseVoiceSmall:/opt/xiaofan-esp32-server/models/SenseVoiceSmall
+      - ./models/snakers4_silero-vad:/opt/xiaofan-esp32-server/models/snakers4_silero-vad
+
+  xiaofan-esp32-server-web:
+    build:
+      context: ../..
+      dockerfile: Dockerfile-web
+    image: xiaofan-esp32-manager-web:postgres
+    container_name: xiaofan-esp32-server-web
+    entrypoint: ["/bin/bash", "/start.sh"]
+    command: []
+    restart: always
+    networks: [default]
+    extra_hosts:
+      - "mcp-endpoint-host:host-gateway"
+    depends_on:
+      xiaofan-esp32-server-db:
+        condition: service_healthy
+      xiaofan-esp32-server-redis:
+        condition: service_healthy
+    ports:
+      - '8002:8002'
+    environment:
+      TZ: Asia/Shanghai
+      SPRING_DATASOURCE_DRUID_URL: jdbc:postgresql://xiaofan-esp32-server-db:5432/xiaofan_esp32_server?currentSchema=public&prepareThreshold=0
+      SPRING_DATASOURCE_DRUID_POOL_PREPARED_STATEMENTS: "false"
+      SPRING_DATASOURCE_DRUID_USERNAME: xiaofan
+      SPRING_DATASOURCE_DRUID_PASSWORD: xiaofan_esp32_password
+      SPRING_DATA_REDIS_HOST: xiaofan-esp32-server-redis
+      SPRING_DATA_REDIS_PASSWORD: ''
+      SPRING_DATA_REDIS_PORT: '6379'
+    volumes:
+      - ./uploadfile:/uploadfile
+      - ../../docs/docker/nginx.conf:/etc/nginx/nginx.conf:ro
+
+  xiaofan-esp32-server-db:
+    image: postgres:17
+    container_name: xiaofan-esp32-server-db
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U xiaofan -d xiaofan_esp32_server']
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    networks: [default]
+    expose:
+      - 5432
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    environment:
+      TZ: Asia/Shanghai
+      POSTGRES_USER: xiaofan
+      POSTGRES_PASSWORD: xiaofan_esp32_password
+      POSTGRES_DB: xiaofan_esp32_server
+
+  xiaofan-esp32-server-redis:
+    image: redis:8.0
+    expose:
+      - 6379
+    container_name: xiaofan-esp32-server-redis
+    restart: always
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks: [default]
+
+networks:
+  default:
+

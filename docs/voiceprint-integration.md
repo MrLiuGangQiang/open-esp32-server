@@ -34,7 +34,7 @@ telnet 127.0.0.1 3306
 
 修改前
 ```
-  xiaozhi-esp32-server-db:
+  xiaofan-esp32-server-db:
     ...
     networks:
       - default
@@ -44,7 +44,7 @@ telnet 127.0.0.1 3306
 
 修改后
 ```
-  xiaozhi-esp32-server-db:
+  xiaofan-esp32-server-db:
     ...
     networks:
       - default
@@ -52,15 +52,15 @@ telnet 127.0.0.1 3306
       - "3306:3306"
 ```
 
-注意是将`xiaozhi-esp32-server-db`下面的`expose`改成`ports`。改完后，需要重新启动。以下是重启mysql的命令：
+注意是将`xiaofan-esp32-server-db`下面的`expose`改成`ports`。改完后，需要重新启动。以下是重启mysql的命令：
 
 ```
-# 进入你docker-compose_all.yml所在的文件夹，例如我的是xiaozhi-server
-cd xiaozhi-server
+# 进入你docker-compose_all.yml所在的文件夹，例如我的是xiaofan-server
+cd xiaofan-server
 docker compose -f docker-compose_all.yml down
 docker compose -f docker-compose_all.yml up -d
 ```
-数据库服务`xiaozhi-esp32-server-db`在`docker-compose_all.yml`里，最小化的`docker-compose.yml`只有服务本身，所以两条命令都用`docker-compose_all.yml`。
+数据库服务`xiaofan-esp32-server-db`在`docker-compose_all.yml`里，最小化的`docker-compose.yml`只有服务本身，所以两条命令都用`docker-compose_all.yml`。
 
 启动完后，在宿主机再使用`telnet`命令，看看能不能正常访问`mysql`的`3306`端口。
 ```
@@ -196,7 +196,7 @@ http://192.168.1.25:8005/voiceprint/health?key=abcd
 # 3、最简化部署时，怎么配置声纹识别
 
 ## 第一步 配置接口
-打开 `xiaozhi-server/data/.config.yaml` 文件（如果没有需要创建），然后添加/修改以下内容：
+打开 `xiaofan-server/data/.config.yaml` 文件（如果没有需要创建），然后添加/修改以下内容：
 
 ```
 # 声纹识别配置

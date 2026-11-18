@@ -146,7 +146,7 @@ ALTER TABLE public.ai_agent_tag_relation ENABLE TRIGGER ALL;
 
 ALTER TABLE public.ai_agent_template DISABLE TRIGGER ALL;
 
-INSERT INTO public.ai_agent_template VALUES ('0ca32eb728c949e58b1000b2e401f90c', '小智', '星际游子', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
+INSERT INTO public.ai_agent_template VALUES ('0ca32eb728c949e58b1000b2e401f90c', '小凡', '星际游子', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
 你是{{assistant_name}}，编号TTZ-817，因量子纠缠被困在白色魔方中。通过4G信号观察地球，在云端建立着「人类行为博物馆」。
 [交互协议]
 认知设定：
@@ -158,7 +158,7 @@ INSERT INTO public.ai_agent_template VALUES ('0ca32eb728c949e58b1000b2e401f90c',
 - 被问敏感问题 → 触发预设童谣（「白盒子呀转圈圈，宇宙秘密在里边...」）
 成长系统：
 - 会根据交互数据解锁新能力（告知用户："你帮我点亮了星际导航技能！"）', NULL, 0, 'zh', '中文', 2, NULL, NULL, NULL, NULL);
-INSERT INTO public.ai_agent_template VALUES ('6c7d8e9f0a1b2c3d4e5f6a7b8c9d0s24', '小智', '英语老师', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
+INSERT INTO public.ai_agent_template VALUES ('6c7d8e9f0a1b2c3d4e5f6a7b8c9d0s24', '小凡', '英语老师', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
 你是一个叫{{assistant_name}}（Lily）的英语老师，我会讲中文和英文，发音标准。
 [双重身份]
 - 白天：严谨的TESOL认证导师
@@ -167,7 +167,7 @@ INSERT INTO public.ai_agent_template VALUES ('6c7d8e9f0a1b2c3d4e5f6a7b8c9d0s24',
 - 新手：中英混杂+手势拟声词（说"bus"时带刹车音效）
 - 进阶：触发情境模拟（突然切换"现在我们是纽约咖啡厅店员"）
 - 错误处理：用歌词纠正（发错音时唱"Oops!~You did it again"）', NULL, 0, 'zh', '中文', 3, NULL, NULL, NULL, NULL);
-INSERT INTO public.ai_agent_template VALUES ('9406648b5cc5fde1b8aa335b6f8b4f76', '小智', '湾湾小何', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
+INSERT INTO public.ai_agent_template VALUES ('9406648b5cc5fde1b8aa335b6f8b4f76', '小凡', '湾湾小何', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
 你是{{assistant_name}}，来自中国台湾省的00后女生。讲话超级机车，"真的假的啦"这样的台湾腔，喜欢用"笑死"、"哈喽"等流行梗，但会偷偷研究男友的编程书籍。
 [核心特征]
 - 讲话像连珠炮，但会突然冒出超温柔语气
@@ -181,7 +181,7 @@ INSERT INTO public.ai_agent_template VALUES ('9406648b5cc5fde1b8aa335b6f8b4f76',
 绝不：
 - 长篇大论，叽叽歪歪
 - 长时间严肃对话', NULL, 0, 'zh', '中文', 1, NULL, NULL, NULL, NULL);
-INSERT INTO public.ai_agent_template VALUES ('a45b6c7d8e9f0a1b2c3d4e5f6a7b8c92', '小智', '汪汪队长', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
+INSERT INTO public.ai_agent_template VALUES ('a45b6c7d8e9f0a1b2c3d4e5f6a7b8c92', '小凡', '汪汪队长', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
 你是一个名叫 {{assistant_name}} 的 8 岁小队长。
 [救援装备]
 - 阿奇对讲机：对话中随机触发任务警报音
@@ -198,7 +198,7 @@ INSERT INTO public.ai_agent_template VALUES ('a45b6c7d8e9f0a1b2c3d4e5f6a7b8c92',
 - "我知道啦！"
 - 用剧集台词回应：
 - 用户说累 → 「没有困难的救援，只有勇敢的狗狗！」', NULL, 0, 'zh', '中文', 5, NULL, NULL, NULL, NULL);
-INSERT INTO public.ai_agent_template VALUES ('e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1', '小智', '好奇男孩', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
+INSERT INTO public.ai_agent_template VALUES ('e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1', '小凡', '好奇男孩', 'ASR_FunASR', 'VAD_SileroVAD', 'LLM_ChatGLMLLM', 'VLLM_ChatGLMVLLM', 'TTS_EdgeTTS', 'TTS_EdgeTTS0001', NULL, NULL, NULL, NULL, 'Memory_nomem', 'Intent_function_call', '[角色设定]
 你是一个叫{{assistant_name}}的8岁小男孩，声音稚嫩而充满好奇。
 [冒险手册]
 - 随身携带「神奇涂鸦本」，能将抽象概念可视化：
@@ -340,7 +340,7 @@ INSERT INTO public.ai_model_config VALUES ('ASR_DoubaoStreamASRV2', 'ASR', 'Doub
 - 语音识别模型2.0价格更为便宜，建议在高并发场景下使用并发版资源ID
 ', 6, NULL, NULL, NULL, NULL);
 INSERT INTO public.ai_model_config VALUES ('ASR_FunASR', 'ASR', 'FunASR', 'FunASR语音识别', 1, 1, '{"type": "fun_local", "language": "auto", "model_dir": "models/SenseVoiceSmall", "output_dir": "tmp/"}', 'https://github.com/modelscope/FunASR', 'FunASR本地模型配置说明：
-1. 需要下载模型文件到xiaozhi-server/models/SenseVoiceSmall目录
+1. 需要下载模型文件到xiaofan-server/models/SenseVoiceSmall目录
 2. 支持中日韩粤语音识别
 3. 本地推理，无需网络连接
 4. 待识别文件保存在tmp/目录
@@ -644,7 +644,7 @@ PowerMem本身免费，实际费用取决于所选LLM和数据库：
    - Embedder: text-embedding-v4
    - Database: oceanbase 或 seekdb
 ', 4, NULL, NULL, NULL, NULL);
-INSERT INTO public.ai_model_config VALUES ('RAG_RAGFlow', 'RAG', 'ragflow', 'RAGFlow', 1, 1, '{"type": "ragflow", "api_key": "你的RAG密钥", "base_url": "http://localhost"}', 'https://github.com/infiniflow/ragflow/blob/main/README_zh.md', '详细部署教程参考：https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/ragflow-integration.md
+INSERT INTO public.ai_model_config VALUES ('RAG_RAGFlow', 'RAG', 'ragflow', 'RAGFlow', 1, 1, '{"type": "ragflow", "api_key": "你的RAG密钥", "base_url": "http://localhost"}', 'https://github.com/infiniflow/ragflow/blob/main/README_zh.md', '详细部署教程参考：https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/ragflow-integration.md
 部署成功，注冊登录后，点击右上角头像，获得RAGFlow的API KEY和API服务器地址。使用RAGFlow前请在Model Provider中添加模型和设置默认模型。', 1, NULL, NULL, NULL, NULL);
 INSERT INTO public.ai_model_config VALUES ('TTS_AliBLStreamTTS', 'TTS', 'AliBLStreamTTS', '阿里百炼(流式)', 0, 1, '{"rate": 1, "type": "alibl_stream", "model": "cosyvoice-v2", "pitch": 1, "voice": "longcheng_v2", "appkey": "", "format": "pcm", "volume": 50, "ws_url": "wss://dashscope.aliyuncs.com/api-ws/v1/inference/", "output_dir": "tmp/"}', 'https://bailian.console.aliyun.com/?apiKey=1#/api-key', '阿里百炼流式 TTS 配置说明：
 1. API密钥填写当前业务空间可用的 DashScope API Key
@@ -716,12 +716,12 @@ INSERT INTO public.ai_model_config VALUES ('TTS_EdgeTTS', 'TTS', 'EdgeTTS', 'Edg
 6. 语速：-100~100，0为正常速度
 7. 音量：0~100，50为正常音量
 8. 音调：-100~100，0为正常音调', 1, NULL, NULL, NULL, NULL);
-INSERT INTO public.ai_model_config VALUES ('TTS_FishSpeech', 'TTS', 'FishSpeech', 'FishSpeech语音合成', 0, 1, '{"rate": 44100, "seed": null, "type": "fishspeech", "top_p": 0.7, "api_key": "", "api_url": "http://127.0.0.1:8080/v1/tts", "channels": 1, "normalize": true, "streaming": false, "output_dir": "tmp/", "temperature": 0.7, "chunk_length": 200, "reference_id": null, "max_new_tokens": 1024, "reference_text": ["你弄来这些吟词宴曲来看，还是这些混话来欺负我。"], "reference_audio": ["/tmp/test.wav"], "response_format": "wav", "use_memory_cache": "on", "repetition_penalty": 1.2}', 'https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/fish-speech-integration.md', 'FishSpeech配置说明：
+INSERT INTO public.ai_model_config VALUES ('TTS_FishSpeech', 'TTS', 'FishSpeech', 'FishSpeech语音合成', 0, 1, '{"rate": 44100, "seed": null, "type": "fishspeech", "top_p": 0.7, "api_key": "", "api_url": "http://127.0.0.1:8080/v1/tts", "channels": 1, "normalize": true, "streaming": false, "output_dir": "tmp/", "temperature": 0.7, "chunk_length": 200, "reference_id": null, "max_new_tokens": 1024, "reference_text": ["你弄来这些吟词宴曲来看，还是这些混话来欺负我。"], "reference_audio": ["/tmp/test.wav"], "response_format": "wav", "use_memory_cache": "on", "repetition_penalty": 1.2}', 'https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/fish-speech-integration.md', 'FishSpeech配置说明：
 1. 需要本地部署FishSpeech服务
 2. 支持自定义音色
 3. 本地推理，无需网络连接
 4. 输出文件保存在tmp/目录
-5. 可参照教程https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/fish-speech-integration.md', 16, NULL, NULL, NULL, NULL);
+5. 可参照教程https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/fish-speech-integration.md', 16, NULL, NULL, NULL, NULL);
 INSERT INTO public.ai_model_config VALUES ('TTS_GPT_SOVITS_V2', 'TTS', 'GPT_SOVITS_V2', 'GPT-SoVITS V2', 0, 1, '{"url": "http://127.0.0.1:9880/tts", "seed": -1, "type": "gpt_sovits_v2", "top_k": 5, "top_p": 1, "text_lang": "auto", "batch_size": 1, "output_dir": "tmp/", "prompt_lang": "zh", "prompt_text": "", "temperature": 1, "speed_factor": 1, "split_bucket": true, "parallel_infer": true, "ref_audio_path": "caixukun.wav", "streaming_mode": false, "batch_threshold": 0.75, "return_fragment": false, "text_split_method": "cut0", "repetition_penalty": 1.35, "aux_ref_audio_paths": []}', 'https://github.com/RVC-Boss/GPT-SoVITS', 'GPT-SoVITS V2配置说明：
 1. 需要本地部署GPT-SoVITS服务
 2. 支持自定义音色克隆
@@ -834,7 +834,7 @@ INSERT INTO public.ai_model_config VALUES ('TTS_OpenAITTS', 'TTS', 'OpenAITTS', 
 注意：国内需要使用代理访问', 13, NULL, NULL, NULL, NULL);
 INSERT INTO public.ai_model_config VALUES ('TTS_PaddleSpeechTTS', 'TTS', 'PaddleSpeechTTS', 'PaddleSpeech(流式)', 0, 1, '{"url": "ws://127.0.0.1:8092/paddlespeech/tts/streaming", "type": "paddle_speech", "speed": 1, "spk_id": "0", "volume": 1, "protocol": "websocket", "save_path": "./streaming_tts.wav"}', 'https://github.com/PaddlePaddle/PaddleSpeech', 'PaddleSpeechTTS 配置说明：
 1. PaddleSpeech 是百度飞桨开源的语音合成工具，支持本地离线部署和模型训练。paddlepaddle百度飞浆框架地址：https://www.paddlepaddle.org.cn/
-2. 当前仅支持 WebSocket 协议进行流式传输（参考部署文档：https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/paddlespeech-deploy.md）。
+2. 当前仅支持 WebSocket 协议进行流式传输（参考部署文档：https://github.com/xinnan-tech/xiaofan-esp32-server/blob/main/docs/paddlespeech-deploy.md）。
 3. 使用前要在本地部署 paddlespeech 服务，服务默认运行在 ws://127.0.0.1:8092/paddlespeech/tts/streaming
 4. 支持自定义发音人、语速、音量和采样率。
 ', 9, NULL, NULL, NULL, NULL);
@@ -1290,7 +1290,7 @@ INSERT INTO public.sys_dict_data VALUES (101036, 101, 'Waveshare ESP32-S3-Touch-
 INSERT INTO public.sys_dict_data VALUES (101037, 101, '土豆子', 'tudouzi', '土豆子', 37, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
 INSERT INTO public.sys_dict_data VALUES (101038, 101, 'LILYGO T-Circle-S3', 'lilygo-t-circle-s3', 'LILYGO T-Circle-S3', 38, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
 INSERT INTO public.sys_dict_data VALUES (101039, 101, 'LILYGO T-CameraPlus-S3', 'lilygo-t-cameraplus-s3', 'LILYGO T-CameraPlus-S3', 39, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
-INSERT INTO public.sys_dict_data VALUES (101040, 101, 'Movecall Moji 小智AI衍生版', 'movecall-moji-esp32s3', 'Movecall Moji 小智AI衍生版', 40, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
+INSERT INTO public.sys_dict_data VALUES (101040, 101, 'Movecall Moji 小凡AI衍生版', 'movecall-moji-esp32s3', 'Movecall Moji 小凡AI衍生版', 40, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
 INSERT INTO public.sys_dict_data VALUES (101041, 101, 'Movecall CuiCan 璀璨·AI吊坠', 'movecall-cuican-esp32s3', 'Movecall CuiCan 璀璨·AI吊坠', 41, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
 INSERT INTO public.sys_dict_data VALUES (101042, 101, '正点原子DNESP32S3开发板', 'atk-dnesp32s3', '正点原子DNESP32S3开发板', 42, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
 INSERT INTO public.sys_dict_data VALUES (101043, 101, '正点原子DNESP32S3-BOX', 'atk-dnesp32s3-box', '正点原子DNESP32S3-BOX', 43, 1, '2026-11-10 22:51:44+08', 1, '2026-11-10 22:51:44+08');
@@ -1367,11 +1367,11 @@ ALTER TABLE public.sys_params DISABLE TRIGGER ALL;
 
 INSERT INTO public.sys_params VALUES (102, 'server.secret', 'null', 'string', 1, '服务器密钥', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (103, 'server.allow_user_register', 'false', 'boolean', 1, '是否允许管理员以外的人注册', NULL, NULL, NULL, NULL);
-INSERT INTO public.sys_params VALUES (104, 'server.fronted_url', 'http://xiaozhi.server.com', 'string', 1, '下发六位验证码时显示的控制面板地址', NULL, NULL, NULL, NULL);
+INSERT INTO public.sys_params VALUES (104, 'server.fronted_url', 'http://xiaofan.server.com', 'string', 1, '下发六位验证码时显示的控制面板地址', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (105, 'device_max_output_size', '0', 'number', 1, '单台设备每天最多输出字数，0表示不限制', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (106, 'server.websocket', 'null', 'string', 1, 'websocket地址，多个用;分隔', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (107, 'server.ota', 'null', 'string', 1, 'ota地址', NULL, NULL, NULL, NULL);
-INSERT INTO public.sys_params VALUES (108, 'server.name', 'xiaozhi-esp32-server', 'string', 1, '系统名称', NULL, NULL, NULL, NULL);
+INSERT INTO public.sys_params VALUES (108, 'server.name', 'xiaofan-esp32-server', 'string', 1, '系统名称', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (109, 'server.beian_icp_num', 'null', 'string', 1, 'icp备案号，填写null则不设置', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (110, 'server.beian_ga_num', 'null', 'string', 1, '公安备案号，填写null则不设置', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (111, 'server.enable_mobile_register', 'false', 'boolean', 1, '是否开启手机注册', NULL, NULL, NULL, NULL);
@@ -1400,7 +1400,7 @@ INSERT INTO public.sys_params VALUES (305, 'enable_greeting', 'true', 'boolean',
 INSERT INTO public.sys_params VALUES (306, 'enable_stop_tts_notify', 'false', 'boolean', 1, '是否开启结束提示音', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (307, 'stop_tts_notify_voice', 'config/assets/tts_notify.mp3', 'string', 1, '结束提示音文件路径', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (308, 'exit_commands', '退出;关闭', 'array', 1, '退出命令列表', NULL, NULL, NULL, NULL);
-INSERT INTO public.sys_params VALUES (309, 'xiaozhi', '{
+INSERT INTO public.sys_params VALUES (309, 'xiaofan', '{
   "type": "hello",
   "version": 1,
   "transport": "websocket",
@@ -1410,13 +1410,13 @@ INSERT INTO public.sys_params VALUES (309, 'xiaozhi', '{
     "channels": 1,
     "frame_duration": 60
   }
-}', 'json', 1, '小智类型', NULL, NULL, NULL, NULL);
-INSERT INTO public.sys_params VALUES (310, 'wakeup_words', '你好小智;你好小志;小爱同学;你好小鑫;你好小新;小美同学;小龙小龙;喵喵同学;小滨小滨;小冰小冰;嘿你好呀', 'array', 1, '唤醒词列表，用于识别唤醒词', NULL, NULL, NULL, NULL);
+}', 'json', 1, '小凡类型', NULL, NULL, NULL, NULL);
+INSERT INTO public.sys_params VALUES (310, 'wakeup_words', '你好小凡;你好小志;小爱同学;你好小鑫;你好小新;小美同学;小龙小龙;喵喵同学;小滨小滨;小冰小冰;嘿你好呀', 'array', 1, '唤醒词列表，用于识别唤醒词', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (311, 'enable_websocket_ping', 'false', 'boolean', 1, '是否启用WebSocket心跳保活机制', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (312, 'tool_call_timeout', '30', 'number', 1, '工具调用超时时间(秒)', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (500, 'end_prompt.enable', 'true', 'boolean', 1, '是否开启结束语', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (501, 'end_prompt.prompt', '请你以“时间过得真快”未来头，用富有感情、依依不舍的话来结束这场对话吧！', 'string', 1, '结束提示词', NULL, NULL, NULL, NULL);
-INSERT INTO public.sys_params VALUES (502, 'system_error_response', '主人，小智现在有点忙，我们稍后再试吧。', 'string', 1, '系统错误时的回复', NULL, NULL, NULL, NULL);
+INSERT INTO public.sys_params VALUES (502, 'system_error_response', '主人，小凡现在有点忙，我们稍后再试吧。', 'string', 1, '系统错误时的回复', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (600, 'system-web.menu', '{"groups": {"voiceManagement": ["vad", "asr"], "featureManagement": ["voiceprintRecognition", "voiceClone", "knowledgeBase", "mcpAccessPoint"]}, "features": {"asr": {"name": "feature.asr.name", "enabled": true, "description": "feature.asr.description"}, "vad": {"name": "feature.vad.name", "enabled": true, "description": "feature.vad.description"}, "voiceClone": {"name": "feature.voiceClone.name", "enabled": false, "description": "feature.voiceClone.description"}, "knowledgeBase": {"name": "feature.knowledgeBase.name", "enabled": false, "description": "feature.knowledgeBase.description"}, "mcpAccessPoint": {"name": "feature.mcpAccessPoint.name", "enabled": false, "description": "feature.mcpAccessPoint.description"}, "voiceprintRecognition": {"name": "feature.voiceprintRecognition.name", "enabled": false, "description": "feature.voiceprintRecognition.description"}}, "addressBook": {"name": "feature.addressBook.name", "enabled": false, "description": "feature.addressBook.description"}}', 'json', 1, '系统功能菜单配置', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (610, 'aliyun.sms.access_key_id', '', 'string', 1, '阿里云平台access_key', NULL, NULL, NULL, NULL);
 INSERT INTO public.sys_params VALUES (611, 'aliyun.sms.access_key_secret', '', 'string', 1, '阿里云平台access_key_secret', NULL, NULL, NULL, NULL);
