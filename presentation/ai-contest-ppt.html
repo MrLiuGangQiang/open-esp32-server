@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f7ff">
+<title>小凡 · AI 枢纽驱动的低代码智能终端平台</title>
+<style>
+  :root{
+    --ink:#0a1730;
+    --ink-2:#2c3b59;
+    --muted:#6f7c94;
+    --muted-2:#9aa6ba;
+    --line:rgba(31,60,119,.12);
+    --line-strong:rgba(31,60,119,.2);
+    --paper:#f4f7ff;
+    --white:#fff;
+    --blue:#285cff;
+    --cyan:#08bcd4;
+    --violet:#6f5cff;
+    --green:#13b981;
+    --orange:#f29a4a;
+    --navy:#071528;
+    --navy-2:#0c2349;
+    --grad:linear-gradient(112deg,#285cff,#08bcd4);
+    --shadow:0 30px 84px rgba(35,68,139,.13);
+    --radius:24px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden;background:#061225}
+  body{
+    color:var(--ink);
+    font-family:"Segoe UI Variable Display","Microsoft YaHei UI","PingFang SC","Noto Sans SC",sans-serif;
+    -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+  }
+  button{font:inherit}
+  .stage{
+    position:absolute;left:50%;top:50%;width:1600px;height:900px;
+    transform:translate(-50%,-50%) scale(var(--stage-scale,1));transform-origin:center;
+    overflow:hidden;background:var(--paper);box-shadow:0 50px 140px rgba(0,0,0,.36);
+  }
+  .deck{position:absolute;inset:0}
+  .slide{
+    position:absolute;inset:0;overflow:hidden;padding:74px 88px 76px;
+    opacity:0;visibility:hidden;pointer-events:none;transform:translateY(24px) scale(.995);
+    transition:opacity .5s ease,transform .68s cubic-bezier(.22,.8,.22,1),visibility .5s;
+    background:
+      radial-gradient(circle at 90% 7%,rgba(80,135,255,.1),transparent 34%),
+      radial-gradient(circle at 8% 95%,rgba(8,188,212,.075),transparent 28%),
+      linear-gradient(180deg,#fbfdff 0%,#f3f7ff 100%);
+  }
+  .slide::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.58;
+    background-image:
+      linear-gradient(rgba(31,60,119,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(31,60,119,.035) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 92% 86% at 50% 48%,#000 10%,transparent 82%);
+  }
+  .slide::after{
+    content:"";position:absolute;right:-260px;bottom:-340px;width:660px;height:660px;border-radius:50%;
+    border:1px solid rgba(40,92,255,.09);box-shadow:0 0 0 92px rgba(40,92,255,.025),0 0 0 184px rgba(8,188,212,.018);
+    pointer-events:none;
+  }
+  .slide.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+  .slide.dark{
+    color:#eef5ff;
+    background:
+      radial-gradient(circle at 88% 10%,rgba(56,110,255,.25),transparent 36%),
+      radial-gradient(circle at 8% 90%,rgba(8,188,212,.15),transparent 33%),
+      linear-gradient(145deg,#071528 0%,#0a1b36 55%,#08172d 100%);
+  }
+  .slide.dark::before{
+    opacity:.75;background-image:linear-gradient(rgba(255,255,255,.038) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.038) 1px,transparent 1px);
+  }
+  .slide.dark::after{border-color:rgba(91,151,255,.11);box-shadow:0 0 0 92px rgba(52,105,255,.035),0 0 0 184px rgba(8,188,212,.02)}
+  .content{position:relative;z-index:2;height:100%}
+  .reveal{opacity:0;transform:translateY(15px)}
+  .slide.active .reveal{animation:reveal .7s cubic-bezier(.22,.78,.2,1) forwards}
+  .d1{animation-delay:.04s}.d2{animation-delay:.12s}.d3{animation-delay:.2s}.d4{animation-delay:.28s}
+  .d5{animation-delay:.36s}.d6{animation-delay:.44s}.d7{animation-delay:.52s}.d8{animation-delay:.6s}
+  @keyframes reveal{to{opacity:1;transform:none}}
+  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  @keyframes pulse{0%,100%{transform:scale(.95);opacity:.6}50%{transform:scale(1.05);opacity:1}}
+  @keyframes flow{to{background-position:200% 0}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+  .eyebrow{
+    display:flex;align-items:center;gap:12px;margin-bottom:16px;color:var(--blue);
+    font-size:12px;font-weight:750;letter-spacing:.2em;text-transform:uppercase;
+  }
+  .eyebrow::before{content:"";width:36px;height:2px;border-radius:5px;background:var(--grad)}
+  .dark .eyebrow{color:#73dfea}
+  h2{max-width:1200px;font-size:52px;line-height:1.15;letter-spacing:-.035em;font-weight:820}
+  h2 .accent{color:transparent;background:var(--grad);background-clip:text;-webkit-background-clip:text}
+  .dark h2 .accent{background:linear-gradient(110deg,#8bb4ff,#59e5ef);background-clip:text;-webkit-background-clip:text}
+  .subtitle{max-width:900px;margin-top:16px;color:var(--muted);font-size:17px;line-height:1.8}
+  .dark .subtitle{color:#a9b9d3}
+  .section-head{margin-bottom:38px}
+  .slide-footer{
+    position:absolute;z-index:4;left:88px;right:210px;bottom:30px;display:flex;align-items:center;gap:20px;
+    padding-top:13px;border-top:1px solid var(--line);color:var(--muted-2);
+    font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .slide-footer .spacer{flex:1}
+  .dark .slide-footer{border-color:rgba(255,255,255,.1);color:#7186a7}
+  .pill{
+    display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;
+    border:1px solid rgba(40,92,255,.14);background:rgba(255,255,255,.72);color:#50617f;
+    font-size:11px;font-weight:650;white-space:nowrap;
+  }
+  .pill::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(8,188,212,.08)}
+  .mono{font-family:"Cascadia Code","SFMono-Regular",Consolas,monospace}
+
+  /* Cover */
+  .cover{padding:0}
+  .cover-top{position:absolute;z-index:5;left:70px;right:70px;top:42px;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-mark{
+    position:relative;width:40px;height:40px;border-radius:13px;border:1px solid rgba(40,92,255,.17);
+    background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(234,242,255,.92));
+    box-shadow:0 12px 24px rgba(40,92,255,.12);
+  }
+  .brand-mark::before,.brand-mark::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%}
+  .brand-mark::before{width:19px;height:19px;background:var(--grad);box-shadow:0 0 18px rgba(40,92,255,.34)}
+  .brand-mark::after{width:7px;height:7px;background:#fff}
+  .brand-name{font-size:17px;font-weight:850;letter-spacing:.12em}
+  .brand-sub{margin-top:2px;color:var(--muted-2);font-size:8px;font-weight:700;letter-spacing:.24em}
+  .top-badge{
+    display:flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid var(--line);border-radius:999px;
+    background:rgba(255,255,255,.75);color:#566784;font-size:10px;font-weight:650;letter-spacing:.08em;
+    box-shadow:0 8px 28px rgba(41,72,135,.06);backdrop-filter:blur(12px);
+  }
+  .top-badge i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(19,185,129,.09)}
+  .cover-layout{
+    position:relative;z-index:3;height:100%;display:grid;grid-template-columns:725px 1fr;align-items:center;
+    padding:92px 68px 54px;
+  }
+  .cover-kicker{
+    display:inline-flex;align-items:center;gap:9px;margin-bottom:24px;padding:8px 13px;border-radius:999px;
+    color:var(--blue);background:rgba(40,92,255,.07);border:1px solid rgba(40,92,255,.11);
+    font-size:10px;font-weight:750;letter-spacing:.17em;
+  }
+  .cover-kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2.4s ease-in-out infinite}
+  .cover h1{max-width:750px;font-size:72px;line-height:1.11;letter-spacing:-.06em;font-weight:900}
+  .cover h1 .grad{
+    display:block;margin-top:8px;color:transparent;background:linear-gradient(112deg,#1d50db,#285cff 36%,#08bcd4 100%);
+    background-clip:text;-webkit-background-clip:text;
+  }
+  .cover-desc{max-width:665px;margin-top:25px;color:#586984;font-size:17px;line-height:1.85}
+  .cover-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+  .cover-note{display:flex;align-items:center;gap:16px;margin-top:40px;color:#8591a6;font-size:10px;font-weight:650}
+  .cover-note b{color:#344563;font-weight:800}
+  .cover-note .divider{width:1px;height:20px;background:var(--line)}
+  .builder{
+    position:relative;width:760px;height:620px;margin-left:-14px;margin-top:10px;
+    border:1px solid rgba(38,69,132,.13);border-radius:24px;overflow:hidden;
+    background:rgba(255,255,255,.72);box-shadow:0 34px 90px rgba(37,69,139,.14);backdrop-filter:blur(16px);
+  }
+  .builder::after{
+    content:"";position:absolute;right:-140px;top:-140px;width:340px;height:340px;border-radius:50%;
+    border:1px solid rgba(40,92,255,.1);box-shadow:0 0 0 44px rgba(40,92,255,.025);pointer-events:none;
+  }
+  .builder-top{
+    position:relative;z-index:2;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 17px;
+    border-bottom:1px solid var(--line);background:rgba(250,252,255,.86);
+  }
+  .builder-dots{display:flex;gap:5px}
+  .builder-dots i{width:6px;height:6px;border-radius:50%;background:#d7deea}
+  .builder-dots i:first-child{background:#79a2ff}
+  .builder-title{position:absolute;left:50%;transform:translateX(-50%);color:#7e8ca3;font-size:8px;font-weight:700;letter-spacing:.12em}
+  .builder-state{display:flex;align-items:center;gap:6px;color:#6d7e97;font-size:7px}
+  .builder-state i{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 7px rgba(19,185,129,.55)}
+  .builder-body{position:relative;height:572px;display:grid;grid-template-columns:142px 1fr 156px}
+  .palette{padding:15px 11px;border-right:1px solid var(--line);background:rgba(248,251,255,.68)}
+  .palette-title{display:flex;align-items:center;justify-content:space-between;margin:1px 4px 10px;color:#76859c;font-size:7px;font-weight:750;letter-spacing:.12em}
+  .palette-title span{color:#b4bdca}
+  .palette-item{
+    display:flex;align-items:center;gap:8px;margin-bottom:7px;padding:8px 8px;border-radius:8px;
+    border:1px solid rgba(31,60,119,.07);background:rgba(255,255,255,.78);color:#4a5a75;font-size:7px;font-weight:650;
+  }
+  .palette-item i{display:flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:6px;background:#edf3ff;color:#4e73d9;font-size:5px;font-style:normal;font-weight:850}
+  .palette-item:nth-child(3) i{background:#f0eeff;color:#6b5bdc}
+  .palette-item:nth-child(4) i{background:#eafbf7;color:#159a72}
+  .palette-item:nth-child(5) i{background:#fff5e9;color:#d98735}
+  .palette-hint{margin:16px 4px 0;padding:10px;border-radius:8px;border:1px dashed rgba(40,92,255,.14);background:rgba(40,92,255,.035);color:#9aa7b9;font-size:6px;line-height:1.6}
+  .canvas{position:relative;overflow:hidden;background-image:radial-gradient(rgba(31,60,119,.1) .7px,transparent .7px);background-size:13px 13px}
+  .canvas-label{position:absolute;left:15px;top:13px;color:#a2adbd;font-size:6px;font-weight:750;letter-spacing:.15em}
+  .flow-line{position:absolute;left:50%;top:66px;width:1px;height:360px;transform:translateX(-50%);background:linear-gradient(rgba(40,92,255,.08),rgba(40,92,255,.5),rgba(8,188,212,.1))}
+  .flow-line::after{content:"";position:absolute;left:-3px;top:0;width:7px;height:24px;border-radius:7px;background:#fff;box-shadow:0 0 14px 4px rgba(8,188,212,.5);animation:builderFlow 4s ease-in-out infinite}
+  @keyframes builderFlow{0%{top:-20px}100%{top:360px}}
+  .flow-node{
+    position:absolute;left:50%;display:flex;align-items:center;gap:9px;width:250px;padding:11px 12px;
+    transform:translateX(-50%);border:1px solid rgba(31,60,119,.1);border-radius:11px;background:rgba(255,255,255,.94);
+    box-shadow:0 10px 26px rgba(41,72,135,.08);
+  }
+  .flow-node .node-icon{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:#edf3ff;color:#4b70d9;font-size:6px;font-weight:850}
+  .flow-node b{display:block;color:#2e3e5c;font-size:8px}
+  .flow-node span{display:block;margin-top:3px;color:#9aa6b7;font-size:6px}
+  .flow-node .node-status{margin-left:auto;color:#69a790;font-size:6px}
+  .flow-node.n1{top:47px}
+  .flow-node.n2{top:150px;border-color:rgba(40,92,255,.18)}
+  .flow-node.n3{top:253px}
+  .flow-node.n4{top:356px;border-color:rgba(8,188,212,.18)}
+  .n2 .node-icon{background:var(--grad);color:#fff;box-shadow:0 8px 16px rgba(40,92,255,.2)}
+  .n4 .node-icon{background:#eafbf7;color:#139a72}
+  .canvas-metrics{position:absolute;left:15px;right:15px;bottom:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .canvas-metric{padding:8px 9px;border-radius:8px;background:rgba(248,251,255,.9);border:1px solid rgba(31,60,119,.07)}
+  .canvas-metric small{display:block;color:#a0aabc;font-size:5px}
+  .canvas-metric b{display:block;margin-top:3px;color:#344563;font-size:8px}
+  .inspector{padding:14px 11px;border-left:1px solid var(--line);background:rgba(250,252,255,.8)}
+  .inspector-title{margin:1px 4px 12px;color:#76859c;font-size:7px;font-weight:750;letter-spacing:.12em}
+  .prop-group{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(31,60,119,.07)}
+  .prop-group:last-child{border-bottom:0}
+  .prop-label{margin:0 4px 6px;color:#9aa6b7;font-size:6px}
+  .prop-field{margin-bottom:5px;padding:7px 8px;border-radius:6px;background:#fff;border:1px solid rgba(31,60,119,.08);color:#52627c;font-size:6px}
+  .prop-field.active{border-color:rgba(40,92,255,.22);box-shadow:0 0 0 2px rgba(40,92,255,.04)}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;margin-top:6px;color:#79879d;font-size:6px}
+  .toggle{position:relative;width:21px;height:11px;border-radius:9px;background:var(--blue)}
+  .toggle::after{content:"";position:absolute;right:2px;top:2px;width:7px;height:7px;border-radius:50%;background:#fff}
+  .builder-float{
+    position:absolute;z-index:4;right:18px;bottom:48px;display:flex;align-items:center;gap:9px;padding:11px 14px;
+    border-radius:13px;border:1px solid rgba(40,92,255,.13);background:rgba(255,255,255,.9);
+    box-shadow:0 18px 44px rgba(39,72,145,.14);animation:floatY 5.5s ease-in-out infinite;
+  }
+  .builder-float i{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9px;background:rgba(19,185,129,.1);color:var(--green);font-size:8px;font-weight:850;font-style:normal}
+  .builder-float b{display:block;font-size:8px;color:#354662}
+  .builder-float span{display:block;margin-top:2px;font-size:6px;color:#98a5b8}
+  /* Slide 2: delivery gap */
+  .gap-layout{display:grid;grid-template-columns:570px 1fr;gap:26px;align-items:stretch}
+  .gap-thesis{
+    position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:468px;padding:34px 36px;
+    border-radius:26px;overflow:hidden;color:#f1f6ff;background:linear-gradient(145deg,#091b38,#0c2b58);box-shadow:0 28px 70px rgba(9,27,61,.2);
+  }
+  .gap-thesis::after{content:"";position:absolute;right:-170px;bottom:-180px;width:400px;height:400px;border-radius:50%;border:1px solid rgba(87,223,235,.12);box-shadow:0 0 0 60px rgba(87,223,235,.025)}
+  .gap-thesis .mini-label{color:#69dfe9;font-size:9px;font-weight:750;letter-spacing:.17em}
+  .gap-thesis h3{position:relative;z-index:2;margin-top:22px;font-size:47px;line-height:1.28;letter-spacing:-.045em}
+  .gap-thesis h3 span{color:#70e6ef}
+  .gap-thesis p{position:relative;z-index:2;max-width:450px;margin-top:20px;color:#a2b5d1;font-size:14px;line-height:1.85}
+  .gap-signals{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:31px}
+  .gap-signal{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.045)}
+  .gap-signal b{display:block;color:#e1ebfa;font-size:11px}
+  .gap-signal span{display:block;margin-top:5px;color:#7f97ba;font-size:8px;line-height:1.55}
+  .bottleneck-panel{padding:24px;border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.72);box-shadow:0 15px 42px rgba(39,69,135,.06)}
+  .bottleneck-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .bottleneck-title b{font-size:13px;letter-spacing:-.01em}
+  .bottleneck-title span{color:#a0abbd;font-size:8px;font-weight:700;letter-spacing:.14em}
+  .bottleneck{display:grid;grid-template-columns:46px 1fr;gap:15px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .bottleneck:last-child{border-bottom:0}
+  .bottleneck-no{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:13px;background:#eef3ff;color:var(--blue);font-size:10px;font-weight:850}
+  .bottleneck h4{font-size:17px;letter-spacing:-.02em}
+  .bottleneck p{margin-top:6px;color:var(--muted);font-size:11px;line-height:1.7}
+  .bottleneck-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .bottleneck-tags span{padding:4px 7px;border-radius:6px;background:#f3f6fc;color:#8190a5;font-size:7px;font-weight:650}
+  .answer-strip{
+    display:flex;align-items:center;gap:20px;margin-top:18px;padding:14px 20px;border:1px solid rgba(40,92,255,.14);border-radius:15px;
+    background:linear-gradient(100deg,rgba(40,92,255,.09),rgba(8,188,212,.045));
+  }
+  .answer-strip b{flex:0 0 auto;color:#263958;font-size:13px}
+  .answer-strip span{color:#65748d;font-size:10px;line-height:1.6}
+  .answer-strip em{flex:1;color:#9ba6b7;font-size:9px;font-style:normal;text-align:right}
+
+  /* Slide 3: low-code equation */
+  .equation{display:grid;grid-template-columns:1fr 58px 1fr 58px 1.12fr;gap:0;align-items:stretch;margin-top:4px}
+  .eq-panel{position:relative;min-height:410px;padding:26px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.76);box-shadow:0 18px 48px rgba(39,69,135,.07);overflow:hidden}
+  .eq-panel.dna::after{content:"";position:absolute;right:-90px;bottom:-100px;width:240px;height:240px;border-radius:50%;border:1px solid rgba(40,92,255,.08);box-shadow:0 0 0 42px rgba(40,92,255,.02)}
+  .eq-label{display:flex;align-items:center;justify-content:space-between;color:#7f8ca3;font-size:8px;font-weight:750;letter-spacing:.14em}
+  .eq-label span{padding:5px 7px;border-radius:6px;background:#f2f6ff;color:#78879e;font-size:7px}
+  .eq-panel h3{margin-top:22px;font-size:31px;line-height:1.3;letter-spacing:-.035em}
+  .eq-panel h3 span{color:var(--blue)}
+  .eq-panel > p{margin-top:10px;color:var(--muted);font-size:11px;line-height:1.7}
+  .cap-stack{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:23px}
+  .cap-block{padding:13px 12px;border:1px solid rgba(31,60,119,.09);border-radius:11px;background:#f8fbff;color:#455773;font-size:10px;font-weight:700}
+  .cap-block small{display:block;margin-top:4px;color:#98a4b7;font-size:7px;font-weight:600;line-height:1.5}
+  .eq-op{display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:34px;font-weight:300}
+  .eq-result{
+    color:#eff6ff;background:linear-gradient(145deg,#091b38,#0d2d5b);border-color:transparent;box-shadow:0 26px 64px rgba(8,27,61,.2);
+  }
+  .eq-result::after{content:"";position:absolute;right:-130px;bottom:-150px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(8,188,212,.2),transparent 68%)}
+  .eq-result .eq-label{color:#69dfe9}
+  .eq-result .eq-label span{background:rgba(255,255,255,.06);color:#8ea5c5}
+  .eq-result h3{position:relative;z-index:2;color:#fff}
+  .eq-result h3 span{color:#66e3ed}
+  .eq-result > p{position:relative;z-index:2;color:#9fb2cf}
+  .result-points{position:relative;z-index:2;display:grid;gap:8px;margin-top:24px}
+  .result-point{display:flex;align-items:flex-start;gap:9px;padding:10px 11px;border-radius:9px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.04)}
+  .result-point i{width:5px;height:5px;flex:0 0 5px;border-radius:50%;background:#5de0ea;margin-top:5px}
+  .result-point b{display:block;color:#dce8f8;font-size:9px}
+  .result-point span{display:block;margin-top:3px;color:#8299ba;font-size:7px;line-height:1.5}
+  .equation-caption{display:flex;align-items:center;gap:15px;margin-top:18px;padding:16px 20px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.68)}
+  .equation-caption b{flex:0 0 160px;color:#2c3e5f;font-size:12px}
+  .equation-caption span{color:#708098;font-size:10px;line-height:1.65}
+  .equation-caption em{margin-left:auto;color:var(--blue);font-size:9px;font-style:normal;font-weight:750;letter-spacing:.08em;white-space:nowrap}
+
+  /* Slide 4: platform layers */
+  .platform-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:28px}
+  .platform-head h2{font-size:48px}
+  .platform-badge{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#a9bddb;font-size:9px;font-weight:700;letter-spacing:.12em;white-space:nowrap}
+  .platform-badge i{width:5px;height:5px;border-radius:50%;background:#60deea;box-shadow:0 0 9px rgba(96,222,234,.65)}
+  .layer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .layer-card{
+    position:relative;min-height:440px;padding:24px 21px;border-radius:20px;border:1px solid rgba(255,255,255,.085);
+    background:rgba(255,255,255,.04);overflow:hidden;transition:.3s;
+  }
+  .layer-card:nth-child(2){background:linear-gradient(160deg,rgba(40,92,255,.14),rgba(255,255,255,.035));border-color:rgba(102,149,255,.19)}
+  .layer-card:hover{transform:translateY(-5px);border-color:rgba(101,220,235,.24);background-color:rgba(255,255,255,.055)}
+  .layer-index{display:flex;align-items:center;justify-content:space-between;color:#6d84a7;font-size:8px;font-weight:750;letter-spacing:.13em}
+  .layer-index span:last-child{color:#526a8b;font-size:7px}
+  .layer-icon{
+    display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin-top:30px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.065);color:#75e1eb;font-size:9px;font-weight:850;letter-spacing:.04em;
+  }
+  .layer-card h3{margin-top:24px;font-size:23px;letter-spacing:-.025em}
+  .layer-card > p{margin-top:10px;color:#90a5c2;font-size:10px;line-height:1.7}
+  .layer-list{display:grid;gap:7px;margin-top:22px}
+  .layer-list span{display:flex;align-items:center;gap:7px;color:#c0cede;font-size:9px;line-height:1.5}
+  .layer-list i{width:4px;height:4px;border-radius:50%;background:#55dce7;flex:0 0 4px}
+  .layer-value{position:absolute;left:21px;right:21px;bottom:18px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07);color:#667f9f;font-size:7px;line-height:1.5}
+  .layer-output{
+    display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;margin-top:14px;padding:13px 18px;border-radius:14px;
+    border:1px solid rgba(93,224,234,.13);background:linear-gradient(100deg,rgba(40,92,255,.11),rgba(8,188,212,.045));color:#8299b9;font-size:9px;
+  }
+  .layer-output b{color:#dce8f8;font-size:11px}
+  .layer-output span{line-height:1.6}
+  /* Slide 5: customers */
+  .customer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:6px}
+  .customer-card{
+    position:relative;min-height:390px;padding:26px 25px;border:1px solid var(--line);border-radius:24px;
+    background:rgba(255,255,255,.76);overflow:hidden;transition:.35s;
+  }
+  .customer-card:hover{transform:translateY(-6px);box-shadow:0 24px 58px rgba(39,69,135,.1);background:#fff;border-color:rgba(40,92,255,.16)}
+  .customer-card::after{content:"";position:absolute;right:-80px;bottom:-90px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(40,92,255,.08);box-shadow:0 0 0 34px rgba(40,92,255,.02)}
+  .customer-head{display:flex;align-items:center;justify-content:space-between}
+  .customer-no{color:var(--blue);font-size:10px;font-weight:850;letter-spacing:.12em}
+  .customer-type{color:#9da8ba;font-size:8px;font-weight:700;letter-spacing:.13em}
+  .customer-icon{
+    display:flex;align-items:center;justify-content:center;width:54px;height:54px;margin-top:26px;border-radius:16px;
+    background:linear-gradient(145deg,#eef3ff,#f9fbff);border:1px solid rgba(40,92,255,.09);color:var(--blue);font-size:10px;font-weight:850;letter-spacing:.04em;
+  }
+  .customer-card h3{margin-top:21px;font-size:26px;letter-spacing:-.03em}
+  .customer-card .pain{margin-top:10px;color:var(--muted);font-size:11px;line-height:1.72}
+  .customer-value{margin-top:20px;padding:13px 14px;border-radius:11px;background:#f5f8ff;border:1px solid rgba(40,92,255,.07)}
+  .customer-value small{display:block;color:#9aa6b8;font-size:7px;font-weight:700;letter-spacing:.12em}
+  .customer-value b{display:block;margin-top:5px;color:#31415e;font-size:11px;line-height:1.55}
+  .customer-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .customer-tags span{padding:5px 8px;border-radius:7px;background:#f1f5fc;color:#6c7c94;font-size:7px}
+  .customer-quote{
+    display:flex;align-items:center;gap:18px;margin-top:18px;padding:16px 20px;border-radius:15px;
+    border:1px solid rgba(40,92,255,.13);background:linear-gradient(100deg,rgba(40,92,255,.08),rgba(8,188,212,.04));
+  }
+  .customer-quote b{flex:0 0 auto;color:#2d3f5e;font-size:12px}
+  .customer-quote span{color:#65758d;font-size:10px;line-height:1.6}
+  .customer-quote em{margin-left:auto;color:var(--blue);font-size:9px;font-style:normal;font-weight:750;white-space:nowrap}
+
+  /* Slide 6: business model */
+  .business-layout{display:grid;grid-template-columns:1fr 1.02fr;gap:22px;align-items:stretch}
+  .revenue-panel{padding:24px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.75);box-shadow:0 16px 44px rgba(39,69,135,.06)}
+  .panel-cap{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+  .panel-cap b{font-size:13px}
+  .panel-cap span{color:#9ca8ba;font-size:8px;font-weight:700;letter-spacing:.13em}
+  .revenue-card{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:17px 16px;border-radius:14px;border:1px solid rgba(31,60,119,.08);background:#f8fbff}
+  .revenue-card + .revenue-card{margin-top:10px}
+  .revenue-card:nth-child(3){background:linear-gradient(100deg,rgba(40,92,255,.075),rgba(248,251,255,.9));border-color:rgba(40,92,255,.13)}
+  .revenue-no{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:#eaf0ff;color:var(--blue);font-size:9px;font-weight:850}
+  .revenue-copy b{display:block;color:#2f405f;font-size:13px}
+  .revenue-copy span{display:block;margin-top:5px;color:#7a889e;font-size:9px;line-height:1.6}
+  .revenue-type{color:#93a0b4;font-size:7px;font-weight:700;letter-spacing:.1em;white-space:nowrap}
+  .business-shift{margin-top:14px;padding:15px 17px;border-radius:13px;color:#dce8f8;background:linear-gradient(135deg,#091b38,#0d2a54)}
+  .business-shift small{display:block;color:#6edfe8;font-size:7px;font-weight:750;letter-spacing:.14em}
+  .business-shift b{display:block;margin-top:6px;font-size:13px;line-height:1.55}
+  .flywheel-panel{position:relative;min-height:470px;padding:24px;border:1px solid rgba(40,92,255,.13);border-radius:24px;background:rgba(255,255,255,.72);overflow:hidden}
+  .flywheel-panel::after{content:"";position:absolute;left:50%;top:54%;width:440px;height:440px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(40,92,255,.09);box-shadow:0 0 0 46px rgba(40,92,255,.02);pointer-events:none}
+  .flywheel{position:relative;height:360px}
+  .wheel-ring{
+    position:absolute;left:50%;top:50%;width:280px;height:280px;transform:translate(-50%,-50%);border-radius:50%;
+    border:1px dashed rgba(40,92,255,.22);animation:spin 36s linear infinite;
+  }
+  .wheel-ring::after{content:"";position:absolute;left:50%;top:-4px;width:8px;height:8px;transform:translateX(-50%);border-radius:50%;background:var(--cyan);box-shadow:0 0 13px rgba(8,188,212,.7)}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .wheel-core{
+    position:absolute;left:50%;top:50%;width:116px;height:116px;transform:translate(-50%,-50%);border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:var(--grad);
+    box-shadow:0 20px 50px rgba(40,92,255,.25);text-align:center;
+  }
+  .wheel-core b{font-size:15px}
+  .wheel-core span{margin-top:4px;color:rgba(255,255,255,.75);font-size:7px;letter-spacing:.1em}
+  .wheel-node{
+    position:absolute;display:flex;align-items:center;gap:8px;min-width:142px;padding:10px 12px;border-radius:11px;
+    border:1px solid rgba(31,60,119,.09);background:#fff;box-shadow:0 10px 26px rgba(39,69,135,.08);
+  }
+  .wheel-node i{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:#eef3ff;color:var(--blue);font-size:6px;font-weight:850;font-style:normal}
+  .wheel-node b{display:block;color:#3c4c68;font-size:8px}
+  .wheel-node span{display:block;margin-top:2px;color:#9aa6b8;font-size:6px}
+  .wn1{left:4px;top:42px}.wn2{right:4px;top:42px}.wn3{right:20px;bottom:38px}.wn4{left:20px;bottom:38px}.wn5{left:50%;bottom:1px;transform:translateX(-50%)}
+  .flywheel-note{position:absolute;left:24px;right:24px;bottom:19px;padding-top:12px;border-top:1px solid var(--line);color:#718096;font-size:9px;line-height:1.55;text-align:center}
+  .moat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+  .moat-chip{padding:9px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.65);color:#6b7a91;font-size:8px;font-weight:700;text-align:center}
+
+  /* Slide 7: ending */
+  .ending{padding:0}
+  .ending .content{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:58px 115px 96px;text-align:center}
+  .ending-rings{position:absolute;left:50%;top:43%;width:720px;height:720px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(109,154,255,.09);pointer-events:none}
+  .ending-rings::before,.ending-rings::after{content:"";position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(109,154,255,.1)}
+  .ending-rings::before{width:480px;height:480px;transform:translate(-50%,-50%)}
+  .ending-rings::after{width:260px;height:260px;transform:translate(-50%,-50%);border-color:rgba(96,220,233,.12)}
+  .ending-glow{position:absolute;left:50%;top:43%;width:220px;height:220px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(60,219,235,.24),transparent 68%);filter:blur(18px);animation:pulse 5s ease-in-out infinite}
+  .ending-badge{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(126,172,255,.17);background:rgba(255,255,255,.055);color:#7fe1eb;font-size:9px;font-weight:750;letter-spacing:.17em}
+  .ending-badge i{width:5px;height:5px;border-radius:50%;background:#60dfe9;box-shadow:0 0 12px rgba(96,223,233,.8);animation:blink 2s ease-in-out infinite}
+  .ending h1{position:relative;z-index:2;max-width:1060px;margin-top:25px;font-size:62px;line-height:1.22;letter-spacing:-.055em;font-weight:850}
+  .ending h1 span{color:transparent;background:linear-gradient(110deg,#8cb6ff,#5fe4ef);background-clip:text;-webkit-background-clip:text}
+  .ending-sub{position:relative;z-index:2;max-width:760px;margin-top:17px;color:#9eb1cf;font-size:15px;line-height:1.8}
+  .ending-steps{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:820px;margin-top:30px}
+  .ending-step{padding:13px 15px;border-radius:12px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.05);text-align:left}
+  .ending-step small{display:block;color:#61dce7;font-size:7px;font-weight:750;letter-spacing:.13em}
+  .ending-step b{display:block;margin-top:5px;color:#dce8f8;font-size:10px}
+  .ending-step span{display:block;margin-top:4px;color:#7f96b7;font-size:7px;line-height:1.55}
+  .ending-footer{position:absolute;z-index:3;left:88px;right:210px;bottom:43px;display:flex;align-items:center;gap:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.09);color:#6f84a5;font-size:8px;letter-spacing:.08em}
+  .ending-footer span:nth-child(2){flex:1;text-align:center;color:#a7b8d1}
+  .ending-footer span:last-child{color:#72dce7;text-align:right}
+
+  /* controls */
+  .progress{position:absolute;z-index:20;left:0;top:0;width:0;height:3px;background:var(--grad);box-shadow:0 0 16px rgba(8,188,212,.46);transition:width .35s ease}
+  .rail{position:absolute;z-index:18;right:23px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px}
+  .rail button{position:relative;width:7px;height:7px;border:0;border-radius:50%;padding:0;background:rgba(48,72,122,.18);cursor:pointer;transition:.25s}
+  .rail button:hover,.rail button.active{height:22px;border-radius:7px;background:var(--blue);box-shadow:0 0 12px rgba(40,92,255,.35)}
+  .rail button span{position:absolute;right:16px;top:50%;transform:translateY(-50%);white-space:nowrap;padding:5px 8px;border-radius:6px;background:#0b1a35;color:#dbe7f8;font-size:8px;opacity:0;pointer-events:none;transition:.2s}
+  .rail button:hover span{opacity:1}
+  .controls{position:absolute;z-index:20;right:54px;bottom:24px;display:flex;align-items:center;gap:6px;color:#8996aa;font-size:9px;font-variant-numeric:tabular-nums}
+  .controls button{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid rgba(38,64,113,.12);border-radius:8px;background:rgba(255,255,255,.72);color:#61718b;cursor:pointer;transition:.2s}
+  .controls button:hover{border-color:rgba(40,92,255,.28);color:var(--blue);background:#fff}
+  .controls .counter{margin-right:2px;letter-spacing:.08em}
+  .controls .counter b{color:#344563}
+  .hint{position:absolute;z-index:17;left:50%;bottom:27px;transform:translateX(-50%);color:#9da8b9;font-size:8px;letter-spacing:.1em;transition:.45s}
+  .hint.gone{opacity:0}
+  .dark-control .controls button{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#9cb0cf}
+  .dark-control .controls .counter b{color:#dbe7f8}
+  .dark-control .rail button{background:rgba(255,255,255,.16)}
+  .dark-control .rail button:hover,.dark-control .rail button.active{background:#6ae0ec}
+  .dark-control .hint{color:#7086a8}
+  body.static .reveal,body.static .slide{opacity:1!important;transform:none!important;visibility:visible!important;animation:none!important}
+  body.static .slide:not(.active){display:none}
+  body.static .wheel-ring,body.static .builder-float,body.static .ending-glow,body.static .ending-badge i{animation:none!important}
+  ::selection{background:rgba(40,92,255,.18);color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  }
+</style>
+<style>
+
+/* Internal innovation edition — unified light visual */
+:root{
+  --device:#09a9c4;
+  --device-soft:rgba(9,169,196,.10);
+  --app:#285cff;
+  --app-soft:rgba(40,92,255,.10);
+  --ai:#7258ff;
+  --ai-soft:rgba(114,88,255,.10);
+  --tool:#13a97d;
+  --tool-soft:rgba(19,169,125,.10);
+}
+.slide.dark{color:var(--ink);background:radial-gradient(circle at 90% 7%,rgba(80,135,255,.10),transparent 34%),radial-gradient(circle at 8% 95%,rgba(8,188,212,.075),transparent 28%),linear-gradient(180deg,#fbfdff 0%,#f3f7ff 100%)}
+.slide.dark::before{opacity:.58;background-image:linear-gradient(rgba(31,60,119,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(31,60,119,.035) 1px,transparent 1px)}
+.slide.dark::after{border-color:rgba(40,92,255,.09);box-shadow:0 0 0 92px rgba(40,92,255,.025),0 0 0 184px rgba(8,188,212,.018)}
+.slide.dark .eyebrow{color:var(--blue)}
+.slide.dark h2 .accent{background:var(--grad);background-clip:text;-webkit-background-clip:text}
+.slide.dark .subtitle{color:var(--muted)}
+
+/* Shared layer labels */
+.layer-device{color:var(--device)}
+.layer-app{color:var(--app)}
+.layer-ai{color:var(--ai)}
+.value-mark{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;font-size:7px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.value-mark.device{color:#087f94;background:var(--device-soft)}
+.value-mark.app{color:#204dc9;background:var(--app-soft)}
+.value-mark.ai{color:#5d46d6;background:var(--ai-soft)}
+
+/* Page 2 — three values */
+.value-model-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:4px}
+.value-pillar{
+  position:relative;min-height:420px;padding:26px 24px;border-radius:24px;border:1px solid var(--line);
+  background:rgba(255,255,255,.76);overflow:hidden;transition:.35s;
+}
+.value-pillar:hover{transform:translateY(-5px);box-shadow:0 22px 54px rgba(39,69,135,.09);background:#fff}
+.value-pillar::after{content:"";position:absolute;right:-80px;bottom:-95px;width:210px;height:210px;border-radius:50%;border:1px solid rgba(40,92,255,.07);box-shadow:0 0 0 35px rgba(40,92,255,.018)}
+.value-pillar.device::before,.value-pillar.app::before,.value-pillar.ai::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.value-pillar.device::before{background:linear-gradient(90deg,var(--device),#70dce7)}
+.value-pillar.app::before{background:linear-gradient(90deg,var(--app),#7eabff)}
+.value-pillar.ai::before{background:linear-gradient(90deg,var(--ai),#b09dff)}
+.value-pillar.device{background:linear-gradient(165deg,rgba(9,169,196,.055),rgba(255,255,255,.84) 42%)}
+.value-pillar.app{background:linear-gradient(165deg,rgba(40,92,255,.055),rgba(255,255,255,.84) 42%)}
+.value-pillar.ai{background:linear-gradient(165deg,rgba(114,88,255,.055),rgba(255,255,255,.84) 42%)}
+.pillar-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between}
+.pillar-index{color:#9aa6b9;font-size:8px;font-weight:750;letter-spacing:.14em}
+.pillar-icon{
+  position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:54px;height:54px;margin-top:22px;
+  border-radius:16px;border:1px solid rgba(31,60,119,.08);background:#fff;box-shadow:0 10px 26px rgba(39,69,135,.08);
+  font-size:10px;font-weight:850;letter-spacing:.05em;
+}
+.device .pillar-icon{color:var(--device);background:linear-gradient(145deg,#f0fdff,#fff)}
+.app .pillar-icon{color:var(--app);background:linear-gradient(145deg,#f0f4ff,#fff)}
+.ai .pillar-icon{color:var(--ai);background:linear-gradient(145deg,#f4f1ff,#fff)}
+.value-pillar h3{position:relative;z-index:2;margin-top:20px;font-size:27px;letter-spacing:-.03em}
+.value-pillar .role{position:relative;z-index:2;margin-top:5px;font-size:10px;font-weight:700}
+.device .role{color:#15899d}.app .role{color:#345bc9}.ai .role{color:#6852dc}
+.value-list{position:relative;z-index:2;display:grid;gap:10px;margin-top:19px}
+.value-list div{display:grid;grid-template-columns:7px 1fr;gap:8px;color:#5e6e87;font-size:10px;line-height:1.65}
+.value-list i{width:5px;height:5px;border-radius:50%;margin-top:6px;background:currentColor;opacity:.65}
+.device .value-list{color:#5b7e86}.app .value-list{color:#5d6c86}.ai .value-list{color:#6a6488}
+.pillar-value{
+  position:absolute;z-index:2;left:24px;right:24px;bottom:21px;padding-top:13px;border-top:1px solid var(--line);
+  color:#4a5b77;font-size:10px;line-height:1.65;font-weight:650;
+}
+.value-loop{
+  display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr 32px 1fr;align-items:center;gap:8px;margin-top:16px;
+  padding:14px 18px;border-radius:15px;border:1px solid rgba(40,92,255,.12);
+  background:linear-gradient(100deg,rgba(9,169,196,.055),rgba(40,92,255,.065),rgba(114,88,255,.055));
+}
+.loop-token{padding:8px 10px;border-radius:9px;background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.9);text-align:center;color:#53637d;font-size:9px;font-weight:700}
+.loop-token b{display:block;margin-bottom:2px;color:#263958;font-size:10px}
+.loop-arrow{text-align:center;color:#8ca2c4;font-size:15px}
+
+/* Page 3 — low-code method */
+.method-layout{display:grid;grid-template-columns:1fr 430px;gap:23px;align-items:stretch;margin-top:2px}
+.method-main{padding:28px;border:1px solid var(--line);border-radius:25px;background:rgba(255,255,255,.74);box-shadow:0 18px 48px rgba(38,69,136,.06)}
+.method-statement{max-width:770px;font-size:31px;line-height:1.48;letter-spacing:-.03em;font-weight:650;color:#2a3a58}
+.method-statement strong{color:var(--blue);font-weight:850}
+.method-statement-note{margin-top:15px;color:var(--muted);font-size:12px;line-height:1.75}
+.principle-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:25px}
+.principle{position:relative;padding:17px 16px 15px;border-radius:13px;border:1px solid var(--line);background:#f8fbff}
+.principle b{display:block;color:#334461;font-size:13px}
+.principle span{display:block;margin-top:6px;color:#7d8ba1;font-size:9px;line-height:1.6}
+.principle i{position:absolute;right:13px;top:12px;color:rgba(40,92,255,.25);font-size:8px;font-style:normal;font-weight:800}
+.method-side{position:relative;padding:24px;border:1px solid rgba(40,92,255,.14);border-radius:25px;background:linear-gradient(160deg,rgba(40,92,255,.075),rgba(255,255,255,.82) 50%);overflow:hidden}
+.method-side::after{content:"";position:absolute;right:-100px;bottom:-120px;width:270px;height:270px;border-radius:50%;border:1px solid rgba(40,92,255,.09);box-shadow:0 0 0 42px rgba(40,92,255,.02)}
+.method-side-title{position:relative;z-index:2;color:#344563;font-size:13px;font-weight:800}
+.method-side-sub{position:relative;z-index:2;margin-top:5px;color:#94a0b3;font-size:8px;font-weight:700;letter-spacing:.12em}
+.method-step{position:relative;z-index:2;display:grid;grid-template-columns:34px 1fr;gap:12px;margin-top:14px;padding:14px 13px;border-radius:12px;background:rgba(255,255,255,.8);border:1px solid rgba(31,60,119,.08)}
+.method-step-no{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;background:#edf3ff;color:var(--blue);font-size:8px;font-weight:850}
+.method-step b{display:block;color:#334461;font-size:11px}
+.method-step span{display:block;margin-top:5px;color:#8290a5;font-size:8px;line-height:1.55}
+.method-outcome{position:relative;z-index:2;margin-top:15px;padding:13px 14px;border-radius:11px;border:1px solid rgba(40,92,255,.13);background:linear-gradient(110deg,rgba(40,92,255,.085),rgba(8,188,212,.045));color:#384a68}
+.method-outcome small{display:block;color:var(--blue);font-size:7px;font-weight:750;letter-spacing:.12em}
+.method-outcome b{display:block;margin-top:5px;font-size:11px;line-height:1.6}
+.team-values{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}
+.team-value{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.7);color:#6c7b92;font-size:9px;text-align:center}
+.team-value b{color:#384a68}
+
+/* Page 4 — foundation */
+.foundation-board{display:grid;gap:10px;margin-top:2px}
+.foundation-row{
+  display:grid;grid-template-columns:185px 1fr;gap:12px;align-items:stretch;padding:12px;
+  border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.76);box-shadow:0 8px 24px rgba(39,69,135,.035);
+}
+.foundation-row.f-device{background:linear-gradient(100deg,rgba(9,169,196,.075),rgba(255,255,255,.8))}
+.foundation-row.f-app{background:linear-gradient(100deg,rgba(40,92,255,.075),rgba(255,255,255,.8))}
+.foundation-row.f-ai{background:linear-gradient(100deg,rgba(114,88,255,.075),rgba(255,255,255,.8))}
+.foundation-row.f-tools{background:linear-gradient(100deg,rgba(19,169,125,.07),rgba(255,255,255,.8))}
+.foundation-label{display:flex;align-items:center;gap:11px;padding:7px 10px;border-right:1px solid var(--line)}
+.foundation-label i{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;color:#fff;font-size:8px;font-style:normal;font-weight:850}
+.f-device .foundation-label i{background:linear-gradient(145deg,#08b6cd,#6edfeb)}
+.f-app .foundation-label i{background:linear-gradient(145deg,#285cff,#7ba8ff)}
+.f-ai .foundation-label i{background:linear-gradient(145deg,#7258ff,#a18fff)}
+.f-tools .foundation-label i{background:linear-gradient(145deg,#13a97d,#74d5b8)}
+.foundation-label b{display:block;color:#30415f;font-size:12px}
+.foundation-label span{display:block;margin-top:4px;color:#96a2b5;font-size:7px;letter-spacing:.08em}
+.foundation-nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.foundation-nodes.five{grid-template-columns:repeat(5,1fr)}
+.foundation-node{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:64px;padding:8px;
+  border:1px solid rgba(31,60,119,.09);border-radius:10px;background:rgba(255,255,255,.75);text-align:center;
+}
+.foundation-node b{color:#40516e;font-size:9px}
+.foundation-node span{margin-top:3px;color:#93a0b3;font-size:7px;line-height:1.4}
+.foundation-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+.foundation-summary div{padding:12px 14px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.68);color:#6d7b91;font-size:9px;line-height:1.55}
+.foundation-summary b{display:block;margin-bottom:3px;color:#354663;font-size:10px}
+
+/* Page 5 — interaction */
+.interaction-chain{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:22px}
+.interaction-chain::before{content:"";position:absolute;left:7%;right:7%;top:27px;height:2px;background:linear-gradient(90deg,rgba(9,169,196,.38),rgba(40,92,255,.42),rgba(114,88,255,.36),rgba(19,169,125,.38));overflow:hidden}
+.interaction-chain::after{content:"";position:absolute;left:7%;top:23px;width:90px;height:10px;border-radius:10px;background:rgba(255,255,255,.9);box-shadow:0 0 18px 5px rgba(8,188,212,.38);animation:chainFlow 4s linear infinite}
+@keyframes chainFlow{0%{transform:translateX(-100px)}100%{transform:translateX(1060px)}}
+.interaction-step{position:relative;z-index:2;text-align:center}
+.step-node{display:flex;align-items:center;justify-content:center;width:54px;height:54px;margin:0 auto 14px;border-radius:50%;background:#fff;border:2px solid rgba(40,92,255,.14);box-shadow:0 10px 24px rgba(39,69,135,.1);font-size:8px;font-weight:850;letter-spacing:.04em}
+.interaction-step:nth-child(1) .step-node,.interaction-step:nth-child(2) .step-node,.interaction-step:nth-child(6) .step-node{color:var(--device);border-color:rgba(9,169,196,.18)}
+.interaction-step:nth-child(3) .step-node,.interaction-step:nth-child(4) .step-node{color:var(--ai);border-color:rgba(114,88,255,.18)}
+.interaction-step:nth-child(5) .step-node{color:var(--app);border-color:rgba(40,92,255,.18)}
+.step-card{min-height:176px;padding:17px 13px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.78);text-align:left}
+.step-card small{display:block;color:#9ba6b8;font-size:7px;font-weight:750;letter-spacing:.1em}
+.step-card b{display:block;margin-top:7px;color:#30415f;font-size:15px}
+.step-card p{margin-top:7px;color:#7b899e;font-size:9px;line-height:1.65}
+.interaction-example{display:grid;grid-template-columns:215px 1fr;gap:18px;align-items:center;margin-top:19px;padding:17px 19px;border:1px solid rgba(40,92,255,.13);border-radius:16px;background:linear-gradient(100deg,rgba(40,92,255,.065),rgba(8,188,212,.035))}
+.interaction-example b{color:#31425f;font-size:12px;line-height:1.55}
+.interaction-example b span{display:block;margin-top:4px;color:#8b98ac;font-size:8px;font-weight:600}
+.example-flow{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr;gap:6px;align-items:center}
+.example-chip{padding:8px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.8);color:#5e6e86;font-size:8px;text-align:center}
+.example-chip b{display:block;margin-bottom:2px;color:#30415f;font-size:8px}
+.example-arrow{text-align:center;color:#8ca1c1}
+.interaction-values{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.interaction-value{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.72)}
+.interaction-value i{display:flex;align-items:center;justify-content:center;width:42px;height:30px;border-radius:8px;font-style:normal;font-size:7px;font-weight:850}
+.interaction-value.device i{color:#078296;background:var(--device-soft)}
+.interaction-value.app i{color:#234fca;background:var(--app-soft)}
+.interaction-value.ai i{color:#624ad8;background:var(--ai-soft)}
+.interaction-value b{display:block;color:#354663;font-size:10px}
+.interaction-value span{display:block;margin-top:2px;color:#8794a8;font-size:7px;line-height:1.45}
+
+/* Page 6 — console demo */
+.console-layout{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-top:2px}
+.console-mock{
+  position:relative;height:500px;border-radius:22px;border:1px solid rgba(31,60,119,.13);overflow:hidden;
+  background:#f8faff;box-shadow:0 30px 78px rgba(36,68,137,.14);display:grid;grid-template-columns:154px 1fr;
+}
+.mock-side{padding:16px 12px;background:linear-gradient(160deg,#edf4ff,#e8f1ff);color:#526783;border-right:1px solid #dfe8f6}
+.mock-brand{display:flex;align-items:center;gap:8px;padding:2px 7px 16px}
+.mock-brand i{width:25px;height:25px;border-radius:8px;background:var(--grad)}
+.mock-brand b{font-size:9px;letter-spacing:.1em}
+.mock-brand small{display:block;margin-top:2px;color:#91a0b5;font-size:5px;letter-spacing:.12em}
+.mock-nav{display:grid;gap:4px;margin-top:12px}
+.mock-nav span{padding:8px 9px;border-radius:7px;color:#7889a2;font-size:7px}
+.mock-nav span.active{color:#285cff;background:rgba(40,92,255,.09);box-shadow:inset 2px 0 0 #285cff}
+.mock-main{padding:14px 16px;min-width:0}
+.mock-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:11px;border-bottom:1px solid #e6ecf6}
+.mock-head b{display:block;color:#263854;font-size:11px}
+.mock-head span{display:block;margin-top:3px;color:#98a4b6;font-size:6px}
+.mock-head-right{display:flex;gap:5px}
+.mock-btn{padding:5px 8px;border-radius:6px;border:1px solid #e0e7f2;background:#fff;color:#75849a;font-size:6px}
+.mock-btn.primary{background:var(--app);border-color:var(--app);color:#fff}
+.mock-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mock-metric{padding:9px;border-radius:8px;border:1px solid #e6ecf6;background:#fff}
+.mock-metric small{display:block;color:#9ba7b9;font-size:6px}
+.mock-metric b{display:block;margin-top:3px;color:#2d3f5c;font-size:14px}
+.mock-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:9px;margin-top:9px}
+.mock-panel{padding:10px;border-radius:9px;border:1px solid #e6ecf6;background:#fff;min-width:0}
+.mock-panel-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mock-panel-title b{color:#374963;font-size:7px}
+.mock-panel-title span{color:#a0aabc;font-size:5px}
+.mock-agent{display:flex;gap:8px;align-items:center;padding:8px;border-radius:7px;background:#f5f8ff;border:1px solid #e9eff9}
+.mock-agent-avatar{width:36px;height:36px;border-radius:11px;background:var(--grad);box-shadow:0 8px 18px rgba(40,92,255,.18)}
+.mock-agent b{display:block;color:#31425d;font-size:7px}
+.mock-agent span{display:block;margin-top:3px;color:#98a5b8;font-size:5px}
+.mock-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.mock-tags span{padding:4px 6px;border-radius:5px;background:#f2f6fc;border:1px solid #ebeff6;color:#74839a;font-size:5px}
+.mock-list{display:grid;gap:4px}
+.mock-list-row{display:grid;grid-template-columns:27px 1fr auto;gap:6px;align-items:center;padding:6px;border-radius:6px;background:#f7f9fd;border:1px solid #edf1f7}
+.mock-list-row i{display:flex;align-items:center;justify-content:center;width:26px;height:20px;border-radius:5px;background:#eaf0ff;color:#4f73d2;font-size:5px;font-style:normal;font-weight:800}
+.mock-list-row b{color:#596980;font-size:6px}
+.mock-list-row span{color:#a2adbd;font-size:5px}
+.mock-bottom{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.mock-history{display:grid;gap:3px;margin-top:2px}
+.mock-history span{padding:5px 6px;border-radius:5px;background:#f8fafd;color:#7f8da2;font-size:5px}
+.mock-chart{position:relative;height:44px;margin-top:3px;border-radius:7px;overflow:hidden;background:linear-gradient(180deg,rgba(40,92,255,.07),rgba(8,188,212,.01))}
+.mock-chart svg{position:absolute;inset:0;width:100%;height:100%}
+.console-points{display:grid;gap:10px}
+.console-point{display:grid;grid-template-columns:34px 1fr;gap:11px;padding:14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.76)}
+.console-point i{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;background:#edf3ff;color:var(--app);font-size:7px;font-style:normal;font-weight:850}
+.console-point b{display:block;color:#344563;font-size:12px}
+.console-point span{display:block;margin-top:5px;color:#7b899e;font-size:8px;line-height:1.6}
+.console-note{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}
+.console-note span{padding:6px 8px;border-radius:7px;background:#f1f5fc;color:#718097;font-size:7px}
+
+/* Page 7 — light closing */
+.light-end{
+  background:
+    radial-gradient(circle at 50% 48%,rgba(61,131,255,.12),transparent 30%),
+    radial-gradient(circle at 86% 16%,rgba(8,188,212,.075),transparent 28%),
+    linear-gradient(180deg,#fbfdff,#f2f7ff);
+}
+.light-end::after{right:-250px;bottom:-380px;width:760px;height:760px;border-color:rgba(40,92,255,.08)}
+.light-end .ending-rings{top:48%;border-color:rgba(40,92,255,.08)}
+.light-end .ending-rings::before,.light-end .ending-rings::after{border-color:rgba(40,92,255,.09)}
+.light-end .ending-glow{top:48%;background:radial-gradient(circle,rgba(75,143,255,.16),transparent 68%)}
+.light-end .ending-badge{border-color:rgba(40,92,255,.14);background:rgba(255,255,255,.72);color:var(--blue);box-shadow:0 8px 28px rgba(39,69,135,.06)}
+.light-end .ending-badge i{background:var(--cyan);box-shadow:0 0 10px rgba(8,188,212,.6)}
+.light-end h1{color:var(--ink);font-size:59px}
+.light-end h1 span{background:var(--grad);background-clip:text;-webkit-background-clip:text}
+.light-end .ending-sub{color:#6e7d94}
+.light-end .ending-steps{width:870px}
+.light-end .ending-step{background:rgba(255,255,255,.76);border-color:var(--line);box-shadow:0 10px 30px rgba(39,69,135,.045)}
+.light-end .ending-step small{color:var(--blue)}
+.light-end .ending-step b{color:#344563}
+.light-end .ending-step span{color:#8592a6}
+.light-end .ending-footer{border-color:var(--line);color:#9aa6b8}
+.light-end .ending-footer span:nth-child(2){color:#63728a}
+.light-end .ending-footer span:last-child{color:var(--blue)}
+
+/* Override existing dark-only controls when all pages are light */
+.dark-control .controls button{border-color:rgba(38,64,113,.12);background:rgba(255,255,255,.72);color:#61718b}
+.dark-control .controls .counter b{color:#344563}
+.dark-control .rail button{background:rgba(48,72,122,.18)}
+.dark-control .rail button:hover,.dark-control .rail button.active{background:var(--blue)}
+.dark-control .hint{color:#9da8b9}
+
+
+/* AI hub value model */
+.hub-value-layout{display:grid;grid-template-columns:1fr 72px 360px 72px 1fr;gap:0;align-items:stretch;margin-top:2px}
+.hub-endpoint{position:relative;min-height:438px;padding:24px 23px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.78);overflow:hidden}
+.hub-endpoint::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.hub-endpoint.device{background:linear-gradient(165deg,rgba(9,169,196,.07),rgba(255,255,255,.84) 42%)}
+.hub-endpoint.device::before{background:linear-gradient(90deg,var(--device),#77dfea)}
+.hub-endpoint.app{background:linear-gradient(165deg,rgba(40,92,255,.065),rgba(255,255,255,.84) 42%)}
+.hub-endpoint.app::before{background:linear-gradient(90deg,var(--app),#82acff)}
+.hub-endpoint-head{display:flex;align-items:center;justify-content:space-between}
+.hub-endpoint h3{margin-top:19px;font-size:27px;letter-spacing:-.03em}
+.hub-endpoint .hub-role{margin-top:5px;font-size:10px;font-weight:700}
+.hub-endpoint.device .hub-role{color:#15899d}.hub-endpoint.app .hub-role{color:#345bc9}
+.hub-endpoint p{margin-top:14px;color:#75849b;font-size:10px;line-height:1.7}
+.hub-points{display:grid;gap:9px;margin-top:17px}
+.hub-points div{display:grid;grid-template-columns:6px 1fr;gap:8px;color:#68788f;font-size:9px;line-height:1.55}
+.hub-points i{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.55;margin-top:5px}
+.hub-endpoint.device .hub-points{color:#5e7f87}.hub-endpoint.app .hub-points{color:#64728b}
+.hub-endpoint-value{position:absolute;left:23px;right:23px;bottom:20px;padding-top:12px;border-top:1px solid var(--line);color:#40516d;font-size:10px;font-weight:650;line-height:1.6}
+.hub-link{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding-top:22px}
+.hub-link::before{content:"";position:absolute;left:50%;top:31%;width:1px;height:34%;transform:translateX(-50%);background:linear-gradient(transparent,rgba(40,92,255,.28),transparent)}
+.hub-link span{position:relative;z-index:2;padding:5px 7px;border-radius:6px;background:rgba(255,255,255,.86);border:1px solid var(--line);color:#76869d;font-size:7px;font-weight:700;white-space:nowrap}
+.hub-link i{position:relative;z-index:2;color:var(--blue);font-size:20px;font-style:normal}
+.hub-ai{position:relative;min-height:438px;padding:22px;border:1px solid rgba(114,88,255,.16);border-radius:26px;background:radial-gradient(circle at 50% 42%,rgba(114,88,255,.1),rgba(255,255,255,.86) 54%,rgba(255,255,255,.78));box-shadow:0 28px 68px rgba(59,63,138,.12);overflow:hidden}
+.hub-ai::before{content:"";position:absolute;left:50%;top:46%;width:290px;height:290px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(114,88,255,.13);box-shadow:0 0 0 42px rgba(40,92,255,.025),0 0 0 84px rgba(8,188,212,.018)}
+.hub-ai-head{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between}
+.hub-ai-head .value-mark{display:inline-flex;align-items:center;padding:5px 8px;border-radius:7px;color:#5d46d6;background:rgba(114,88,255,.1);font-size:7px;font-weight:800;letter-spacing:.08em}
+.hub-ai-head span:last-child{color:#9aa6b9;font-size:7px;font-weight:750;letter-spacing:.12em}
+.hub-core-ring{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:166px;height:166px;margin:35px auto 0;border-radius:50%;border:1px solid rgba(114,88,255,.16);box-shadow:0 0 0 13px rgba(114,88,255,.035)}
+.hub-core{display:flex;flex-direction:column;align-items:center;justify-content:center;width:132px;height:132px;border-radius:50%;background:linear-gradient(145deg,#315fff,#745bff 64%,#2ac4d9);box-shadow:0 20px 48px rgba(70,83,205,.28),inset 10px 10px 24px rgba(255,255,255,.2);color:#fff;text-align:center}
+.hub-core b{font-size:32px;letter-spacing:-.04em}.hub-core span{margin-top:4px;font-size:7px;font-weight:750;letter-spacing:.14em;color:rgba(255,255,255,.78)}
+.hub-capabilities{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:30px}
+.hub-capability{padding:9px 8px;border-radius:9px;border:1px solid rgba(114,88,255,.1);background:rgba(255,255,255,.78);text-align:center;color:#5c6385;font-size:9px;font-weight:700}
+.hub-ai-value{position:relative;z-index:2;margin-top:17px;padding-top:12px;border-top:1px solid rgba(114,88,255,.14);color:#4b517c;font-size:10px;font-weight:650;line-height:1.65;text-align:center}
+.hub-connections{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:17px}
+.hub-connection{padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.72);text-align:center;color:#6c7b92;font-size:9px;line-height:1.55}
+.hub-connection b{display:block;margin-bottom:2px;color:#344563;font-size:10px}
+
+/* AI hub architecture */
+.ai-arch-layout{display:grid;grid-template-columns:1fr 390px 1fr;grid-template-rows:1fr 1fr;grid-template-areas:"device core app" "model core tools";gap:12px;margin-top:4px;min-height:474px}
+.arch-satellite{position:relative;padding:17px 17px 14px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.78);overflow:hidden}
+.arch-satellite.device{grid-area:device;background:linear-gradient(145deg,rgba(9,169,196,.065),rgba(255,255,255,.84))}
+.arch-satellite.app{grid-area:app;background:linear-gradient(145deg,rgba(40,92,255,.065),rgba(255,255,255,.84))}
+.arch-satellite.model{grid-area:model;background:linear-gradient(145deg,rgba(114,88,255,.06),rgba(255,255,255,.84))}
+.arch-satellite.tools{grid-area:tools;background:linear-gradient(145deg,rgba(19,169,125,.06),rgba(255,255,255,.84))}
+.arch-sat-head{display:flex;align-items:center;gap:9px}
+.arch-sat-icon{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;color:#fff;font-size:7px;font-weight:850}
+.device .arch-sat-icon{background:linear-gradient(145deg,#08b6cd,#6edfeb)}.app .arch-sat-icon{background:linear-gradient(145deg,#285cff,#7ba8ff)}.model .arch-sat-icon{background:linear-gradient(145deg,#7258ff,#a18fff)}.tools .arch-sat-icon{background:linear-gradient(145deg,#13a97d,#74d5b8)}
+.arch-sat-head b{display:block;color:#30415f;font-size:11px}.arch-sat-head span{display:block;margin-top:2px;color:#9aa6b7;font-size:6px;letter-spacing:.08em}
+.arch-sat-nodes{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:11px}
+.arch-sat-node{padding:7px 8px;border:1px solid rgba(31,60,119,.07);border-radius:7px;background:rgba(255,255,255,.72);color:#5d6e86;font-size:7px;line-height:1.42}
+.arch-sat-node b{display:block;color:#465876;font-size:7px}.arch-sat-node span{display:block;margin-top:2px;color:#9aa6b7;font-size:6px}
+.ai-arch-core{grid-area:core;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(40,92,255,.15);border-radius:24px;background:radial-gradient(circle at 50% 46%,rgba(40,92,255,.12),rgba(255,255,255,.85) 54%,rgba(255,255,255,.75));box-shadow:0 26px 64px rgba(39,70,138,.11);overflow:hidden}
+.ai-arch-core::before{content:"";position:absolute;width:330px;height:330px;border-radius:50%;border:1px solid rgba(40,92,255,.12);box-shadow:0 0 0 46px rgba(40,92,255,.025),0 0 0 92px rgba(8,188,212,.018)}
+.ai-arch-core-label{position:absolute;top:18px;left:20px;color:var(--blue);font-size:8px;font-weight:850;letter-spacing:.13em}
+.ai-arch-core-ring{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:155px;height:155px;border-radius:50%;border:1px solid rgba(40,92,255,.16);box-shadow:0 0 0 12px rgba(40,92,255,.03)}
+.ai-arch-core-circle{display:flex;flex-direction:column;align-items:center;justify-content:center;width:124px;height:124px;border-radius:50%;background:linear-gradient(145deg,#285cff,#7058ff 65%,#08bcd4);box-shadow:0 18px 44px rgba(54,83,199,.25);color:#fff;text-align:center}
+.ai-arch-core-circle b{font-size:26px;letter-spacing:-.03em}.ai-arch-core-circle span{margin-top:3px;color:rgba(255,255,255,.76);font-size:7px;letter-spacing:.1em}
+.ai-arch-core-cap{position:relative;z-index:2;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:26px;padding:0 18px}
+.ai-arch-core-cap span{padding:6px 8px;border-radius:7px;background:rgba(255,255,255,.8);border:1px solid rgba(40,92,255,.09);color:#5f6a87;font-size:7px;font-weight:700}
+.ai-arch-core-note{position:relative;z-index:2;margin-top:16px;padding:0 24px;text-align:center;color:#6b7890;font-size:9px;line-height:1.55}
+.ai-arch-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:13px}
+.ai-arch-summary div{padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.7);text-align:center;color:#708096;font-size:8px}
+.ai-arch-summary b{color:#354663;font-weight:750}
+
+</style>
+</head><body>
+<div class="stage" id="stage">
+  <div class="progress" id="progress"></div>
+  <main class="deck" id="deck">
+
+    <section class="slide cover active" data-title="产品定位">
+      <div class="cover-top">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <div>
+            <div class="brand-name">XIAOFAN</div>
+            <div class="brand-sub">AI HUB · INTELLIGENT DEVICE PLATFORM</div>
+          </div>
+        </div>
+        <div class="top-badge"><i></i>内部产品创新赛 · 项目展示</div>
+      </div>
+
+      <div class="cover-layout">
+        <div>
+          <div class="cover-kicker reveal d1">AI HUB × DEVICE × APPLICATION × LOW-CODE</div>
+          <h1 class="reveal d2">AI 是连接枢纽，<span class="grad">串起设备与应用系统</span></h1>
+          <p class="cover-desc reveal d3">小凡以 xiaofan-server 的 AI Agent Runtime 为枢纽，向上连接管理后台，向下连接 ESP32、数字人与 Web 端，统一编排语音、模型、记忆、知识与工具。</p>
+          <div class="cover-tags reveal d4">
+            <span class="pill">AI Agent Runtime</span>
+            <span class="pill">ESP32 / 数字人 / Web</span>
+            <span class="pill">manager-web / mobile</span>
+            <span class="pill">manager-api</span>
+            <span class="pill">MQTT+UDP / WebSocket / MCP</span>
+          </div>
+          <div class="cover-note reveal d5">
+            <span><b>项目定位</b></span>
+            <span class="divider"></span>
+            <span>AI 是枢纽</span>
+            <span class="divider"></span>
+            <span>设备是输入输出端</span>
+            <span class="divider"></span>
+            <span>应用系统是配置治理端</span>
+          </div>
+        </div>
+
+        <div class="builder reveal d2" aria-hidden="true">
+          <div class="builder-top">
+            <span class="builder-dots"><i></i><i></i><i></i></span>
+            <span class="builder-title">AI HUB · PROJECT CANVAS</span>
+            <span class="builder-state"><i></i>已发布</span>
+          </div>
+          <div class="builder-body">
+            <aside class="palette">
+              <div class="palette-title">项目组件 <span>8</span></div>
+              <div class="palette-item"><i>DV</i>设备接入</div>
+              <div class="palette-item"><i>AP</i>智控台与 API</div>
+              <div class="palette-item"><i>AI</i>AI Hub</div>
+              <div class="palette-item"><i>TL</i>MCP / IoT</div>
+              <div class="palette-item"><i>OP</i>记录与治理</div>
+              <div class="palette-hint">把设备、应用与 AI 能力组合成一件完整产品。</div>
+            </aside>
+            <div class="canvas">
+              <div class="canvas-label">DEVICE ↔ AI HUB ↔ APPLICATION</div>
+              <div class="flow-line"></div>
+              <div class="flow-node n1"><span class="node-icon">DV</span><div><b>设备输入输出</b><span>ESP32 / 数字人 / Web 音频</span></div><span class="node-status">已接入</span></div>
+              <div class="flow-node n2"><span class="node-icon">AI</span><div><b>AI Hub · Agent Runtime</b><span>VAD · ASR · LLM · Memory · TTS</span></div><span class="node-status">枢纽</span></div>
+              <div class="flow-node n3"><span class="node-icon">AP</span><div><b>应用系统控制面</b><span>manager-web · mobile · manager-api</span></div><span class="node-status">配置治理</span></div>
+              <div class="flow-node n4"><span class="node-icon">TL</span><div><b>工具与行动接口</b><span>MCP · Home Assistant · IoT</span></div><span class="node-status">可扩展</span></div>
+              <div class="canvas-metrics">
+                <div class="canvas-metric"><small>设备</small><b>输入与输出</b></div>
+                <div class="canvas-metric"><small>应用</small><b>配置与治理</b></div>
+                <div class="canvas-metric"><small>AI</small><b>连接与调度</b></div>
+              </div>
+            </div>
+            <aside class="inspector">
+              <div class="inspector-title">产品配置</div>
+              <div class="prop-group">
+                <div class="prop-label">应用场景</div>
+                <div class="prop-field active">智慧家庭</div>
+                <div class="prop-field">教育陪伴</div>
+                <div class="prop-field">行业定制</div>
+              </div>
+              <div class="prop-group">
+                <div class="prop-label">AI 策略</div>
+                <div class="prop-field active">多模型热插拔</div>
+                <div class="toggle-row"><span>长期记忆</span><span class="toggle"></span></div>
+                <div class="toggle-row"><span>知识库增强</span><span class="toggle"></span></div>
+              </div>
+              <div class="prop-group">
+                <div class="prop-label">应用治理</div>
+                <div class="prop-field">角色与权限</div>
+                <div class="prop-field">版本与发布</div>
+              </div>
+            </aside>
+          </div>
+          <div class="builder-float"><i>HUB</i><div><b>AI Hub 驱动完整链路</b><span>RUNTIME READY</span></div></div>
+        </div>
+      </div>
+
+      <div class="slide-footer"><span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span><span class="spacer"></span><span>INTERNAL INNOVATION SHOWCASE</span></div>
+    </section>
+
+    <section class="slide" data-title="AI枢纽">
+      <div class="content">
+        <div class="section-head reveal d1">
+          <div class="eyebrow">01 / AI HUB</div>
+          <h2>AI 是连接枢纽，<span class="accent">设备与应用系统围绕它协同</span></h2>
+          <p class="subtitle">AI 不是三层结构中的中间层，而是统一接收设备输入、读取应用配置、做出决策并调度工具的核心连接点。</p>
+        </div>
+
+        <div class="hub-value-layout">
+          <article class="hub-endpoint device reveal d2">
+            <div class="hub-endpoint-head"><span class="value-mark device">DEVICE</span><span class="pillar-index">输入 / 输出端</span></div>
+            <h3>设备</h3>
+            <div class="hub-role">AI 的感知器，也是 AI 的执行器</div>
+            <p>设备把现实世界变成 AI 可理解的输入，也把 AI 的决策变成可见、可听、可执行的结果。</p>
+            <div class="hub-points">
+              <div><i></i><span>麦克风、摄像头与扬声器，提供语音、视觉和表达通道</span></div>
+              <div><i></i><span>唤醒、VAD、流式播放与随时打断，形成自然交互</span></div>
+              <div><i></i><span>GPIO、红外与 OTA，把 AI 决策落到真实设备</span></div>
+            </div>
+            <div class="hub-endpoint-value">对 AI 的价值：提供输入与输出边界，让智能真正到达用户。</div>
+          </article>
+
+          <div class="hub-link reveal d3"><span>感知 / 请求</span><i>⇄</i><span>回应 / 执行</span></div>
+
+          <article class="hub-ai reveal d3">
+            <div class="hub-ai-head"><span>AI HUB</span><span>DECISION &amp; ORCHESTRATION</span></div>
+            <div class="hub-core-ring"><div class="hub-core"><b>AI</b><span>连接 · 理解 · 决策</span></div></div>
+            <div class="hub-capabilities">
+              <div class="hub-capability">理解输入</div>
+              <div class="hub-capability">调用记忆</div>
+              <div class="hub-capability">形成决策</div>
+              <div class="hub-capability">调度工具</div>
+            </div>
+            <div class="hub-ai-value">对系统的价值：连接两端，统一上下文、决策与行动链路。</div>
+          </article>
+
+          <div class="hub-link reveal d4"><span>配置 / 权限</span><i>⇄</i><span>状态 / 轨迹</span></div>
+
+          <article class="hub-endpoint app reveal d4">
+            <div class="hub-endpoint-head"><span class="value-mark app">APPLICATION SYSTEM</span><span class="pillar-index">配置 / 治理端</span></div>
+            <h3>应用系统</h3>
+            <div class="hub-role">AI 的配置面，也是 AI 的治理面</div>
+            <p>应用系统不替代 AI 决策，而是定义 AI 能看到什么、记住什么、调用什么，以及如何发布和运营。</p>
+            <div class="hub-points">
+              <div><i></i><span>配置角色、模型、知识、记忆和工具权限</span></div>
+              <div><i></i><span>绑定设备与用户，管理版本、参数和发布</span></div>
+              <div><i></i><span>记录对话、工具轨迹与运行状态，形成治理闭环</span></div>
+            </div>
+            <div class="hub-endpoint-value">对 AI 的价值：提供规则、能力边界与可运营的上下文。</div>
+          </article>
+        </div>
+
+        <div class="hub-connections reveal d5">
+          <div class="hub-connection"><b>设备 → AI</b>语音、图像与设备事件</div>
+          <div class="hub-connection"><b>应用 → AI</b>角色、知识、模型与工具权限</div>
+          <div class="hub-connection"><b>AI → 设备</b>回应、控制与任务执行</div>
+          <div class="hub-connection"><b>AI → 应用</b>对话、工具轨迹与运行状态</div>
+        </div>
+      </div>
+      <div class="slide-footer"><span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span><span class="spacer"></span><span>AI AS THE CONNECTION HUB</span></div>
+    </section>
+    <section class="slide" data-title="应用系统">
+      <div class="content">
+        <div class="section-head reveal d1">
+          <div class="eyebrow">02 / APPLICATION SYSTEM</div>
+          <h2>应用系统，是 AI Hub 的<span class="accent">低代码配置与治理面</span></h2>
+          <p class="subtitle">manager-web、manager-mobile 与 manager-api 把 AI Hub 需要的角色、模型、设备、知识、MCP 与权限，组织成可视化配置。</p>
+        </div>
+
+        <div class="method-layout">
+          <div class="method-main reveal d2">
+            <div class="method-statement">智控台把 AI Hub 需要的一切，变成<strong>可配置、可复用、可发布的模块</strong>。</div>
+            <p class="method-statement-note">从角色与模型，到设备、知识库、MCP 工具与语音能力，项目已有能力都通过管理后台进入运行时，而不是每次重新开发。</p>
+            <div class="principle-grid">
+              <div class="principle"><i>01</i><b>智能体管理</b><span>角色配置、能力配置、MCP 授权、默认角色与快速模板。</span></div>
+              <div class="principle"><i>02</i><b>模型配置</b><span>VAD、ASR、LLM、VLLM、Intent、TTS、Memory 可插拔选择。</span></div>
+              <div class="principle"><i>03</i><b>设备管理</b><span>ESP32 设备、绑定关系、OTA、通讯录与设备互联。</span></div>
+              <div class="principle"><i>04</i><b>知识与记忆</b><span>RAGFlow 知识库，以及 mem0ai、PowerMem、本地记忆方案。</span></div>
+              <div class="principle"><i>05</i><b>语音与身份</b><span>声音克隆、声纹识别、替换词与语音资源管理。</span></div>
+              <div class="principle"><i>06</i><b>运营与治理</b><span>用户、参数、字典、功能开关、对话记录与工具轨迹。</span></div>
+            </div>
+          </div>
+
+          <aside class="method-side reveal d3">
+            <div class="method-side-title">配置如何进入 AI Hub</div>
+            <div class="method-side-sub">CONFIGURE → SERVE → RUN → OBSERVE</div>
+            <div class="method-step">
+              <span class="method-step-no">01</span>
+              <div><b>前台配置</b><span>管理员在 manager-web 或 manager-mobile 中完成智能体与能力配置。</span></div>
+            </div>
+            <div class="method-step">
+              <span class="method-step-no">02</span>
+              <div><b>接口与管理</b><span>manager-api 负责用户、设备、模型、MCP、知识库与配置数据。</span></div>
+            </div>
+            <div class="method-step">
+              <span class="method-step-no">03</span>
+              <div><b>运行与反馈</b><span>xiaofan-server 加载配置，AI Hub 执行会话，记录回传应用系统。</span></div>
+            </div>
+            <div class="method-outcome">
+              <small>项目闭环</small>
+              <b>应用系统负责“配置与治理”，AI Hub 负责“理解、决策与调度”。</b>
+            </div>
+          </aside>
+        </div>
+
+        <div class="team-values reveal d4">
+          <div class="team-value"><b>前端入口</b> · manager-web / manager-mobile</div>
+          <div class="team-value"><b>管理服务</b> · manager-api + PostgreSQL + Redis</div>
+          <div class="team-value"><b>实时运行</b> · xiaofan-server Agent Runtime</div>
+        </div>
+      </div>
+      <div class="slide-footer"><span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span><span class="spacer"></span><span>APPLICATION CONTROL PLANE</span></div>
+    </section>
+
+    <section class="slide" data-title="项目全景">
+      <div class="content">
+        <div class="section-head reveal d1">
+          <div class="eyebrow">03 / PROJECT ARCHITECTURE</div>
+          <h2>整个项目，围绕 AI Hub <span class="accent">连接四类真实模块</span></h2>
+          <p class="subtitle">设备、应用系统、模型与知识、工具服务通过 xiaofan-server 的 AI Agent Runtime 交换输入、配置、能力与行动。</p>
+        </div>
+
+        <div class="ai-arch-layout">
+          <article class="arch-satellite device reveal d2">
+            <div class="arch-sat-head"><i class="arch-sat-icon">DV</i><div><b>设备与接入</b><span>INPUT &amp; OUTPUT</span></div></div>
+            <div class="arch-sat-nodes">
+              <div class="arch-sat-node"><b>ESP32 硬件</b><span>语音、视觉与设备控制</span></div>
+              <div class="arch-sat-node"><b>数字人终端</b><span>语音唤醒与虚拟形象</span></div>
+              <div class="arch-sat-node"><b>Web 音频端</b><span>调试与能力验证</span></div>
+              <div class="arch-sat-node"><b>WebSocket / MQTT+UDP</b><span>信令与音频传输</span></div>
+            </div>
+          </article>
+
+          <article class="ai-arch-core reveal d3">
+            <div class="ai-arch-core-label">XIAOFAN-SERVER · AI HUB</div>
+            <div class="ai-arch-core-ring"><div class="ai-arch-core-circle"><b>AI</b><span>Agent Runtime</span></div></div>
+            <div class="ai-arch-core-cap"><span>会话</span><span>语音</span><span>意图</span><span>模型</span><span>工具</span></div>
+            <div class="ai-arch-core-note">向下接收设备输入，向上读取应用配置，内部编排模型、记忆与知识，对外调度 MCP 与 IoT 工具。</div>
+          </article>
+
+          <article class="arch-satellite app reveal d3">
+            <div class="arch-sat-head"><i class="arch-sat-icon">AP</i><div><b>应用系统与数据</b><span>CONFIG &amp; GOVERN</span></div></div>
+            <div class="arch-sat-nodes">
+              <div class="arch-sat-node"><b>manager-web</b><span>Vue 智控台</span></div>
+              <div class="arch-sat-node"><b>manager-mobile</b><span>uni-app 移动端</span></div>
+              <div class="arch-sat-node"><b>manager-api</b><span>Java / Spring Boot</span></div>
+              <div class="arch-sat-node"><b>PostgreSQL + Redis</b><span>业务数据与缓存</span></div>
+              <div class="arch-sat-node"><b>认证与权限</b><span>用户、角色与访问控制</span></div>
+            </div>
+          </article>
+
+          <article class="arch-satellite model reveal d4">
+            <div class="arch-sat-head"><i class="arch-sat-icon">ML</i><div><b>模型与知识供给</b><span>AI CAPABILITIES</span></div></div>
+            <div class="arch-sat-nodes">
+              <div class="arch-sat-node"><b>VAD / ASR</b><span>Silero / FunASR 等</span></div>
+              <div class="arch-sat-node"><b>Intent / LLM</b><span>意图与对话生成</span></div>
+              <div class="arch-sat-node"><b>Memory / RAGFlow</b><span>记忆与知识检索</span></div>
+              <div class="arch-sat-node"><b>VLLM / TTS</b><span>视觉理解与语音合成</span></div>
+              <div class="arch-sat-node"><b>voiceprint-api</b><span>声纹识别服务</span></div>
+            </div>
+          </article>
+
+          <article class="arch-satellite tools reveal d4">
+            <div class="arch-sat-head"><i class="arch-sat-icon">TL</i><div><b>工具与执行</b><span>ACTION &amp; EXTENSION</span></div></div>
+            <div class="arch-sat-nodes">
+              <div class="arch-sat-node"><b>客户端 MCP</b><span>设备端能力与工具</span></div>
+              <div class="arch-sat-node"><b>服务端 MCP</b><span>外部服务与业务工具</span></div>
+              <div class="arch-sat-node"><b>MCP 接入点</b><span>插件与外部能力接入</span></div>
+              <div class="arch-sat-node"><b>Home Assistant</b><span>智能家居联动</span></div>
+              <div class="arch-sat-node"><b>自定义插件</b><span>天气、新闻、音乐等</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-arch-summary reveal d5">
+          <div><b>ESP32 / 数字人</b> · 设备入口</div>
+          <div><b>manager-web / api</b> · 应用控制面</div>
+          <div><b>xiaofan-server</b> · AI 运行时枢纽</div>
+          <div><b>MCP / RAG / HA</b> · 能力与行动</div>
+        </div>
+      </div>
+      <div class="slide-footer"><span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span><span class="spacer"></span><span>WHOLE-PROJECT ARCHITECTURE</span></div>
+    </section>
+    <section class="slide" data-title="运行链路">
+      <div class="content">
+        <div class="section-head reveal d1">
+          <div class="eyebrow">04 / RUNTIME FLOW</div>
+          <h2>一次语音交互，AI Hub 在中心<span class="accent">完成理解、决策与调度</span></h2>
+          <p class="subtitle">设备输入通过 WebSocket 或 MQTT+UDP 进入 xiaofan-server；应用系统提供角色、模型、工具与知识配置；AI Hub 在运行时完成整条链路。</p>
+        </div>
+
+        <div class="interaction-chain">
+          <article class="interaction-step reveal d2">
+            <div class="step-node">DV</div>
+            <div class="step-card"><small>ESP32 / ESP-SR</small><b>设备唤醒</b><p>端侧检测唤醒词，开始采集语音，不需要持续上传音频。</p></div>
+          </article>
+          <article class="interaction-step reveal d3">
+            <div class="step-node">NW</div>
+            <div class="step-card"><small>WEBSOCKET / MQTT+UDP</small><b>音频上行</b><p>Opus 音频与设备事件进入 xiaofan-server，支持不同网络与部署形态。</p></div>
+          </article>
+          <article class="interaction-step reveal d4">
+            <div class="step-node">AI</div>
+            <div class="step-card"><small>AI HUB / SPEECH</small><b>VAD 与 ASR</b><p>运行时判断说话边界并流式识别，把语音转换成可理解的文本。</p></div>
+          </article>
+          <article class="interaction-step reveal d5">
+            <div class="step-node">AP</div>
+            <div class="step-card"><small>MANAGER-API / CONTEXT</small><b>加载应用配置</b><p>当前智能体的角色、模型、知识、MCP 工具与权限进入会话上下文。</p></div>
+          </article>
+          <article class="interaction-step reveal d6">
+            <div class="step-node">AI</div>
+            <div class="step-card"><small>AI HUB / DECIDE</small><b>意图、记忆与决策</b><p>Intent、LLM、Memory 与 RAG 协同判断：直接回答，还是调用工具完成任务。</p></div>
+          </article>
+          <article class="interaction-step reveal d7">
+            <div class="step-node">TL</div>
+            <div class="step-card"><small>MCP / IOT / TTS</small><b>执行与表达</b><p>MCP 工具或设备控制执行动作，TTS 流式返回语音，结果同步到对话记录。</p></div>
+          </article>
+        </div>
+
+        <div class="interaction-example reveal d8">
+          <b>项目示例：把客厅灯调暗<span>ONE REAL PROJECT FLOW</span></b>
+          <div class="example-flow">
+            <div class="example-chip"><b>ESP32</b>采集语音</div>
+            <div class="example-arrow">→</div>
+            <div class="example-chip"><b>AI Hub</b>识别意图并决策</div>
+            <div class="example-arrow">→</div>
+            <div class="example-chip"><b>MCP / HA</b>调用设备工具</div>
+            <div class="example-arrow">→</div>
+            <div class="example-chip"><b>设备</b>执行并语音反馈</div>
+          </div>
+        </div>
+
+        <div class="interaction-values reveal d8">
+          <div class="interaction-value device"><i>DV</i><div><b>设备端</b><span>提供真实输入与执行出口。</span></div></div>
+          <div class="interaction-value app"><i>AP</i><div><b>应用系统</b><span>定义角色、模型、工具与权限。</span></div></div>
+          <div class="interaction-value ai"><i>AI</i><div><b>AI Hub</b><span>连接上下文，完成决策与调度。</span></div></div>
+        </div>
+      </div>
+      <div class="slide-footer"><span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span><span class="spacer"></span><span>DEVICE → AI HUB → ACTION</span></div>
+    </section>
+    <section class="slide" data-title="智控台配置">
+      <div class="content">
+        <div class="section-head reveal d1">
+          <div class="eyebrow">05 / APPLICATION SYSTEM</div>
+          <h2>一个智控台，<span class="accent">管理整个项目的 AI 配置</span></h2>
+          <p class="subtitle">角色、模型、设备、MCP、知识库与对话记录在同一控制面配置，并最终作用于 xiaofan-server 的 AI Hub。</p>
+        </div>
+
+        <div class="console-layout">
+          <div class="console-mock reveal d2" aria-hidden="true">
+            <aside class="mock-side">
+              <div class="mock-brand"><i></i><div><b>XIAOFAN</b><small>AI DEVICE CLOUD</small></div></div>
+              <div class="mock-nav">
+                <span class="active">智能体管理</span>
+                <span>设备管理</span>
+                <span>模型配置</span>
+                <span>MCP 与工具</span>
+                <span>知识库</span>
+                <span>对话记录</span>
+              </div>
+            </aside>
+            <div class="mock-main">
+              <div class="mock-head">
+                <div><b>我的 ESP 机器人</b><span>角色配置 / AI 能力 / 工具权限</span></div>
+                <div class="mock-head-right"><span class="mock-btn">测试对话</span><span class="mock-btn primary">保存配置</span></div>
+              </div>
+              <div class="mock-metrics">
+                <div class="mock-metric"><small>配置入口</small><b>智控台</b></div>
+                <div class="mock-metric"><small>AI 模块</small><b>8 类</b></div>
+                <div class="mock-metric"><small>MCP 形态</small><b>3 类</b></div>
+              </div>
+              <div class="mock-grid">
+                <div class="mock-panel">
+                  <div class="mock-panel-title"><b>智能体概览</b><span>运行中</span></div>
+                  <div class="mock-agent">
+                    <div class="mock-agent-avatar"></div>
+                    <div><b>湾湾小何 · 家庭助手</b><span>角色、音色、记忆与知识已配置</span></div>
+                  </div>
+                  <div class="mock-tags"><span>角色配置</span><span>能力配置</span><span>MCP 授权</span><span>历史版本</span></div>
+                </div>
+                <div class="mock-panel">
+                  <div class="mock-panel-title"><b>AI 能力链</b><span>可插拔</span></div>
+                  <div class="mock-list">
+                    <div class="mock-list-row"><i>VAD</i><b>语音活动检测</b><span>已配置</span></div>
+                    <div class="mock-list-row"><i>ASR</i><b>流式语音识别</b><span>已配置</span></div>
+                    <div class="mock-list-row"><i>INT</i><b>意图与 LLM</b><span>已配置</span></div>
+                    <div class="mock-list-row"><i>TTS</i><b>记忆与语音合成</b><span>已配置</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mock-bottom">
+                <div class="mock-panel">
+                  <div class="mock-panel-title"><b>工具与设备</b><span>权限可控</span></div>
+                  <div class="mock-tags"><span>客户端 MCP</span><span>服务端 MCP</span><span>MCP 接入点</span><span>Home Assistant</span></div>
+                  <div class="mock-history"><span>管理 · 设备绑定与 OTA</span><span>运行 · MCP 工具调用轨迹</span></div>
+                </div>
+                <div class="mock-panel">
+                  <div class="mock-panel-title"><b>对话与工具轨迹</b><span>运行记录</span></div>
+                  <div class="mock-chart">
+                    <svg viewBox="0 0 300 44" preserveAspectRatio="none"><path d="M0,34 C30,30 45,22 70,26 S110,34 136,20 S176,11 202,19 S244,28 268,14 S290,8 300,11 L300,44 L0,44 Z" fill="rgba(40,92,255,.08)"/><path d="M0,34 C30,30 45,22 70,26 S110,34 136,20 S176,11 202,19 S244,28 268,14 S290,8 300,11" fill="none" stroke="#285cff" stroke-width="1.5"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="console-points reveal d3">
+            <div class="console-point"><i>WEB</i><div><b>manager-web / mobile</b><span>智控台与移动端承载角色、设备、模型和运营配置。</span></div></div>
+            <div class="console-point"><i>API</i><div><b>manager-api</b><span>Java 管理服务连接 PostgreSQL、Redis、用户与权限体系。</span></div></div>
+            <div class="console-point"><i>RUN</i><div><b>xiaofan-server</b><span>AI Hub 加载配置并执行语音、模型、记忆与工具链路。</span></div></div>
+            <div class="console-point"><i>SVC</i><div><b>能力服务</b><span>voiceprint-api、RAGFlow、Home Assistant 与 MCP 工具。</span></div></div>
+            <div class="console-note"><span>角色配置</span><span>模型配置</span><span>设备管理</span><span>MCP 工具</span><span>知识库</span><span>声音克隆</span><span>声纹识别</span><span>对话记录</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer"><span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span><span class="spacer"></span><span>APPLICATION SYSTEM OVERVIEW</span></div>
+    </section>
+    <section class="slide light-end ending" data-title="产品愿景">
+      <div class="ending-rings"></div>
+      <div class="ending-glow"></div>
+      <div class="content">
+        <div class="ending-badge reveal d1"><i></i>AI HUB · DEVICE · APPLICATION</div>
+        <h1 class="reveal d2">AI 在中心，<br>连接设备与<span>应用系统</span></h1>
+        <p class="ending-sub reveal d3">小凡以 AI Agent Runtime 为枢纽，把 ESP32、数字人与 Web 端，同智控台、模型、知识和工具连接成一个完整项目。</p>
+        <div class="ending-steps reveal d4">
+          <div class="ending-step"><small>01 / DEVICE</small><b>真实输入与执行</b><span>ESP32、数字人与 Web 端提供语音、视觉和设备行动能力。</span></div>
+          <div class="ending-step"><small>02 / APPLICATION</small><b>配置与治理</b><span>manager-web、manager-mobile 与 manager-api 管理角色、模型、MCP 和设备。</span></div>
+          <div class="ending-step"><small>03 / AI HUB</small><b>连接与调度中心</b><span>xiaofan-server 统一编排语音、模型、记忆、知识与工具。</span></div>
+        </div>
+      </div>
+      <div class="ending-footer">
+        <span>XIAOFAN · AI HUB INTELLIGENT DEVICE PLATFORM</span>
+        <span>内部产品创新赛 · 项目展示</span>
+        <span>DEVICE ↔ AI HUB ↔ APPLICATION</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="rail" id="rail" aria-label="页面导航"></div>
+  <div class="controls" id="controls">
+    <span class="counter"><b id="current">01</b> / 07</span>
+    <button type="button" id="prev" aria-label="上一页">←</button>
+    <button type="button" id="next" aria-label="下一页">→</button>
+  </div>
+  <div class="hint" id="hint">← → 或滚轮翻页 · F 全屏</div>
+</div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const progress = document.getElementById('progress');
+  const current = document.getElementById('current');
+  const rail = document.getElementById('rail');
+  const hint = document.getElementById('hint');
+  const total = slides.length;
+  let index = 0;
+  let hinted = false;
+  let wheelLocked = false;
+  const pad = (value) => String(value).padStart(2, '0');
+  const isStatic = new URLSearchParams(location.search).has('static');
+  if (isStatic) document.body.classList.add('static');
+
+  function fitStage() {
+    const scale = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+    stage.style.setProperty('--stage-scale', String(scale));
+  }
+  function buildRail() {
+    slides.forEach((slide, i) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-label', `第 ${i + 1} 页：${slide.dataset.title || ''}`);
+      button.innerHTML = `<span>${pad(i + 1)} · ${slide.dataset.title || ''}</span>`;
+      button.addEventListener('click', () => go(i));
+      rail.appendChild(button);
+    });
+  }
+  function dismissHint() {
+    if (hinted) return;
+    hinted = true;
+    setTimeout(() => hint.classList.add('gone'), 1100);
+  }
+  function go(next, updateHash = true) {
+    index = Math.max(0, Math.min(total - 1, next));
+    slides.forEach((slide, i) => {
+      const active = i === index;
+      slide.classList.toggle('active', active);
+      slide.setAttribute('aria-hidden', String(!active));
+    });
+    Array.from(rail.children).forEach((button, i) => {
+      button.classList.toggle('active', i === index);
+      button.setAttribute('aria-current', i === index ? 'page' : 'false');
+    });
+    current.textContent = pad(index + 1);
+    progress.style.width = `${((index + 1) / total) * 100}%`;
+    document.title = `${slides[index].dataset.title || '小凡'} · 低代码 AI 设备平台`;
+    if (updateHash) history.replaceState(null, '', `#${index + 1}`);
+    dismissHint();
+  }
+  function initialIndex() {
+    const value = Number.parseInt(location.hash.replace('#', ''), 10);
+    return Number.isFinite(value) && value >= 1 && value <= total ? value - 1 : 0;
+  }
+  document.getElementById('prev').addEventListener('click', () => go(index - 1));
+  document.getElementById('next').addEventListener('click', () => go(index + 1));
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+      event.preventDefault(); go(index + 1);
+    } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+      event.preventDefault(); go(index - 1);
+    } else if (event.key === 'Home') {
+      event.preventDefault(); go(0);
+    } else if (event.key === 'End') {
+      event.preventDefault(); go(total - 1);
+    } else if (event.key === 'f' || event.key === 'F') {
+      event.preventDefault();
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+  window.addEventListener('wheel', (event) => {
+    if (wheelLocked || Math.abs(event.deltaY) < 8) return;
+    wheelLocked = true;
+    go(index + (event.deltaY > 0 ? 1 : -1));
+    setTimeout(() => { wheelLocked = false; }, 620);
+  }, { passive: true });
+  let touchStartX = 0;
+  let touchStartY = 0;
+  window.addEventListener('touchstart', (event) => {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', (event) => {
+    const dx = event.changedTouches[0].clientX - touchStartX;
+    const dy = event.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+  window.addEventListener('click', (event) => {
+    if (event.target.closest('button, a, .rail, .controls')) return;
+    const rect = stage.getBoundingClientRect();
+    const relativeX = (event.clientX - rect.left) / rect.width;
+    if (relativeX > 0.73) go(index + 1);
+    else if (relativeX < 0.07) go(index - 1);
+  });
+  window.addEventListener('resize', fitStage);
+  fitStage();
+  buildRail();
+  go(initialIndex(), false);
+})();
+</script>
+</body>
+</html>
