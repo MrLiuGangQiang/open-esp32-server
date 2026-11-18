@@ -543,6 +543,9 @@ export default {
   'cache.viewer': 'Cache-Betrachter',
 
   // Chat history dialog related
+  'chatHistory.toolCall': 'Werkzeugaufruf',
+  'chatHistory.toolResult': 'Werkzeugergebnis',
+  'chatHistory.tool': 'Werkzeug',
   'chatHistory.with': 'Mit',
   'chatHistory.dialogTitle': "'s Chat-Verlauf",
   'chatHistory.loading': 'Lädt...',

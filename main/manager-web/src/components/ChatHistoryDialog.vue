@@ -42,20 +42,31 @@
                                     <div class="content-wrapper">
                                         <div v-for="(item, idx) in extractContentFromString(message.content)" :key="idx">
                                             <div v-if="item.type === 'text'" class="text-content">{{ item.text }}</div>
-                                            <div v-else-if="item.type === 'tool'" class="tool-call-text">{{ item.text }}</div>
-                                            <div v-else-if="item.type === 'tool_result'" class="tool-call-text">
-                                                <div v-if="item.text && item.text.length > 80" class="tool-result-wrapper">
+                                            <div v-else-if="item.type === 'tool'" class="tool-event tool-call-event">
+                                                <div class="tool-event-header">
+                                                    <span class="tool-event-badge">{{ $t('chatHistory.toolCall') }}</span>
+                                                    <strong>{{ toolDisplayName(item) }}</strong>
+                                                </div>
+                                                <div v-if="toolRawName(item)" class="tool-event-name">{{ toolRawName(item) }}</div>
+                                                <pre class="tool-event-body">{{ toolArgumentsText(item) }}</pre>
+                                            </div>
+                                            <div v-else-if="item.type === 'tool_result'" class="tool-event tool-result-event">
+                                                <div class="tool-event-header">
+                                                    <span class="tool-event-badge">{{ $t('chatHistory.toolResult') }}</span>
+                                                    <strong>{{ toolDisplayName(item) }}</strong>
+                                                </div>
+                                                <div v-if="item.text && item.text.length > 120" class="tool-result-wrapper">
                                                     <div v-if="isToolResultCollapsed(index, idx)" class="tool-result-collapsed">
                                                         {{ getFirstLineText(item.text) }}
                                                     </div>
                                                     <div v-else class="tool-result-expanded">
-                                                        {{ item.text }}
+                                                        <pre class="tool-event-body">{{ item.text }}</pre>
                                                     </div>
                                                     <span class="tool-toggle-btn" @click="toggleToolResult(index, idx)">
                                                         <i :class="isToolResultCollapsed(index, idx) ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"></i>
                                                     </span>
                                                 </div>
-                                                <div v-else>{{ item.text }}</div>
+                                                <pre v-else class="tool-event-body">{{ item.text }}</pre>
                                             </div>
                                         </div>
                                     </div>
@@ -221,6 +232,28 @@ export default {
             return content;
         },
         // 切换工具结果的展开/折叠状态
+        toolDisplayName(item) {
+            return item.display_name || item.tool_name || this.toolRawName(item) || this.$t('chatHistory.tool');
+        },
+        toolRawName(item) {
+            if (item.tool_name && item.tool_name !== item.display_name) return item.tool_name;
+            const text = String(item.text || '');
+            const index = text.indexOf('(');
+            return index > 0 ? text.slice(0, index) : '';
+        },
+        toolArgumentsText(item) {
+            if (item.arguments !== undefined && item.arguments !== null) {
+                try {
+                    return JSON.stringify(item.arguments, null, 2);
+                } catch (e) {
+                    return String(item.arguments);
+                }
+            }
+            const text = String(item.text || '');
+            const start = text.indexOf('(');
+            if (start >= 0 && text.endsWith(')')) return text.slice(start + 1, -1);
+            return text;
+        },
         toggleToolResult(messageIndex, itemIndex) {
             const key = `${messageIndex}-${itemIndex}`;
             this.$set(this.expandedToolResults, key, !this.expandedToolResults[key]);
@@ -532,6 +565,27 @@ export default {
     display: block;
     margin-bottom: 4px;
 }
+
+.tool-event {
+    margin-top: 6px;
+    padding: 9px 11px;
+    border: 1px solid #dfe7f3;
+    border-left: 3px solid #2563eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #344054;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.tool-result-event { border-left-color: #10b981; }
+.tool-event-header { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.tool-event-header strong { overflow: hidden; color: #1f2937; font-size: 13px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.tool-event-badge { flex-shrink: 0; padding: 2px 7px; border-radius: 999px; color: #1d4ed8; background: #eef4ff; font-size: 10px; font-weight: 600; }
+.tool-result-event .tool-event-badge { color: #047857; background: #ecfdf5; }
+.tool-event-name { margin-top: 5px; color: #7c889b; font-family: 'Cascadia Code', Consolas, monospace; font-size: 10px; word-break: break-all; }
+.tool-event-body { margin: 7px 0 0; padding: 7px 9px; overflow-x: auto; border-radius: 6px; background: #f7f9fc; color: #475467; font-family: 'Cascadia Code', Consolas, monospace; font-size: 11px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
 
 .tool-call-text {
     color: #1890ff;

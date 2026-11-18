@@ -543,6 +543,9 @@ export default {
   'cache.viewer': 'Visualizador de Cache',
 
   // Diálogo de histórico de chat
+  'chatHistory.toolCall': 'Chamada de ferramenta',
+  'chatHistory.toolResult': 'Resultado da ferramenta',
+  'chatHistory.tool': 'Ferramenta',
   'chatHistory.with': 'Com',
   'chatHistory.dialogTitle': ' - Histórico de Chat',
   'chatHistory.loading': 'Carregando...',

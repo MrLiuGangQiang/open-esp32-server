@@ -545,6 +545,9 @@ export default {
   'cache.viewer': '緩存查看器',
 
   // 聊天历史对话框相关
+  'chatHistory.toolCall': '工具呼叫',
+  'chatHistory.toolResult': '工具結果',
+  'chatHistory.tool': '工具',
   'chatHistory.with': '與',
   'chatHistory.dialogTitle': '的聊天記錄',
   'chatHistory.loading': '加載中...',

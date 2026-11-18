@@ -543,6 +543,9 @@ export default {
   'cache.viewer': 'Trình xem cache',
 
   // Chat history dialog related
+  'chatHistory.toolCall': 'Gọi công cụ',
+  'chatHistory.toolResult': 'Kết quả công cụ',
+  'chatHistory.tool': 'Công cụ',
   'chatHistory.with': 'Với',
   'chatHistory.dialogTitle': "'s Lịch sử trò chuyện",
   'chatHistory.loading': 'Đang tải...',

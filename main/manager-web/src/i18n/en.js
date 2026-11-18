@@ -648,6 +648,9 @@ export default {
   'cache.viewer': 'Cache Viewer',
 
   // Chat history dialog related
+  'chatHistory.toolCall': 'Tool call',
+  'chatHistory.toolResult': 'Tool result',
+  'chatHistory.tool': 'Tool',
   'chatHistory.with': 'With',
   'chatHistory.dialogTitle': "'s Chat History",
   'chatHistory.loading': 'Loading...',

@@ -650,6 +650,9 @@ export default {
   'cache.viewer': '缓存查看器',
 
   // 聊天历史对话框相关
+  'chatHistory.toolCall': '工具调用',
+  'chatHistory.toolResult': '工具结果',
+  'chatHistory.tool': '工具',
   'chatHistory.with': '与',
   'chatHistory.dialogTitle': '的聊天记录',
   'chatHistory.loading': '加载中...',
